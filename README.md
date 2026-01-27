@@ -1,36 +1,229 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# APOC-BNB ☢️
 
-## Getting Started
+> **"Survival is Luxury."**
 
-First, run the development server:
+The world's first (and last) premium rental platform for the post-apocalyptic elite. Book verified fallout-free bunkers, orbital suites, and hollowed-out mountains with your hard-earned Bottle Caps.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+![Hero Image](./public/images/hero-bunker.png)
+
+## 🌟 Features
+
+### Core Features
+* **Doomsday Map**: Interactive fallout zones using Mapbox with multiple bunker markers, color-coded by radiation level
+* **Dynamic Pricing**: Currency automatically converts between BTC and Bottle Caps (CAPS)
+* **Survivalist Verified**: "Superhost" badges for "Rad-Free", "Mutant-Proof", and "Cannibal-Free" listings
+* **Apoc-AI Chatbot**: An intelligent concierge that cares (mostly about your survival) with context-aware responses
+* **Raid Parties**: Book guided looting tours with local Warlords - 6 unique experiences available
+* **Advanced Search & Filters**: Filter by price, rating, radiation level, and amenities
+* **Favorites System**: Save your favorite bunkers with persistent storage
+* **Real-time Booking**: Book bunkers with interactive pricing calculator
+* **Reviews System**: Read verified survivor reviews and ratings
+
+### Technical Features
+* **State Management**: Zustand store with persistent favorites
+* **Toast Notifications**: Beautiful toast system using Sonner
+* **Error Boundaries**: Graceful error handling throughout the app
+* **Loading States**: Skeleton loaders for better UX
+* **Modal System**: Reusable modal component for filters and more
+* **Mobile Responsive**: Full mobile menu drawer with hamburger navigation
+* **API Routes**: RESTful API endpoints for bunkers data
+* **Testing**: Vitest test suite with React Testing Library
+* **TypeScript**: Fully typed with comprehensive interfaces
+* **Accessibility**: ARIA labels, keyboard navigation, and semantic HTML
+
+## 🛠️ Tech Stack
+
+* **Framework**: [Next.js 16](https://nextjs.org/) (App Router)
+* **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) + Custom "Neobrutal Dystopian" Theme
+* **Animations**: [Framer Motion](https://www.framer.com/motion/)
+* **State Management**: [Zustand](https://zustand-demo.pmnd.rs/)
+* **Notifications**: [Sonner](https://sonner.emilkowal.ski/)
+* **Testing**: [Vitest](https://vitest.dev/) + React Testing Library
+* **Maps**: [react-map-gl](https://visgl.github.io/react-map-gl/)
+* **Icons**: [Lucide React](https://lucide.dev/)
+* **UI Components**: Custom components with Radix UI primitives
+
+## 🚀 Getting Started
+
+1. **Install Dependencies**:
+
+    ```bash
+    npm install
+    ```
+
+2. **Set Up Environment Variables**:
+
+    Create a `.env.local` file:
+
+    ```bash
+    NEXT_PUBLIC_MAPBOX_TOKEN=your_token_here
+    ```
+
+    *(Note: The app will run in "Fallback Mode" without a token, showing a warning instead of the map.)*
+
+3. **Run the Development Server**:
+
+    ```bash
+    npm run dev
+    ```
+
+    Open [http://localhost:3000](http://localhost:3000) with your browser to confirm you are still alive.
+
+4. **Run Tests**:
+
+    ```bash
+    npm run test
+    # or
+    npx vitest
+    ```
+
+5. **Build for Production**:
+
+    ```bash
+    npm run build
+    npm start
+    ```
+
+## 📁 Project Structure
+
+```
+apoc-bnb/
+├── src/
+│   ├── app/                      # Next.js App Router pages
+│   │   ├── api/                  # API routes
+│   │   │   └── bunkers/          # Bunker endpoints
+│   │   ├── bunkers/[id]/         # Dynamic bunker detail pages
+│   │   ├── experiences/          # Raid parties page
+│   │   ├── favorites/            # Favorites page
+│   │   ├── host/                 # Become a host page
+│   │   ├── search/               # Search & filters page
+│   │   ├── layout.tsx            # Root layout with providers
+│   │   ├── page.tsx              # Homepage
+│   │   └── globals.css           # Global styles
+│   ├── components/
+│   │   ├── booking/              # Booking widget
+│   │   ├── chat/                 # AI chatbot
+│   │   ├── layout/               # Navbar, mobile menu
+│   │   ├── map/                  # Mapbox map component
+│   │   ├── reviews/              # Review cards and lists
+│   │   ├── search/               # Filter panel
+│   │   ├── ui/                   # Reusable UI components
+│   │   ├── BunkerCard.tsx        # Bunker listing card
+│   │   └── ErrorBoundary.tsx     # Error boundary
+│   ├── lib/
+│   │   ├── data/                 # Mock data & utilities
+│   │   │   ├── bunkers.ts        # Bunker data
+│   │   │   ├── raids.ts          # Raid party data
+│   │   │   └── reviews.ts        # Reviews data
+│   │   ├── apocAiResponses.ts    # AI chatbot logic
+│   │   ├── store.ts              # Zustand state management
+│   │   └── utils.ts              # Utility functions
+│   └── types/
+│       └── index.ts              # TypeScript interfaces
+├── public/
+│   └── images/                   # Static assets
+├── tests/                        # Test files
+└── package.json
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎨 Design System
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Color Palette
+- **Primary (Radioactive Green)**: `#39ff14` - Safe zones, primary actions
+- **Secondary (Hazard Yellow)**: `#ffea00` - Warnings, ratings
+- **Accent (Alert Red)**: `#ff003c` - Danger zones, alerts
+- **Background**: `#0a0a0a` - Deep black
+- **Card**: `#171717` - Surface elements
+- **Muted**: `#262626` - Borders, disabled states
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Typography
+- **Font**: Geist Sans (primary), Geist Mono (code/data)
+- **Headings**: Bold, uppercase, tight tracking
+- **Body**: Readable with proper line-height
 
-## Learn More
+### Components
+- **Neobrutal Buttons**: Bold shadows, no rounded corners
+- **Glitch Text**: Animated glitch effect for emphasis
+- **Cards**: Hover effects with border glow
+- **Modals**: Full-screen overlays with blur backdrop
 
-To learn more about Next.js, take a look at the following resources:
+## 🧪 Testing
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Run the test suite:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run test
+```
 
-## Deploy on Vercel
+Coverage includes:
+- BookingWidget pricing calculations
+- BunkerCard rendering
+- GlitchText animation
+- AI chatbot responses
+- Store functionality
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🗺️ Key Features Explained
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Dynamic Search & Filters
+- Real-time filtering by price, rating, and radiation level
+- Persistent filter state using Zustand
+- Modal-based advanced filters
+- Quick filters for common options
+
+### Favorites System
+- Click heart icon to save bunkers
+- Persisted to localStorage via Zustand
+- Dedicated favorites page
+- Counter in navbar
+
+### AI Chatbot
+- Context-aware responses based on keywords
+- Multiple response variations
+- Typing delay simulation
+- Expandable/collapsible interface
+
+### Interactive Map
+- Multiple markers color-coded by danger level
+- Click markers to view bunker info
+- Popup with quick details and link
+- Legend and status overlay
+
+### Booking Flow
+- Interactive guest and night selectors
+- Real-time price calculation
+- Oxygen tax and protection fees
+- Currency toggle (CAPS/BTC)
+- Toast notifications on booking
+
+## 🔮 Future Enhancements
+
+- [ ] User authentication (NextAuth.js)
+- [ ] Real database integration (Prisma + PostgreSQL)
+- [ ] Payment processing (Stripe)
+- [ ] Email notifications (Resend)
+- [ ] Image uploads for hosts
+- [ ] Calendar availability system
+- [ ] Advanced search (dates, amenities)
+- [ ] User profiles and badges
+- [ ] Host dashboard
+- [ ] Booking management
+- [ ] More AI chatbot integrations
+- [ ] Dark/light mode toggle
+- [ ] Internationalization (i18n)
+
+## 🎯 Credits
+
+* **Design**: Inspired by the end of the world
+* **Images**: AI Generated (Stable Diffusion / Midjourney style)
+* **Theme**: Post-apocalyptic + Neobrutal + Y2K aesthetics
+* **Sound Design**: (Coming soon) Geiger counters and alert sirens
+
+## 📄 License
+
+This project is a portfolio/demo project. Feel free to use it as inspiration for your own projects!
+
+---
+
+*No refunds if the nukes drop before check-in.*
+
+**Stay rad-free, survivor.** ☢️
