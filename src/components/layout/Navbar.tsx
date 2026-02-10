@@ -2,9 +2,12 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Radiation, Skull, Heart } from "lucide-react";
+import { Skull, Heart } from "lucide-react";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { useAppStore } from "@/lib/store";
+import { DefconIndicator } from "@/components/ui/DefconIndicator";
+import { SystemStatusCompact } from "@/components/ui/SystemStatus";
+import { ApocMascot } from "@/components/ui/ApocMascot";
 
 export function Navbar() {
     const { favorites } = useAppStore();
@@ -12,12 +15,12 @@ export function Navbar() {
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
             <div className="container mx-auto flex items-center justify-between px-4 py-3">
-                <Link 
-                    href="/" 
+                <Link
+                    href="/"
                     className="flex items-center gap-2 text-2xl font-black uppercase tracking-tighter text-primary hover:text-glow transition-all"
                     aria-label="APOC-BNB Home"
                 >
-                    <Radiation className="h-8 w-8 animate-spin-slow" aria-hidden="true" />
+                    <ApocMascot expression="happy" size="sm" animate={false} />
                     <span>APOC-BNB</span>
                 </Link>
 
@@ -40,6 +43,8 @@ export function Navbar() {
                 </div>
 
                 <div className="hidden md:flex items-center gap-4">
+                    <SystemStatusCompact />
+                    <DefconIndicator />
                     <Button variant="ghost" size="sm">
                         Sign In
                     </Button>

@@ -2,14 +2,30 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { SlidersHorizontal, ShieldCheck, Zap, X } from "lucide-react";
+import { SlidersHorizontal, ShieldCheck, X } from "lucide-react";
 import { useAppStore } from "@/lib/store";
 import { Modal } from "@/components/ui/Modal";
+
+// Common amenities for filtering
+const COMMON_AMENITIES = [
+  { id: "1", name: "Air Filtration", icon: "wind" },
+  { id: "2", name: "Blast Doors", icon: "shield" },
+  { id: "3", name: "Ham Radio", icon: "radio" },
+  { id: "4", name: "Escape Tunnel", icon: "map" },
+  { id: "5", name: "Hydroponic Garden", icon: "leaf" },
+  { id: "6", name: "Armory Access", icon: "crosshair" },
+];
 
 export function FilterPanel() {
   const { searchFilters, updateSearchFilters, resetSearchFilters } = useAppStore();
   const [isOpen, setIsOpen] = useState(false);
   const [tempFilters, setTempFilters] = useState(searchFilters);
+
+  // Reset tempFilters when modal opens
+  const handleOpen = () => {
+    setTempFilters(searchFilters);
+    setIsOpen(true);
+  };
 
   const handleApply = () => {
     updateSearchFilters(tempFilters);
@@ -18,7 +34,7 @@ export function FilterPanel() {
 
   const handleReset = () => {
     resetSearchFilters();
-    setTempFilters(searchFilters);
+    // tempFilters will sync via useEffect on next render
     setIsOpen(false);
   };
 
@@ -26,6 +42,11 @@ export function FilterPanel() {
     searchFilters.radFree,
     searchFilters.minRating > 0,
     searchFilters.maxPrice < 2500,
+    searchFilters.minPrice > 0,
+    searchFilters.guests > 2,
+    searchFilters.amenities.length > 0,
+    searchFilters.location.length > 0,
+    searchFilters.maxRadLevel < 10,
   ].filter(Boolean).length;
 
   return (
@@ -35,7 +56,7 @@ export function FilterPanel() {
           variant="outline"
           size="sm"
           className="gap-2 relative"
-          onClick={() => setIsOpen(true)}
+          onClick={handleOpen}
         >
           <SlidersHorizontal className="h-3 w-3" /> Filters
           {activeFiltersCount > 0 && (
@@ -54,10 +75,6 @@ export function FilterPanel() {
           onClick={() => updateSearchFilters({ radFree: !searchFilters.radFree })}
         >
           <ShieldCheck className="h-3 w-3 mr-1" /> Rad-Free
-        </Button>
-
-        <Button variant="ghost" size="sm">
-          <Zap className="h-3 w-3 mr-1" /> Power
         </Button>
 
         {activeFiltersCount > 0 && (
@@ -178,6 +195,36 @@ export function FilterPanel() {
               >
                 +
               </button>
+            </div>
+          </div>
+
+          {/* Amenities */}
+          <div>
+            <label className="block text-sm font-bold text-foreground mb-3">
+              Required Amenities
+            </label>
+            <div className="grid grid-cols-2 gap-2">
+              {COMMON_AMENITIES.map((amenity) => {
+                const isSelected = tempFilters.amenities.includes(amenity.id);
+                return (
+                  <button
+                    key={amenity.id}
+                    onClick={() => {
+                      const newAmenities = isSelected
+                        ? tempFilters.amenities.filter(id => id !== amenity.id)
+                        : [...tempFilters.amenities, amenity.id];
+                      setTempFilters({ ...tempFilters, amenities: newAmenities });
+                    }}
+                    className={`p-3 rounded border text-sm font-medium transition-all text-left ${
+                      isSelected
+                        ? "border-primary bg-primary/10 text-primary"
+                        : "border-border hover:border-primary/50"
+                    }`}
+                  >
+                    {amenity.name}
+                  </button>
+                );
+              })}
             </div>
           </div>
 

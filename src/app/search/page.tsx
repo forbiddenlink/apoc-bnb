@@ -3,12 +3,11 @@
 import DoomsdayMap from "@/components/map/DoomsdayMap";
 import { Navbar } from "@/components/layout/Navbar";
 import { FilterPanel } from "@/components/search/FilterPanel";
-import { BunkerListSkeleton } from "@/components/ui/BunkerSkeleton";
+// BunkerListSkeleton available for loading states
 import { mockBunkers } from "@/lib/data/bunkers";
 import { useAppStore } from "@/lib/store";
 import { useMemo } from "react";
 import Link from "next/link";
-import { Star, MapPin } from "lucide-react";
 
 export default function SearchPage() {
     const { searchFilters } = useAppStore();
@@ -21,6 +20,11 @@ export default function SearchPage() {
             if (searchFilters.radFree && bunker.features.radLevel > 2) return false;
             if (searchFilters.maxRadLevel && bunker.features.radLevel > searchFilters.maxRadLevel) return false;
             if (searchFilters.location && !bunker.location.name.toLowerCase().includes(searchFilters.location.toLowerCase())) return false;
+            if (searchFilters.guests && bunker.capacity < searchFilters.guests) return false;
+            if (searchFilters.amenities.length > 0) {
+                const bunkerAmenityIds = bunker.amenities.map(a => a.id);
+                if (!searchFilters.amenities.every(id => bunkerAmenityIds.includes(id))) return false;
+            }
             return bunker.availability;
         });
     }, [searchFilters]);
@@ -40,9 +44,9 @@ export default function SearchPage() {
 
                     {/* Scrollable Listings */}
                     <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                        {filteredBunkers.map((bunker) => (
+                        {filteredBunkers.map((bunker, index) => (
                             <Link key={bunker.id} href={`/bunkers/${bunker.id}`}>
-                                <div className="flex gap-4 p-3 rounded-lg border border-transparent hover:border-primary/30 hover:bg-white/5 transition-all cursor-pointer group">
+                                <div className={`flex gap-4 p-3 containment-card cursor-pointer group ${bunker.features.radLevel > 3 ? 'border-accent/50' : ''}`}>
                                     <div 
                                         className="w-32 h-24 bg-muted rounded-md relative overflow-hidden flex-shrink-0 bg-cover bg-center"
                                         style={{ backgroundImage: `url(${bunker.images[0]})` }}

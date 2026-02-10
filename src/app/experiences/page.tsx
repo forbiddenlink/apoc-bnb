@@ -2,7 +2,7 @@
 
 import { Navbar } from "@/components/layout/Navbar";
 import { Button } from "@/components/ui/button";
-import { Skull, Crosshair, Map as MapIcon, Trophy, Clock, Users } from "lucide-react";
+import { Skull, Crosshair, Map as MapIcon, Trophy, Clock, Users, Target, AlertTriangle } from "lucide-react";
 import { mockRaids } from "@/lib/data/raids";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
@@ -50,7 +50,7 @@ export default function ExperiencesPage() {
                             </div>
 
                             <div className="p-6">
-                                <div className="flex justify-between items-start mb-6">
+                                <div className="flex justify-between items-start mb-4">
                                     <div>
                                         <div className="text-xs text-muted-foreground uppercase font-bold">Warlord</div>
                                         <div className="font-bold text-lg">{raid.host}</div>
@@ -60,6 +60,54 @@ export default function ExperiencesPage() {
                                         <div className="font-bold text-lg text-secondary">{raid.price}</div>
                                     </div>
                                 </div>
+
+                                {/* Success Rate Badge */}
+                                {raid.successRate && (
+                                    <div className="mb-4">
+                                        <div className="flex items-center justify-between mb-2">
+                                            <div className="flex items-center gap-2 text-xs text-muted-foreground uppercase font-bold">
+                                                <Target className="h-3 w-3" />
+                                                <span>Survival Odds</span>
+                                            </div>
+                                            <span className={`text-sm font-black ${
+                                                parseInt(raid.successRate) >= 80 ? 'text-green-500' :
+                                                parseInt(raid.successRate) >= 60 ? 'text-accent' :
+                                                parseInt(raid.successRate) >= 40 ? 'text-orange-500' :
+                                                'text-destructive'
+                                            }`}>
+                                                {raid.successRate}
+                                            </span>
+                                        </div>
+                                        <div className="h-2 bg-muted rounded-full overflow-hidden border border-border">
+                                            <motion.div
+                                                initial={{ width: 0 }}
+                                                animate={{ width: raid.successRate }}
+                                                transition={{ delay: index * 0.1 + 0.3, duration: 0.8, ease: "easeOut" }}
+                                                className={`h-full rounded-full ${
+                                                    parseInt(raid.successRate) >= 80 ? 'bg-green-500' :
+                                                    parseInt(raid.successRate) >= 60 ? 'bg-accent' :
+                                                    parseInt(raid.successRate) >= 40 ? 'bg-orange-500' :
+                                                    'bg-destructive'
+                                                }`}
+                                            />
+                                        </div>
+                                        {parseInt(raid.successRate) < 50 && (
+                                            <div className="flex items-center gap-1 mt-1 text-xs text-destructive">
+                                                <AlertTriangle className="h-3 w-3" />
+                                                <span className="uppercase font-bold tracking-wide">High casualty risk</span>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+
+                                {/* Description Card */}
+                                {raid.description && (
+                                    <div className="mb-4 p-3 bg-muted/50 border border-dashed border-border rounded-lg">
+                                        <p className="text-sm text-muted-foreground italic leading-relaxed">
+                                            &ldquo;{raid.description}&rdquo;
+                                        </p>
+                                    </div>
+                                )}
 
                                 <div className="space-y-3 mb-6">
                                     <div className="flex items-center gap-3 text-sm text-muted-foreground">
@@ -80,8 +128,8 @@ export default function ExperiencesPage() {
                                     </div>
                                 </div>
 
-                                <Button 
-                                    className="w-full gap-2 font-black" 
+                                <Button
+                                    className="w-full gap-2 font-black"
                                     variant="neobrutal"
                                     onClick={() => handleJoinRaid(raid.title)}
                                 >

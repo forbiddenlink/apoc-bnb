@@ -1,7 +1,7 @@
 "use client";
 import Map, { Marker, NavigationControl, Popup } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import { Radiation, MapPin } from 'lucide-react';
 import { Bunker } from '@/types';
 import Link from 'next/link';
@@ -24,6 +24,16 @@ export default function DoomsdayMap({ bunkers, selectedBunkerId }: DoomsdayMapPr
     const markers = useMemo(() => {
         return bunkers || [];
     }, [bunkers]);
+
+    // Memoize selected bunker to avoid redundant .find() calls
+    const selectedBunker = useMemo(() => {
+        if (!selectedMarker) return null;
+        return markers.find(b => b.id === selectedMarker) ?? null;
+    }, [markers, selectedMarker]);
+
+    const handleClosePopup = useCallback(() => {
+        setSelectedMarker(null);
+    }, []);
 
     const getMarkerColor = (radLevel: number) => {
         if (radLevel <= 2) return "text-primary"; // Safe
@@ -85,30 +95,30 @@ export default function DoomsdayMap({ bunkers, selectedBunkerId }: DoomsdayMapPr
                 ))}
 
                 {/* Popup for selected marker */}
-                {selectedMarker && markers.find(b => b.id === selectedMarker) && (
+                {selectedBunker && (
                     <Popup
-                        longitude={markers.find(b => b.id === selectedMarker)!.location.coordinates[0]}
-                        latitude={markers.find(b => b.id === selectedMarker)!.location.coordinates[1]}
+                        longitude={selectedBunker.location.coordinates[0]}
+                        latitude={selectedBunker.location.coordinates[1]}
                         anchor="top"
-                        onClose={() => setSelectedMarker(null)}
+                        onClose={handleClosePopup}
                         closeButton={true}
                         closeOnClick={false}
                         className="bunker-popup"
                     >
-                        <Link href={`/bunkers/${selectedMarker}`}>
+                        <Link href={`/bunkers/${selectedBunker.id}`}>
                             <div className="p-2 min-w-[200px]">
                                 <h3 className="font-bold text-sm mb-1">
-                                    {markers.find(b => b.id === selectedMarker)?.title}
+                                    {selectedBunker.title}
                                 </h3>
                                 <p className="text-xs text-muted-foreground mb-2">
-                                    {markers.find(b => b.id === selectedMarker)?.location.name}
+                                    {selectedBunker.location.name}
                                 </p>
                                 <div className="flex justify-between items-center">
                                     <span className="text-xs font-bold text-primary">
-                                        ★ {markers.find(b => b.id === selectedMarker)?.rating}
+                                        ★ {selectedBunker.rating}
                                     </span>
                                     <span className="text-sm font-bold">
-                                        {markers.find(b => b.id === selectedMarker)?.price.caps} CAPS
+                                        {selectedBunker.price.caps} CAPS
                                     </span>
                                 </div>
                             </div>

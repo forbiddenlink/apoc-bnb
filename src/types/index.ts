@@ -21,6 +21,7 @@ export interface Bunker {
   features: BunkerFeatures;
   tags: string[];
   availability: boolean;
+  bannedItems?: string[]; // Things not allowed in this bunker
 }
 
 export interface Host {
@@ -71,6 +72,8 @@ export interface RaidParty {
   location: string;
   duration: string;
   maxParticipants: number;
+  description?: string;
+  successRate?: string;
 }
 
 export interface SearchFilters {
@@ -82,4 +85,16 @@ export interface SearchFilters {
   guests: number;
   amenities: string[];
   maxRadLevel: number;
+}
+
+// Horror stories / Verified Incidents
+export interface VerifiedIncident {
+  id: string;
+  bunkerId: string;
+  title: string;
+  description: string;
+  date: string;
+  severity: "Minor Inconvenience" | "Moderate Trauma" | "Existential Crisis" | "We Don't Talk About It";
+  resolved: boolean;
+  resolutionNote?: string;
 }

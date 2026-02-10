@@ -9,17 +9,34 @@ import { motion } from "framer-motion";
 interface BunkerCardProps {
   bunker: Bunker;
   index?: number;
+  variant?: "default" | "dotted" | "hazard" | "featured";
+  size?: "sm" | "md" | "lg" | "tall";
 }
 
-export function BunkerCard({ bunker, index = 0 }: BunkerCardProps) {
+export function BunkerCard({ bunker, index = 0, variant = "default", size }: BunkerCardProps) {
+  const variantClasses = {
+    default: "containment-card",
+    dotted: "containment-card-dotted",
+    hazard: "containment-card-hazard",
+    featured: "containment-active",
+  };
+
+  const sizeClasses = {
+    sm: "bento-sm",
+    md: "bento-md",
+    lg: "bento-lg",
+    tall: "bento-tall",
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
+      className={size ? sizeClasses[size] : ""}
     >
       <Link href={`/bunkers/${bunker.id}`}>
-        <div className="group relative rounded-xl overflow-hidden border border-border bg-card hover:border-primary/50 transition-all duration-300 cursor-pointer h-full flex flex-col">
+        <div className={`group relative overflow-hidden cursor-pointer h-full flex flex-col ${variantClasses[variant]}`}>
           {/* Image */}
           <div className="aspect-[4/3] bg-muted relative overflow-hidden">
             <div

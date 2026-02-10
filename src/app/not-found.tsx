@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Radio } from "lucide-react";
+import { ApocMascot } from "@/components/ui/ApocMascot";
 
 export default function NotFound() {
     return (
@@ -10,7 +10,12 @@ export default function NotFound() {
 
             <div className="relative z-20 space-y-6 max-w-lg">
                 <div className="flex justify-center mb-6">
-                    <Radio className="h-24 w-24 text-primary animate-pulse" />
+                    <ApocMascot
+                        expression="dead"
+                        size="xl"
+                        speech="ERROR: Location vaporized"
+                        animate={true}
+                    />
                 </div>
 
                 <h1 className="text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-primary to-transparent tracking-tighter">

@@ -4,6 +4,7 @@ import "./globals.css";
 import { ApocAiChat } from "@/components/chat/ApocAiChat";
 import { Toaster } from "@/components/ui/Toaster";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { KeyboardShortcuts } from "@/components/ui/KeyboardShortcuts";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,21 +17,49 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "APOC-BNB ☢️ | Survival is Luxury",
+  title: {
+    default: "APOC-BNB ☢️ | Survival is Luxury",
+    template: "%s | APOC-BNB",
+  },
   description: "The world's first (and last) premium rental platform for the post-apocalyptic elite. Book verified fallout-free bunkers, orbital suites, and hollowed-out mountains.",
-  keywords: ["bunker", "apocalypse", "survival", "rental", "post-apocalyptic", "fallout shelter"],
+  keywords: ["bunker", "apocalypse", "survival", "rental", "post-apocalyptic", "fallout shelter", "safe haven", "radiation-free"],
   authors: [{ name: "APOC-BNB" }],
+  creator: "APOC-BNB",
+  publisher: "APOC-BNB",
+  formatDetection: {
+    email: false,
+    telephone: false,
+  },
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     title: "APOC-BNB ☢️ | Survival is Luxury",
     description: "Book premium bunkers and safe havens in the post-apocalyptic wasteland.",
-    images: ["/images/hero-bunker.png"],
+    siteName: "APOC-BNB",
+    locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "APOC-BNB ☢️ | Survival is Luxury",
     description: "The world's premium post-apocalyptic rental platform.",
-    images: ["/images/hero-bunker.png"],
+    creator: "@apocbnb",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  verification: {
+    google: 'your-google-verification-code',
   },
 };
 
@@ -48,6 +77,7 @@ export default function RootLayout({
           {children}
           <ApocAiChat />
           <Toaster />
+          <KeyboardShortcuts />
         </ErrorBoundary>
       </body>
     </html>

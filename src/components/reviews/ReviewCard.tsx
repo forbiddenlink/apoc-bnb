@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { Review } from "@/types";
 import { Star, ShieldCheck } from "lucide-react";
 
@@ -14,9 +15,21 @@ export function ReviewCard({ review }: ReviewCardProps) {
   return (
     <div className="p-4 bg-card rounded-lg border border-border hover:border-primary/20 transition-colors">
       <div className="flex items-start gap-3 mb-3">
-        <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center text-sm font-bold">
-          {review.userName.slice(0, 2).toUpperCase()}
-        </div>
+        {review.userAvatar ? (
+          <div className="relative h-10 w-10 rounded-full overflow-hidden bg-muted">
+            <Image
+              src={review.userAvatar}
+              alt={`${review.userName}'s avatar`}
+              fill
+              className="object-cover"
+              sizes="40px"
+            />
+          </div>
+        ) : (
+          <div className="h-10 w-10 rounded-full bg-muted flex items-center justify-center text-sm font-bold">
+            {review.userName.slice(0, 2).toUpperCase()}
+          </div>
+        )}
         <div className="flex-1">
           <div className="flex items-center gap-2 mb-1">
             <div className="font-bold text-foreground">{review.userName}</div>

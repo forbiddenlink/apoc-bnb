@@ -14,14 +14,15 @@ interface ModalProps {
 
 export function Modal({ isOpen, onClose, children, title, size = "md" }: ModalProps) {
   useEffect(() => {
+    // Only set up listeners when modal is open
+    if (!isOpen) return;
+
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
 
-    if (isOpen) {
-      document.addEventListener("keydown", handleEscape);
-      document.body.style.overflow = "hidden";
-    }
+    document.addEventListener("keydown", handleEscape);
+    document.body.style.overflow = "hidden";
 
     return () => {
       document.removeEventListener("keydown", handleEscape);

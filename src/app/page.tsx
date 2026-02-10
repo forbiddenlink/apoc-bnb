@@ -3,7 +3,9 @@ import { Navbar } from "@/components/layout/Navbar";
 import { GlitchText } from "@/components/ui/GlitchText";
 import { Button } from "@/components/ui/button";
 import { BunkerCard } from "@/components/BunkerCard";
-import { BunkerListSkeleton } from "@/components/ui/BunkerSkeleton";
+import { SystemStatus } from "@/components/ui/SystemStatus";
+import { FloatingStickers, RadFreeSticker, SurvivorApprovedSticker } from "@/components/ui/WarningStickers";
+// BunkerListSkeleton available for loading states
 import { Search, MapPin, Calendar, ShieldAlert } from "lucide-react";
 import { motion } from "framer-motion";
 import { mockBunkers } from "@/lib/data/bunkers";
@@ -38,6 +40,9 @@ export default function Home() {
       <Navbar />
 
       <main className="relative pt-24 pb-20">
+        {/* Floating Warning Stickers - subtle background decoration */}
+        <FloatingStickers variant="hero" />
+
         {/* -- HERO SECTION -- */}
         <section className="relative container mx-auto px-4 py-20 lg:py-32 flex flex-col items-center text-center z-10">
 
@@ -80,6 +85,7 @@ export default function Home() {
               </div>
               <input
                 type="text"
+                aria-label="Search bunker location"
                 value={searchParams.location}
                 onChange={(e) => setSearchParams({ ...searchParams, location: e.target.value })}
                 className="font-semibold text-foreground bg-transparent border-none outline-none w-full"
@@ -105,6 +111,8 @@ export default function Home() {
               </div>
               <div className="flex items-center gap-2">
                 <button
+                  type="button"
+                  aria-label="Decrease number of survivors"
                   onClick={() => setSearchParams({ ...searchParams, guests: Math.max(1, searchParams.guests - 1) })}
                   className="h-6 w-6 rounded bg-muted hover:bg-primary hover:text-black flex items-center justify-center font-bold"
                 >
@@ -112,6 +120,8 @@ export default function Home() {
                 </button>
                 <span className="font-semibold text-foreground">{searchParams.guests}</span>
                 <button
+                  type="button"
+                  aria-label="Increase number of survivors"
                   onClick={() => setSearchParams({ ...searchParams, guests: searchParams.guests + 1 })}
                   className="h-6 w-6 rounded bg-muted hover:bg-primary hover:text-black flex items-center justify-center font-bold"
                 >
@@ -131,15 +141,30 @@ export default function Home() {
             </Button>
           </div>
 
+          {/* System Status Widget */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+            className="mt-12"
+          >
+            <SystemStatus />
+          </motion.div>
+
         </section>
 
         {/* -- FEATURED BUNKERS -- */}
-        <section className="container mx-auto px-4 py-12">
+        <section className="container mx-auto px-4 py-12 relative">
           <div className="flex items-center justify-between mb-8">
-            <h2 className="text-2xl font-bold uppercase tracking-tight flex items-center gap-2">
-              <span className="w-2 h-8 bg-secondary block"></span>
-              Trending Safe Havens
-            </h2>
+            <div className="flex items-center gap-4">
+              <h2 className="text-2xl font-bold uppercase tracking-tight flex items-center gap-2">
+                <span className="w-2 h-8 bg-secondary block"></span>
+                Trending Safe Havens
+              </h2>
+              <div className="hidden md:block">
+                <SurvivorApprovedSticker size="sm" seed={77} />
+              </div>
+            </div>
             <Button 
               variant="link" 
               className="text-muted-foreground hover:text-primary"
@@ -151,7 +176,12 @@ export default function Home() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {featuredBunkers.map((bunker, index) => (
-              <BunkerCard key={bunker.id} bunker={bunker} index={index} />
+              <BunkerCard
+                key={bunker.id}
+                bunker={bunker}
+                index={index}
+                variant={index === 0 ? "featured" : index === 3 ? "hazard" : "default"}
+              />
             ))}
           </div>
         </section>

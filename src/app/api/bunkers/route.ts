@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { mockBunkers, filterBunkers } from '@/lib/data/bunkers';
+import { filterBunkers } from '@/lib/data/bunkers';
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;

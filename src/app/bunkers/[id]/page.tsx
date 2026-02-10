@@ -4,7 +4,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { BookingWidget } from "@/components/booking/BookingWidget";
 import { ReviewsList } from "@/components/reviews/ReviewsList";
 import { FavoriteButton } from "@/components/ui/FavoriteButton";
-import { BunkerDetailSkeleton } from "@/components/ui/BunkerSkeleton";
+// BunkerDetailSkeleton available for loading states
 import { ShieldCheck, Wind, Radio, WifiOff, Star, MapPin, Users } from "lucide-react";
 import { motion } from "framer-motion";
 import { getBunkerById } from "@/lib/data/bunkers";
@@ -192,7 +192,7 @@ export default function BunkerDetailsPage({ params }: { params: Promise<{ id: st
 
                     {/* Right Booking Widget */}
                     <div className="lg:col-span-1">
-                        <BookingWidget price={bunker.price.caps} bunkerId={bunker.id} />
+                        <BookingWidget price={bunker.price.caps} priceBtc={bunker.price.btc} bunkerName={bunker.title} />
                     </div>
 
                 </div>
