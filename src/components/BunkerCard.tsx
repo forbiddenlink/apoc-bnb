@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Star, MapPin } from "lucide-react";
 import { Bunker } from "@/types";
 import { FavoriteButton } from "@/components/ui/FavoriteButton";
@@ -39,9 +40,12 @@ export function BunkerCard({ bunker, index = 0, variant = "default", size }: Bun
         <div className={`group relative overflow-hidden cursor-pointer h-full flex flex-col ${variantClasses[variant]}`}>
           {/* Image */}
           <div className="aspect-[4/3] bg-muted relative overflow-hidden">
-            <div
-              className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-              style={{ backgroundImage: `url(${bunker.images[0]})` }}
+            <Image
+              src={bunker.images[0]}
+              alt={bunker.title}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+              className="object-cover transition-transform duration-500 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
 

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Navbar } from "@/components/layout/Navbar";
 import { Button } from "@/components/ui/button";
 import { Skull, Crosshair, Map as MapIcon, Trophy, Clock, Users, Target, AlertTriangle } from "lucide-react";
@@ -39,7 +40,13 @@ export default function ExperiencesPage() {
                             className="group relative bg-card border border-border rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 hover:-translate-y-2"
                         >
                             <div className="aspect-video relative overflow-hidden">
-                                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110" style={{ backgroundImage: `url(${raid.image})` }}></div>
+                                <Image
+                                    src={raid.image}
+                                    alt={raid.title}
+                                    fill
+                                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                />
                                 <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80"></div>
                                 <div className="absolute bottom-4 left-4">
                                     <div className="flex items-center gap-2 text-primary font-bold uppercase text-xs tracking-widest mb-1">

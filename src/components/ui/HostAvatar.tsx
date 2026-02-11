@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { ShieldCheck } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -71,11 +72,12 @@ export function HostAvatar({
         }`}
       >
         {avatar && !imageError ? (
-          /* eslint-disable-next-line @next/next/no-img-element */
-          <img
+          <Image
             src={avatar}
             alt={name}
-            className="w-full h-full object-cover"
+            fill
+            sizes="128px"
+            className="object-cover"
             onError={() => setImageError(true)}
           />
         ) : (

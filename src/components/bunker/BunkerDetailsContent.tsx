@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Navbar } from "@/components/layout/Navbar";
 import { BookingWidget } from "@/components/booking/BookingWidget";
 import { ReviewsList } from "@/components/reviews/ReviewsList";
@@ -78,9 +79,13 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                                 index === 0 ? 'md:col-span-2 md:row-span-2' : ''
                             } bg-neutral-800 relative group overflow-hidden`}
                         >
-                            <div
-                                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                                style={{ backgroundImage: `url(${image})` }}
+                            <Image
+                                src={image}
+                                alt={`${bunker.title} - Image ${index + 1}`}
+                                fill
+                                sizes={index === 0 ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 50vw, 25vw"}
+                                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                priority={index === 0}
                             />
                         </div>
                     ))}
