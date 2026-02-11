@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { Loader2 } from "lucide-react";
 import { getRandomLoadingMessage } from "@/lib/data/loading-messages";
 
@@ -15,21 +15,21 @@ export function LoadingMessage({
   showSpinner = true,
   className = "",
 }: LoadingMessageProps) {
-  const [currentMessage, setCurrentMessage] = useState("");
+  // Use lazy initializer for initial random message
+  const initialMessage = useMemo(() => message || getRandomLoadingMessage(), [message]);
+  const [currentMessage, setCurrentMessage] = useState(initialMessage);
   const [isFlickering, setIsFlickering] = useState(false);
 
   useEffect(() => {
-    // Set initial message
-    setCurrentMessage(message || getRandomLoadingMessage());
+    // If custom message provided, don't rotate
+    if (message) return;
 
     // Rotate message every 3 seconds if no custom message
-    if (!message) {
-      const interval = setInterval(() => {
-        setCurrentMessage(getRandomLoadingMessage());
-      }, 3000);
+    const interval = setInterval(() => {
+      setCurrentMessage(getRandomLoadingMessage());
+    }, 3000);
 
-      return () => clearInterval(interval);
-    }
+    return () => clearInterval(interval);
   }, [message]);
 
   // CRT flicker effect

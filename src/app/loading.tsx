@@ -6,12 +6,10 @@ import { useEffect, useState } from "react";
 import { getRandomLoadingMessage } from "@/lib/data/loading-messages";
 
 export default function Loading() {
-  const [message, setMessage] = useState("Scanning wasteland...");
+  // Use lazy initializer to avoid setState in useEffect for initial value
+  const [message, setMessage] = useState(() => getRandomLoadingMessage());
 
   useEffect(() => {
-    // Set initial message
-    setMessage(getRandomLoadingMessage());
-
     // Rotate message every 2.5 seconds
     const interval = setInterval(() => {
       setMessage(getRandomLoadingMessage());

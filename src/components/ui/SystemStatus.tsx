@@ -1,8 +1,17 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useSyncExternalStore } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Activity, Droplets, Wifi, AlertCircle, Wind } from "lucide-react";
+
+// Hook to detect client-side mounting without setState in useEffect
+function useHasMounted() {
+  return useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
+}
 
 interface StatusData {
   radiation: number;
@@ -63,18 +72,19 @@ export function SystemStatus() {
   const [isBlinking, setIsBlinking] = useState(true);
   const [scanProgress, setScanProgress] = useState(0);
   const [timestamp, setTimestamp] = useState<string | null>(null);
-  const [isMounted, setIsMounted] = useState(false);
+  const hasMounted = useHasMounted();
 
-  // Mount detection and timestamp
+  // Timestamp updates
   useEffect(() => {
-    setIsMounted(true);
+    if (!hasMounted) return;
+
     const updateTimestamp = () => {
       setTimestamp(new Date().toLocaleTimeString("en-US", { hour12: false }));
     };
     updateTimestamp();
     const timestampInterval = setInterval(updateTimestamp, 1000);
     return () => clearInterval(timestampInterval);
-  }, []);
+  }, [hasMounted]);
 
   // Simulate status changes
   useEffect(() => {

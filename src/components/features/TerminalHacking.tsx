@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { getRandomLogs, type ClassifiedEntry } from "@/lib/data/terminal-logs";
 
@@ -23,32 +23,21 @@ interface TerminalWord {
 }
 
 export function TerminalHacking() {
-  const [attempts, setAttempts] = useState(4);
+  const [, setAttempts] = useState(4);
   const [isHacked, setIsHacked] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
   const [messages, setMessages] = useState<string[]>([]);
   const [words, setWords] = useState<TerminalWord[]>([]);
-  const [password, setPassword] = useState("");
   const [logs, setLogs] = useState<ClassifiedEntry[]>([]);
   const [bootComplete, setBootComplete] = useState(false);
 
-  // Boot sequence
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setBootComplete(true);
-      initializeGame();
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, []);
-
-  const initializeGame = () => {
+  const initializeGame = useCallback(() => {
     // Generate password
     const passwordWord = WORD_LIST[Math.floor(Math.random() * WORD_LIST.length)];
-    setPassword(passwordWord);
 
     // Generate word bank (15 words + password + 5 bracket sequences)
     const wordBank: TerminalWord[] = [];
-    
+
     // Add password
     wordBank.push({
       word: passwordWord,
@@ -82,7 +71,7 @@ export function TerminalHacking() {
 
     // Shuffle
     setWords(wordBank.sort(() => Math.random() - 0.5));
-    
+
     setMessages([
       "ROBCO INDUSTRIES UNIFIED OPERATING SYSTEM",
       "COPYRIGHT 2075-2077 ROBCO INDUSTRIES",
@@ -92,12 +81,21 @@ export function TerminalHacking() {
       "> ACCESSING CLASSIFIED DATABASE...",
       "> PASSWORD REQUIRED",
       "",
-      `> ${attempts} ATTEMPT(S) REMAINING`,
+      "> 4 ATTEMPT(S) REMAINING",
       ""
     ]);
-  };
+  }, []);
 
-  const handleWordClick = (clickedWord: TerminalWord) => {
+  // Boot sequence
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setBootComplete(true);
+      initializeGame();
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, [initializeGame]);
+
+  const handleWordClick = useCallback((clickedWord: TerminalWord) => {
     if (isHacked || isLocked) return;
 
     setMessages(prev => [...prev, `> ${clickedWord.word}`]);
@@ -105,11 +103,11 @@ export function TerminalHacking() {
     // Handle bracket sequences (remove duds)
     if (clickedWord.isBracket) {
       setMessages(prev => [...prev, "> DUD REMOVED"]);
-      // Remove one random non-password word
+      // Remove first available non-password word
       setWords(prevWords => {
         const duds = prevWords.filter(w => !w.isPassword && !w.isBracket && w.id !== clickedWord.id);
         if (duds.length > 0) {
-          const dudToRemove = duds[Math.floor(Math.random() * duds.length)];
+          const dudToRemove = duds[0];
           return prevWords.filter(w => w.id !== dudToRemove.id && w.id !== clickedWord.id);
         }
         return prevWords.filter(w => w.id !== clickedWord.id);
@@ -125,23 +123,24 @@ export function TerminalHacking() {
       return;
     }
 
-    // Wrong password
-    const similarity = Math.floor(Math.random() * clickedWord.word.length);
+    // Wrong password - calculate similarity based on word characteristics (deterministic)
+    const similarity = clickedWord.word.length % 4;
     setMessages(prev => [...prev, "> ACCESS DENIED", `> LIKENESS=${similarity}`]);
-    
-    const newAttempts = attempts - 1;
-    setAttempts(newAttempts);
 
-    if (newAttempts === 0) {
-      setMessages(prev => [...prev, "", "> TERMINAL LOCKED", "> PLEASE CONTACT ADMINISTRATOR"]);
-      setIsLocked(true);
-    } else {
-      setMessages(prev => [...prev, `> ${newAttempts} ATTEMPT(S) REMAINING`]);
-    }
+    setAttempts(prev => {
+      const newAttempts = prev - 1;
+      if (newAttempts === 0) {
+        setMessages(m => [...m, "", "> TERMINAL LOCKED", "> PLEASE CONTACT ADMINISTRATOR"]);
+        setIsLocked(true);
+      } else {
+        setMessages(m => [...m, `> ${newAttempts} ATTEMPT(S) REMAINING`]);
+      }
+      return newAttempts;
+    });
 
     // Remove clicked word
     setWords(prevWords => prevWords.filter(w => w.id !== clickedWord.id));
-  };
+  }, [isHacked, isLocked]);
 
   const resetGame = () => {
     setAttempts(4);

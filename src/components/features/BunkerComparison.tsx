@@ -202,7 +202,7 @@ function MetricRow({
   highlight?: "higher" | "lower" | "text";
   textHighlight?: string[];
 }) {
-  const getHighlightClass = (value: string, index: number) => {
+  const getHighlightClass = (value: string) => {
     if (highlight === "text") {
       return textHighlight.includes(value) ? "text-green-500" : "text-yellow-500";
     }
@@ -226,7 +226,7 @@ function MetricRow({
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
       <div className="text-secondary font-bold">{label}:</div>
       {values.map((value, idx) => (
-        <div key={idx} className={`${getHighlightClass(value, idx)} font-medium`}>
+        <div key={idx} className={`${getHighlightClass(value)} font-medium`}>
           {value}
         </div>
       ))}

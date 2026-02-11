@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AlertTriangle } from "lucide-react";
 import { getRandomTip } from "@/lib/data/survival-tips";
@@ -10,17 +10,22 @@ interface SurvivalTipProps {
   className?: string;
 }
 
+// Hook to detect client-side mounting without setState in useEffect
+function useHasMounted() {
+  return useSyncExternalStore(
+    () => () => {},
+    () => true,
+    () => false
+  );
+}
+
 export function SurvivalTip({ interval = 8000, className = "" }: SurvivalTipProps) {
-  const [currentTip, setCurrentTip] = useState("");
-  const [isVisible, setIsVisible] = useState(false);
-  const [hasMounted, setHasMounted] = useState(false);
+  // Use lazy initializer for initial tip
+  const [currentTip, setCurrentTip] = useState(() => getRandomTip());
+  const [isVisible, setIsVisible] = useState(true);
+  const hasMounted = useHasMounted();
 
   useEffect(() => {
-    // Only run on client to avoid hydration mismatch
-    setHasMounted(true);
-    setCurrentTip(getRandomTip());
-    setIsVisible(true);
-
     // Rotate tips at interval
     const timer = setInterval(() => {
       setIsVisible(false);

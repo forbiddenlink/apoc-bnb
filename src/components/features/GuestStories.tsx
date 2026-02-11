@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight, Skull } from "lucide-react";
-import { guestStories, type GuestStory } from "@/lib/data/guest-stories";
+import { guestStories } from "@/lib/data/guest-stories";
 
 export function GuestStories() {
   const [currentIndex, setCurrentIndex] = useState(0);

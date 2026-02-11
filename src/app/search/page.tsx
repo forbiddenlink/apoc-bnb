@@ -44,7 +44,7 @@ export default function SearchPage() {
 
                     {/* Scrollable Listings */}
                     <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                        {filteredBunkers.map((bunker, index) => (
+                        {filteredBunkers.map((bunker) => (
                             <Link key={bunker.id} href={`/bunkers/${bunker.id}`}>
                                 <div className={`flex gap-4 p-3 containment-card cursor-pointer group ${bunker.features.radLevel > 3 ? 'border-accent/50' : ''}`}>
                                     <div 
