@@ -6,21 +6,24 @@ import { toast } from "sonner";
 import { Confetti } from "@/components/ui/Confetti";
 import { Modal } from "@/components/ui/Modal";
 import { BookingConfirmation } from "@/components/booking/BookingConfirmation";
+import { useBookBunker } from "@/lib/hooks/useBookBunker";
 
 interface BookingWidgetProps {
+    bunkerId: string;
     price: number;
     priceBtc?: number;
     bunkerName?: string;
 }
 
-export function BookingWidget({ price, priceBtc, bunkerName = "Unknown Bunker" }: BookingWidgetProps) {
+export function BookingWidget({ bunkerId, price, priceBtc, bunkerName = "Unknown Bunker" }: BookingWidgetProps) {
     const [currency, setCurrency] = useState<"CAPS" | "BTC">("CAPS");
     const [guests, setGuests] = useState(2);
     const [nights, setNights] = useState(3);
-    const [isBooking, setIsBooking] = useState(false);
     const [showConfetti, setShowConfetti] = useState(false);
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [confirmationNumber, setConfirmationNumber] = useState("");
+
+    const bookBunker = useBookBunker();
 
     // Use actual BTC price if provided, otherwise derive from CAPS
     const btcPrice = priceBtc ?? price / 10000;
@@ -31,7 +34,7 @@ export function BookingWidget({ price, priceBtc, bunkerName = "Unknown Bunker" }
     const protectionFee = currency === "CAPS" ? Math.floor(total * 0.10) : Number((total * 0.10).toFixed(6));
     const finalTotal = currency === "CAPS" ? total + oxygenTax + protectionFee : Number((total + oxygenTax + protectionFee).toFixed(6));
 
-    const handleBooking = async () => {
+    const handleBooking = () => {
         if (guests < 1) {
             toast.error("At least 1 survivor required!");
             return;
@@ -41,18 +44,23 @@ export function BookingWidget({ price, priceBtc, bunkerName = "Unknown Bunker" }
             return;
         }
 
-        setIsBooking(true);
-
-        // Generate confirmation number
-        const newConfirmationNumber = `APOC-${Math.random().toString(36).substring(2, 8).toUpperCase()}`;
-
-        // Simulate booking process
-        setTimeout(() => {
-            setIsBooking(false);
-            setConfirmationNumber(newConfirmationNumber);
-            setShowConfetti(true);
-            setShowConfirmation(true);
-        }, 1500);
+        bookBunker.mutate(
+            {
+                bunkerId,
+                bunkerName,
+                guests,
+                nights,
+                total: finalTotal,
+                currency,
+            },
+            {
+                onSuccess: (data) => {
+                    setConfirmationNumber(data.booking.confirmationNumber);
+                    setShowConfetti(true);
+                    setShowConfirmation(true);
+                },
+            }
+        );
     };
 
     const handleCloseConfirmation = () => {
@@ -144,14 +152,14 @@ export function BookingWidget({ price, priceBtc, bunkerName = "Unknown Bunker" }
                 </div>
             </div>
 
-            <Button 
-                size="xl" 
-                variant="default" 
+            <Button
+                size="xl"
+                variant="default"
                 className="w-full mb-4"
                 onClick={handleBooking}
-                disabled={isBooking}
+                disabled={bookBunker.isPending}
             >
-                {isBooking ? "SECURING..." : "SECURE SHELTER"}
+                {bookBunker.isPending ? "SECURING..." : "SECURE SHELTER"}
             </Button>
 
             <div className="text-xs text-center text-muted-foreground mb-6">

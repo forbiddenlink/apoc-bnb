@@ -1,9 +1,10 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { SearchFilters } from '@/types';
+import { SearchFilters, Booking } from '@/types';
 
 interface AppState {
   favorites: string[];
+  bookings: Booking[];
   searchFilters: SearchFilters;
   addFavorite: (bunkerId: string) => void;
   removeFavorite: (bunkerId: string) => void;
@@ -11,6 +12,9 @@ interface AppState {
   isFavorite: (bunkerId: string) => boolean;
   updateSearchFilters: (filters: Partial<SearchFilters>) => void;
   resetSearchFilters: () => void;
+  addBooking: (booking: Booking) => void;
+  removeBooking: (bookingId: string) => void;
+  updateBookingStatus: (bookingId: string, status: Booking['status']) => void;
 }
 
 const defaultFilters: SearchFilters = {
@@ -28,6 +32,7 @@ export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
       favorites: [],
+      bookings: [],
       searchFilters: defaultFilters,
 
       addFavorite: (bunkerId: string) =>
@@ -60,10 +65,30 @@ export const useAppStore = create<AppState>()(
 
       resetSearchFilters: () =>
         set({ searchFilters: defaultFilters }),
+
+      addBooking: (booking: Booking) =>
+        set((state) => ({
+          bookings: [...state.bookings, booking],
+        })),
+
+      removeBooking: (bookingId: string) =>
+        set((state) => ({
+          bookings: state.bookings.filter((b) => b.id !== bookingId),
+        })),
+
+      updateBookingStatus: (bookingId: string, status: Booking['status']) =>
+        set((state) => ({
+          bookings: state.bookings.map((b) =>
+            b.id === bookingId ? { ...b, status } : b
+          ),
+        })),
     }),
     {
       name: 'apoc-bnb-storage',
-      partialize: (state) => ({ favorites: state.favorites }),
+      partialize: (state) => ({
+        favorites: state.favorites,
+        bookings: state.bookings,
+      }),
     }
   )
 );

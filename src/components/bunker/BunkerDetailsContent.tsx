@@ -197,7 +197,7 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
 
                     {/* Right Booking Widget */}
                     <div className="lg:col-span-1">
-                        <BookingWidget price={bunker.price.caps} priceBtc={bunker.price.btc} bunkerName={bunker.title} />
+                        <BookingWidget bunkerId={bunker.id} price={bunker.price.caps} priceBtc={bunker.price.btc} bunkerName={bunker.title} />
                     </div>
 
                 </div>

@@ -89,6 +89,29 @@ export interface SearchFilters {
   maxRadLevel: number;
 }
 
+// Bookings
+export interface Booking {
+  id: string;
+  bunkerId: string;
+  bunkerName: string;
+  guests: number;
+  nights: number;
+  total: number;
+  currency: "CAPS" | "BTC";
+  status: "pending" | "confirmed" | "cancelled";
+  createdAt: string;
+  confirmationNumber: string;
+}
+
+export interface CreateBookingRequest {
+  bunkerId: string;
+  bunkerName: string;
+  guests: number;
+  nights: number;
+  total: number;
+  currency: "CAPS" | "BTC";
+}
+
 // Horror stories / Verified Incidents
 export interface VerifiedIncident {
   id: string;
