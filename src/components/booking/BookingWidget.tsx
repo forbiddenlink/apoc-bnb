@@ -7,6 +7,7 @@ import { Confetti } from "@/components/ui/Confetti";
 import { Modal } from "@/components/ui/Modal";
 import { BookingConfirmation } from "@/components/booking/BookingConfirmation";
 import { useBookBunker } from "@/lib/hooks/useBookBunker";
+import { useSoundEffects } from "@/lib/hooks/useSoundEffects";
 
 interface BookingWidgetProps {
     bunkerId: string;
@@ -24,6 +25,7 @@ export function BookingWidget({ bunkerId, price, priceBtc, bunkerName = "Unknown
     const [confirmationNumber, setConfirmationNumber] = useState("");
 
     const bookBunker = useBookBunker();
+    const { playSuccess, playError, playClick } = useSoundEffects();
 
     // Use actual BTC price if provided, otherwise derive from CAPS
     const btcPrice = priceBtc ?? price / 10000;
@@ -37,13 +39,16 @@ export function BookingWidget({ bunkerId, price, priceBtc, bunkerName = "Unknown
     const handleBooking = () => {
         if (guests < 1) {
             toast.error("At least 1 survivor required!");
+            playError();
             return;
         }
         if (nights < 1) {
             toast.error("Minimum 1 night stay required!");
+            playError();
             return;
         }
 
+        playClick();
         bookBunker.mutate(
             {
                 bunkerId,
@@ -58,6 +63,10 @@ export function BookingWidget({ bunkerId, price, priceBtc, bunkerName = "Unknown
                     setConfirmationNumber(data.booking.confirmationNumber);
                     setShowConfetti(true);
                     setShowConfirmation(true);
+                    playSuccess();
+                },
+                onError: () => {
+                    playError();
                 },
             }
         );

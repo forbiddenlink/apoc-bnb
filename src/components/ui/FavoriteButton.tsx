@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback } from "react";
 import { Heart } from "lucide-react";
 import { useAppStore } from "@/lib/store";
+import { useSoundEffects } from "@/lib/hooks/useSoundEffects";
 import { motion } from "framer-motion";
 
 interface FavoriteButtonProps {
@@ -13,6 +14,7 @@ interface FavoriteButtonProps {
 
 export function FavoriteButton({ bunkerId, size = "md", showCount = false }: FavoriteButtonProps) {
   const { isFavorite, toggleFavorite, favorites } = useAppStore();
+  const { playClick } = useSoundEffects();
   const favorite = isFavorite(bunkerId);
   const [isProcessing, setIsProcessing] = useState(false);
   const debounceRef = useRef<NodeJS.Timeout | null>(null);
@@ -31,12 +33,13 @@ export function FavoriteButton({ bunkerId, size = "md", showCount = false }: Fav
 
     setIsProcessing(true);
     toggleFavorite(bunkerId);
+    playClick();
 
     // Reset processing state after short delay
     debounceRef.current = setTimeout(() => {
       setIsProcessing(false);
     }, 300);
-  }, [bunkerId, isProcessing, toggleFavorite]);
+  }, [bunkerId, isProcessing, toggleFavorite, playClick]);
 
   const sizeClasses = {
     sm: "h-8 w-8",
