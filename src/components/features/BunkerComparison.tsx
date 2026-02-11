@@ -1,9 +1,9 @@
 "use client";
 
-import { mockBunkers } from "@/lib/data/bunkers";
 import type { Bunker } from "@/types";
 import { useComparison } from "@/lib/hooks/useComparison";
-import { X, AlertTriangle } from "lucide-react";
+import { useBunkers } from "@/lib/hooks/useBunkers";
+import { X, AlertTriangle, Loader2 } from "lucide-react";
 import Link from "next/link";
 
 // Calculate host eccentricity rating (1-5 stars)
@@ -34,10 +34,22 @@ const getSurvivalLikelihood = (bunker: Bunker): string => {
 
 export function BunkerComparison() {
   const { bunkerIds, removeBunker, clearAll } = useComparison();
-  
+  const { bunkers, isLoading } = useBunkers();
+
   const comparedBunkers = bunkerIds
-    .map(id => mockBunkers.find(b => b.id === id))
+    .map(id => bunkers.find(b => b.id === id))
     .filter((b): b is Bunker => b !== undefined);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <Loader2 className="h-12 w-12 mx-auto text-secondary animate-spin" />
+          <p className="text-muted-foreground">Loading bunker data...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (comparedBunkers.length === 0) {
     return (
