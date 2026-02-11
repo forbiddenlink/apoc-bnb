@@ -3,14 +3,14 @@ import { Navbar } from "@/components/layout/Navbar";
 import { GlitchText } from "@/components/ui/GlitchText";
 import { Button } from "@/components/ui/button";
 import { BunkerCard } from "@/components/BunkerCard";
+import { BunkerListSkeleton } from "@/components/ui/BunkerSkeleton";
 import { SystemStatus } from "@/components/ui/SystemStatus";
 import { FloatingStickers, SurvivorApprovedSticker } from "@/components/ui/WarningStickers";
 import { SurvivalTip } from "@/components/ui/SurvivalTip";
 import { GuestStories } from "@/components/features/GuestStories";
-// BunkerListSkeleton available for loading states
+import { useBunkers } from "@/lib/hooks/useBunkers";
 import { Search, MapPin, Calendar, ShieldAlert } from "lucide-react";
 import { motion } from "framer-motion";
-import { mockBunkers } from "@/lib/data/bunkers";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useAppStore } from "@/lib/store";
@@ -18,6 +18,7 @@ import { useAppStore } from "@/lib/store";
 export default function Home() {
   const router = useRouter();
   const { updateSearchFilters } = useAppStore();
+  const { bunkers, isLoading } = useBunkers();
   const [searchParams, setSearchParams] = useState({
     location: "Anywhere (Rad-Free)",
     guests: 2,
@@ -32,7 +33,7 @@ export default function Home() {
     router.push("/search");
   };
 
-  const featuredBunkers = mockBunkers.filter(b => b.rating >= 4.65).slice(0, 6);
+  const featuredBunkers = bunkers.filter(b => b.rating >= 4.65).slice(0, 6);
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden font-sans selection:bg-primary selection:text-black">
@@ -176,16 +177,20 @@ export default function Home() {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredBunkers.map((bunker, index) => (
-              <BunkerCard
-                key={bunker.id}
-                bunker={bunker}
-                index={index}
-                variant={index === 0 ? "featured" : index === 5 ? "hazard" : "default"}
-              />
-            ))}
-          </div>
+          {isLoading ? (
+            <BunkerListSkeleton count={6} />
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {featuredBunkers.map((bunker, index) => (
+                <BunkerCard
+                  key={bunker.id}
+                  bunker={bunker}
+                  index={index}
+                  variant={index === 0 ? "featured" : index === 5 ? "hazard" : "default"}
+                />
+              ))}
+            </div>
+          )}
 
           {/* Survival Tip */}
           <div className="mt-12 max-w-2xl mx-auto">
