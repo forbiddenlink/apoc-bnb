@@ -99,7 +99,7 @@ export function GuestStories() {
                           {currentStory.guestName}
                         </p>
                         {!currentStory.survived && (
-                          <Skull className="h-4 w-4 text-red-500" title="Did not survive" />
+                          <Skull className="h-4 w-4 text-red-500" />
                         )}
                       </div>
                       <p className="text-sm text-secondary/70">
