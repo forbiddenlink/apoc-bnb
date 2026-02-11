@@ -2,8 +2,24 @@
 
 import { motion } from "framer-motion";
 import { ApocMascot } from "@/components/ui/ApocMascot";
+import { useEffect, useState } from "react";
+import { getRandomLoadingMessage } from "@/lib/data/loading-messages";
 
 export default function Loading() {
+  const [message, setMessage] = useState("Scanning wasteland...");
+
+  useEffect(() => {
+    // Set initial message
+    setMessage(getRandomLoadingMessage());
+
+    // Rotate message every 2.5 seconds
+    const interval = setInterval(() => {
+      setMessage(getRandomLoadingMessage());
+    }, 2500);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center relative overflow-hidden">
       {/* Scanline effect */}
@@ -19,7 +35,7 @@ export default function Loading() {
         <ApocMascot
           expression="excited"
           size="xl"
-          speech="Scanning wasteland..."
+          speech={message}
         />
       </motion.div>
 
@@ -35,10 +51,13 @@ export default function Loading() {
         </h2>
         <div className="flex items-center gap-1 justify-center text-primary font-mono text-sm">
           <motion.span
-            animate={{ opacity: [0, 1, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
+            key={message}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            Scanning for radiation
+            {message}
           </motion.span>
           <motion.span
             animate={{ opacity: [0, 1] }}

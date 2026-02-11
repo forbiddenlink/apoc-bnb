@@ -1,0 +1,68 @@
+[     454ms] Error: Hydration failed because the server rendered text didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <RedirectErrorBoundary router={{...}}>
+      <InnerLayoutRouter url="/" tree={[...]} params={{}} cacheNode={{rsc:<Fragment>, ...}} segmentPath={[...]} ...>
+        <SegmentViewNode type="page" pagePath="page.tsx">
+          <SegmentTrieNode>
+          <ClientPageRoot Component={function Home} serverProvidedParams={{...}}>
+            <Home params={Promise} searchParams={Promise}>
+              <div className="min-h-scre...">
+                <div>
+                <Navbar>
+                <main className="relative p...">
+                  <FloatingStickers variant="hero">
+                    <div className={"absolute..."}>
+                      <div>
+                      <div>
+                      <div className="absolute b...">
+                        <LimitedSupplySticker size="sm" seed={33}>
+                          <motion.div initial={{opacity:0, ...}} animate={{opacity:1,scale:1, ...}} ...>
+                            <div
+                              className={"\n        \n  inline-flex items-center justify-center\n  font-black upperca..."}
+                              style={{
++                               opacity: 0
+-                               opacity: "0"
++                               transform: "scale(0.8) rotate(2.9350846580491634deg)"
+-                               transform: "scale(0.8) rotate(2.93508deg)"
+                              }}
+                              ref={function useMotionRef.useCallback}
+                            >
+                  ...
+                    <div className="mt-12" style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+                      <SystemStatus>
+                        <motion.div initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} className="w-full max...">
+                          <div className="w-full max..." style={{opacity:0, ...}} ref={function useMotionRef.useCallback}>
+                            <div>
+                            <div>
+                            <div>
+                            <div>
+                            <div>
+                            <div className="mt-4 pt-2 ...">
++                             21:27:50
+-                             21:27:49
+                              ...
+                  ...
+        ...
+      ...
+
+    at throwOnHydrationMismatch (http://localhost:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js:3348:56)
+    at completeWork (http://localhost:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js:7032:36)
+    at runWithFiberInDEV (http://localhost:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js:965:74)
+    at completeUnitOfWork (http://localhost:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js:9627:23)
+    at performUnitOfWork (http://localhost:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js:9564:28)
+    at workLoopConcurrentByScheduler (http://localhost:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js:9558:58)
+    at renderRootConcurrent (http://localhost:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js:9541:71)
+    at performWorkOnRoot (http://localhost:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js:9068:150)
+    at performWorkOnRootViaSchedulerTask (http://localhost:3000/_next/static/chunks/node_modules_next_dist_compiled_react-dom_1e674e59._.js:10230:9)
+    at MessagePort.performWorkUntilDeadline (http://localhost:3000/_next/static/chunks/node_modules_next_dist_compiled_a0e4c7b4._.js:2647:64)

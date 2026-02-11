@@ -3,9 +3,12 @@
 import { Navbar } from "@/components/layout/Navbar";
 import { BookingWidget } from "@/components/booking/BookingWidget";
 import { ReviewsList } from "@/components/reviews/ReviewsList";
+import { HostAvatar } from "@/components/ui/HostAvatar";
+import { HostQuirkBadge } from "@/components/ui/HostQuirkBadge";
 import { FavoriteButton } from "@/components/ui/FavoriteButton";
 // BunkerDetailSkeleton available for loading states
 import { ShieldCheck, Wind, Radio, WifiOff, Star, MapPin, Users } from "lucide-react";
+import { CompareButton } from "@/components/ui/CompareButton";
 import { motion } from "framer-motion";
 import { getBunkerById } from "@/lib/data/bunkers";
 import { getReviewsByBunkerId } from "@/lib/data/reviews";
@@ -61,6 +64,11 @@ export default function BunkerDetailsPage({ params }: { params: Promise<{ id: st
                             {bunker.location.name}, {bunker.location.region}
                         </span>
                     </div>
+                    
+                    {/* Action buttons */}
+                    <div className="mt-4">
+                        <CompareButton bunkerId={bunker.id} />
+                    </div>
                 </motion.div>
 
                 {/* Gallery Grid */}
@@ -92,17 +100,21 @@ export default function BunkerDetailsPage({ params }: { params: Promise<{ id: st
 
                         {/* Host Info */}
                         <div className="flex items-center gap-4 py-6 border-b border-border">
-                            <div className="h-16 w-16 rounded-full bg-muted flex items-center justify-center overflow-hidden border-2 border-primary">
-                                <span className="font-mono text-2xl">
-                                    {bunker.host.name.slice(0, 2).toUpperCase()}
-                                </span>
-                            </div>
-                            <div>
+                            <HostAvatar 
+                                name={bunker.host.name}
+                                isSuperhost={bunker.host.isSuperhost}
+                                avatar={bunker.host.avatar}
+                                size="lg"
+                            />
+                            <div className="flex-1">
                                 <h3 className="font-bold text-lg">Hosted by {bunker.host.name}</h3>
-                                <p className="text-muted-foreground text-sm">
+                                <p className="text-muted-foreground text-sm mb-2">
                                     {bunker.host.isSuperhost && '⭐ Superhost • '}
                                     {bunker.host.yearsHosting} Years Hosting
                                 </p>
+                                {bunker.host.quirk && bunker.host.quirkLabel && (
+                                    <HostQuirkBadge quirk={bunker.host.quirk} label={bunker.host.quirkLabel} size="sm" />
+                                )}
                             </div>
                         </div>
 

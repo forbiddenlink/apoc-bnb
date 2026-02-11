@@ -9,6 +9,8 @@ The world's first (and last) premium rental platform for the post-apocalyptic el
 ## 🌟 Features
 
 ### Core Features
+* **14 Unique Bunker Locations**: From underwater research stations to prison suites to school bus caravans
+* **Hilarious Host Characters**: Each location run by memorable survivors with personality (Captain Nemo/Dave, Karen the Warlord, Dr. Glow, etc.)
 * **Doomsday Map**: Interactive fallout zones using Mapbox with multiple bunker markers, color-coded by radiation level
 * **Dynamic Pricing**: Currency automatically converts between BTC and Bottle Caps (CAPS)
 * **Survivalist Verified**: "Superhost" badges for "Rad-Free", "Mutant-Proof", and "Cannibal-Free" listings

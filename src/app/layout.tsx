@@ -5,6 +5,7 @@ import { ApocAiChat } from "@/components/chat/ApocAiChat";
 import { Toaster } from "@/components/ui/Toaster";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { KeyboardShortcuts } from "@/components/ui/KeyboardShortcuts";
+import { KonamiCodeListener } from "@/components/features/KonamiCodeListener";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -78,6 +79,7 @@ export default function RootLayout({
           <ApocAiChat />
           <Toaster />
           <KeyboardShortcuts />
+          <KonamiCodeListener />
         </ErrorBoundary>
       </body>
     </html>

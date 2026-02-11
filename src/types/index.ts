@@ -31,6 +31,8 @@ export interface Host {
   isSuperhost: boolean;
   yearsHosting: number;
   bio?: string;
+  quirk?: "military" | "obsessive" | "dangerous" | "caring" | "eccentric" | "intense";
+  quirkLabel?: string;
 }
 
 export interface BunkerFeatures {

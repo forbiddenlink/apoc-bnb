@@ -4,7 +4,9 @@ import { GlitchText } from "@/components/ui/GlitchText";
 import { Button } from "@/components/ui/button";
 import { BunkerCard } from "@/components/BunkerCard";
 import { SystemStatus } from "@/components/ui/SystemStatus";
-import { FloatingStickers, RadFreeSticker, SurvivorApprovedSticker } from "@/components/ui/WarningStickers";
+import { FloatingStickers, SurvivorApprovedSticker } from "@/components/ui/WarningStickers";
+import { SurvivalTip } from "@/components/ui/SurvivalTip";
+import { GuestStories } from "@/components/features/GuestStories";
 // BunkerListSkeleton available for loading states
 import { Search, MapPin, Calendar, ShieldAlert } from "lucide-react";
 import { motion } from "framer-motion";
@@ -30,7 +32,7 @@ export default function Home() {
     router.push("/search");
   };
 
-  const featuredBunkers = mockBunkers.filter(b => b.rating >= 4.8).slice(0, 4);
+  const featuredBunkers = mockBunkers.filter(b => b.rating >= 4.65).slice(0, 6);
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden font-sans selection:bg-primary selection:text-black">
@@ -174,17 +176,25 @@ export default function Home() {
             </Button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredBunkers.map((bunker, index) => (
               <BunkerCard
                 key={bunker.id}
                 bunker={bunker}
                 index={index}
-                variant={index === 0 ? "featured" : index === 3 ? "hazard" : "default"}
+                variant={index === 0 ? "featured" : index === 5 ? "hazard" : "default"}
               />
             ))}
           </div>
+
+          {/* Survival Tip */}
+          <div className="mt-12 max-w-2xl mx-auto">
+            <SurvivalTip />
+          </div>
         </section>
+
+        {/* -- GUEST HORROR STORIES -- */}
+        <GuestStories />
 
       </main>
     </div>

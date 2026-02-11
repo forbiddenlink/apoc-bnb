@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(md5sum:*)",
+      "Bash(git -C /Volumes/LizsDisk/apoc-bnb log --oneline)",
+      "Bash(npx tsc:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm test:*)",
+      "Bash(npm run:*)",
+      "Bash(npx vitest run:*)",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "mcp__plugin_playwright_playwright__browser_take_screenshot",
+      "mcp__plugin_playwright_playwright__browser_close",
+      "mcp__plugin_playwright_playwright__browser_wait_for",
+      "mcp__plugin_playwright_playwright__browser_click",
+      "mcp__plugin_playwright_playwright__browser_run_code",
+      "mcp__plugin_playwright_playwright__browser_console_messages",
+      "mcp__plugin_playwright_playwright__browser_resize",
+      "Bash(pkill:*)",
+      "Bash(ls:*)",
+      "Bash(~/.claude/scripts/spec_metadata.sh:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(date:*)"
+    ]
+  }
+}
