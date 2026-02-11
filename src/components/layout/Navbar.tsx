@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Skull, Heart } from "lucide-react";
+import { Skull, Heart, CalendarCheck } from "lucide-react";
 import { MobileMenu } from "@/components/layout/MobileMenu";
 import { useAppStore } from "@/lib/store";
 import { DefconIndicator } from "@/components/ui/DefconIndicator";
@@ -10,7 +10,7 @@ import { SystemStatusCompact } from "@/components/ui/SystemStatus";
 import { ApocMascot } from "@/components/ui/ApocMascot";
 
 export function Navbar() {
-    const { favorites } = useAppStore();
+    const { favorites, bookings } = useAppStore();
 
     return (
         <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
@@ -38,6 +38,12 @@ export function Navbar() {
                         <Link href="/favorites" className="hover:text-accent transition-colors flex items-center gap-1">
                             <Heart className="h-4 w-4 fill-current" />
                             <span>({favorites.length})</span>
+                        </Link>
+                    )}
+                    {bookings.length > 0 && (
+                        <Link href="/bookings" className="hover:text-primary transition-colors flex items-center gap-1">
+                            <CalendarCheck className="h-4 w-4" />
+                            <span>({bookings.length})</span>
                         </Link>
                     )}
                 </div>
