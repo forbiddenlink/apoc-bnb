@@ -2,14 +2,14 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Menu, X, Radiation, Heart } from "lucide-react";
+import { Menu, X, Radiation, Heart, CalendarCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 
 export function MobileMenu() {
   const [isOpen, setIsOpen] = useState(false);
-  const { favorites } = useAppStore();
+  const { favorites, bookings } = useAppStore();
 
   return (
     <div className="md:hidden">
@@ -72,6 +72,17 @@ export function MobileMenu() {
                   >
                     <Heart className="h-4 w-4 fill-current" />
                     Favorites ({favorites.length})
+                  </Link>
+                )}
+
+                {bookings.length > 0 && (
+                  <Link
+                    href="/bookings"
+                    onClick={() => setIsOpen(false)}
+                    className="text-foreground hover:text-primary transition-colors py-2 uppercase tracking-wide font-bold flex items-center gap-2"
+                  >
+                    <CalendarCheck className="h-4 w-4" />
+                    Bookings ({bookings.length})
                   </Link>
                 )}
 
