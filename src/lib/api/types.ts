@@ -1,4 +1,4 @@
-import type { Bunker } from "@/types";
+import type { Bunker, Review } from "@/types";
 
 export interface BunkersResponse {
   bunkers: Bunker[];
@@ -11,6 +11,7 @@ export interface BunkersResponse {
   };
 }
 
-// Bunker detail response is the full Bunker type
-// Using type alias for clarity and future extensions
-export type BunkerDetailResponse = Bunker;
+export interface BunkerDetailResponse {
+  bunker: Bunker;
+  reviews: Review[];
+}

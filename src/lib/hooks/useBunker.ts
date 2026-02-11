@@ -15,11 +15,26 @@ export function useBunker(id: string, options: UseBunkerOptions = {}) {
   });
 
   return {
-    bunker: query.data,
+    bunker: query.data?.bunker,
+    reviews: query.data?.reviews ?? [],
     isLoading: query.isLoading,
     isError: query.isError,
     error: query.error,
     refetch: query.refetch,
+  };
+}
+
+/**
+ * Hook to get reviews for a bunker (uses same query as useBunker)
+ */
+export function useReviews(bunkerId: string, options: UseBunkerOptions = {}) {
+  const { reviews, isLoading, isError, error } = useBunker(bunkerId, options);
+
+  return {
+    reviews,
+    isLoading,
+    isError,
+    error,
   };
 }
 
