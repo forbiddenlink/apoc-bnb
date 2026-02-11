@@ -6,12 +6,13 @@ import { FilterPanel } from "@/components/search/FilterPanel";
 import { BunkerListSkeleton } from "@/components/ui/BunkerSkeleton";
 import { useAppStore } from "@/lib/store";
 import { useBunkers } from "@/lib/hooks/useBunkers";
+import { usePrefetchBunker } from "@/lib/hooks/useBunker";
 import Link from "next/link";
 
 export default function SearchPage() {
     const { searchFilters } = useAppStore();
-
     const { bunkers, total, isLoading, isError } = useBunkers(searchFilters);
+    const prefetchBunker = usePrefetchBunker();
 
     return (
         <div className="min-h-screen bg-background flex flex-col font-sans">
@@ -38,7 +39,11 @@ export default function SearchPage() {
                         )}
 
                         {!isLoading && !isError && bunkers.map((bunker) => (
-                            <Link key={bunker.id} href={`/bunkers/${bunker.id}`}>
+                            <Link
+                                key={bunker.id}
+                                href={`/bunkers/${bunker.id}`}
+                                onMouseEnter={() => prefetchBunker(bunker.id)}
+                            >
                                 <div className={`flex gap-4 p-3 containment-card cursor-pointer group ${bunker.features.radLevel > 3 ? 'border-accent/50' : ''}`}>
                                     <div
                                         className="w-32 h-24 bg-muted rounded-md relative overflow-hidden flex-shrink-0 bg-cover bg-center"
