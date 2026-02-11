@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useRef, useCallback } from "react";
 import { Heart } from "lucide-react";
 import { useAppStore } from "@/lib/store";
 import { motion } from "framer-motion";
@@ -13,6 +14,29 @@ interface FavoriteButtonProps {
 export function FavoriteButton({ bunkerId, size = "md", showCount = false }: FavoriteButtonProps) {
   const { isFavorite, toggleFavorite, favorites } = useAppStore();
   const favorite = isFavorite(bunkerId);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const debounceRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleToggle = useCallback((e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    // Prevent rapid clicks
+    if (isProcessing) return;
+
+    // Clear any pending debounce
+    if (debounceRef.current) {
+      clearTimeout(debounceRef.current);
+    }
+
+    setIsProcessing(true);
+    toggleFavorite(bunkerId);
+
+    // Reset processing state after short delay
+    debounceRef.current = setTimeout(() => {
+      setIsProcessing(false);
+    }, 300);
+  }, [bunkerId, isProcessing, toggleFavorite]);
 
   const sizeClasses = {
     sm: "h-8 w-8",
@@ -30,11 +54,7 @@ export function FavoriteButton({ bunkerId, size = "md", showCount = false }: Fav
     <motion.button
       whileTap={{ scale: 0.9 }}
       whileHover={{ scale: 1.05 }}
-      onClick={(e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        toggleFavorite(bunkerId);
-      }}
+      onClick={handleToggle}
       className={`${sizeClasses[size]} rounded-full flex items-center justify-center transition-all ${
         favorite
           ? "bg-accent text-white shadow-[0_0_15px_rgba(255,0,60,0.5)]"

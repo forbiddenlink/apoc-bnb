@@ -62,7 +62,7 @@ export function BookingWidget({ price, priceBtc, bunkerName = "Unknown Bunker" }
 
     return (
         <>
-        <Confetti isActive={showConfetti} onComplete={() => {}} />
+        <Confetti isActive={showConfetti} onComplete={() => setShowConfetti(false)} />
         <Modal isOpen={showConfirmation} onClose={handleCloseConfirmation} size="md">
             <BookingConfirmation
                 confirmationNumber={confirmationNumber}

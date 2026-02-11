@@ -80,15 +80,25 @@ export default function DoomsdayMap({ bunkers, selectedBunkerId }: DoomsdayMapPr
                         latitude={bunker.location.coordinates[1]}
                         anchor="bottom"
                     >
-                        <div 
+                        <div
                             className="group cursor-pointer"
                             onClick={() => setSelectedMarker(bunker.id)}
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter' || e.key === ' ') {
+                                    e.preventDefault();
+                                    setSelectedMarker(bunker.id);
+                                }
+                            }}
+                            role="button"
+                            tabIndex={0}
+                            aria-label={`View ${bunker.title} in ${bunker.location.name} - ${bunker.price.caps} CAPS per night, radiation level ${bunker.features.radLevel}/10`}
                         >
-                            <MapPin 
+                            <MapPin
                                 className={`h-8 w-8 ${getMarkerColor(bunker.features.radLevel)} drop-shadow-lg transition-transform hover:scale-110 ${
                                     selectedBunkerId === bunker.id ? 'animate-bounce' : ''
                                 }`}
                                 fill="currentColor"
+                                aria-hidden="true"
                             />
                         </div>
                     </Marker>

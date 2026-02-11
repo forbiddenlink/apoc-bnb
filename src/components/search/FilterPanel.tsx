@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { SlidersHorizontal, ShieldCheck, X } from "lucide-react";
 import { useAppStore } from "@/lib/store";
@@ -20,6 +20,11 @@ export function FilterPanel() {
   const { searchFilters, updateSearchFilters, resetSearchFilters } = useAppStore();
   const [isOpen, setIsOpen] = useState(false);
   const [tempFilters, setTempFilters] = useState(searchFilters);
+
+  // Sync tempFilters when searchFilters changes (e.g., after reset)
+  useEffect(() => {
+    setTempFilters(searchFilters);
+  }, [searchFilters]);
 
   // Reset tempFilters when modal opens
   const handleOpen = () => {

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Bot, X, Send } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -12,6 +12,16 @@ export function ApocAiChat() {
     ]);
     const [input, setInput] = useState("");
     const scrollRef = useRef<HTMLDivElement>(null);
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+    // Cleanup timeout on unmount to prevent memory leak
+    useEffect(() => {
+        return () => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current);
+            }
+        };
+    }, []);
 
     useEffect(() => {
         if (scrollRef.current) {
@@ -19,19 +29,24 @@ export function ApocAiChat() {
         }
     }, [messages]);
 
-    const handleSend = () => {
+    const handleSend = useCallback(() => {
         if (!input.trim()) return;
 
         const userMsg = input;
         setMessages(prev => [...prev, { role: 'user', text: userMsg }]);
         setInput("");
 
+        // Clear any existing timeout
+        if (timeoutRef.current) {
+            clearTimeout(timeoutRef.current);
+        }
+
         // Simulate typing delay
-        setTimeout(() => {
+        timeoutRef.current = setTimeout(() => {
             const botResponse = getApocAiResponse(userMsg);
             setMessages(prev => [...prev, { role: 'bot', text: botResponse }]);
         }, 800 + Math.random() * 400);
-    };
+    }, [input]);
 
     return (
         <>
