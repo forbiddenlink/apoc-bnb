@@ -3,31 +3,15 @@
 import DoomsdayMap from "@/components/map/DoomsdayMap";
 import { Navbar } from "@/components/layout/Navbar";
 import { FilterPanel } from "@/components/search/FilterPanel";
-// BunkerListSkeleton available for loading states
-import { mockBunkers } from "@/lib/data/bunkers";
+import { BunkerListSkeleton } from "@/components/ui/BunkerSkeleton";
 import { useAppStore } from "@/lib/store";
-import { useMemo } from "react";
+import { useBunkers } from "@/lib/hooks/useBunkers";
 import Link from "next/link";
 
 export default function SearchPage() {
     const { searchFilters } = useAppStore();
 
-    const filteredBunkers = useMemo(() => {
-        return mockBunkers.filter((bunker) => {
-            if (searchFilters.minPrice && bunker.price.caps < searchFilters.minPrice) return false;
-            if (searchFilters.maxPrice && bunker.price.caps > searchFilters.maxPrice) return false;
-            if (searchFilters.minRating && bunker.rating < searchFilters.minRating) return false;
-            if (searchFilters.radFree && bunker.features.radLevel > 2) return false;
-            if (searchFilters.maxRadLevel && bunker.features.radLevel > searchFilters.maxRadLevel) return false;
-            if (searchFilters.location && !bunker.location.name.toLowerCase().includes(searchFilters.location.toLowerCase())) return false;
-            if (searchFilters.guests && bunker.capacity < searchFilters.guests) return false;
-            if (searchFilters.amenities.length > 0) {
-                const bunkerAmenityIds = bunker.amenities.map(a => a.id);
-                if (!searchFilters.amenities.every(id => bunkerAmenityIds.includes(id))) return false;
-            }
-            return bunker.availability;
-        });
-    }, [searchFilters]);
+    const { bunkers, total, isLoading, isError } = useBunkers(searchFilters);
 
     return (
         <div className="min-h-screen bg-background flex flex-col font-sans">
@@ -44,10 +28,19 @@ export default function SearchPage() {
 
                     {/* Scrollable Listings */}
                     <div className="flex-1 overflow-y-auto p-4 space-y-4">
-                        {filteredBunkers.map((bunker) => (
+                        {isLoading && <BunkerListSkeleton />}
+
+                        {isError && (
+                            <div className="text-center py-12">
+                                <p className="text-destructive">Failed to load bunkers.</p>
+                                <p className="text-sm text-muted-foreground/60 mt-2">Please try again later.</p>
+                            </div>
+                        )}
+
+                        {!isLoading && !isError && bunkers.map((bunker) => (
                             <Link key={bunker.id} href={`/bunkers/${bunker.id}`}>
                                 <div className={`flex gap-4 p-3 containment-card cursor-pointer group ${bunker.features.radLevel > 3 ? 'border-accent/50' : ''}`}>
-                                    <div 
+                                    <div
                                         className="w-32 h-24 bg-muted rounded-md relative overflow-hidden flex-shrink-0 bg-cover bg-center"
                                         style={{ backgroundImage: `url(${bunker.images[0]})` }}
                                     >
@@ -84,7 +77,7 @@ export default function SearchPage() {
                                 </div>
                             </Link>
                         ))}
-                        {filteredBunkers.length === 0 && (
+                        {!isLoading && !isError && bunkers.length === 0 && (
                             <div className="text-center py-12">
                                 <p className="text-muted-foreground">No bunkers match your filters.</p>
                                 <p className="text-sm text-muted-foreground/60 mt-2">Try adjusting your search criteria.</p>
@@ -94,13 +87,13 @@ export default function SearchPage() {
 
                     {/* Pagination Footer */}
                     <div className="p-4 border-t border-border text-center text-xs text-muted-foreground">
-                        Displaying {filteredBunkers.length} of {mockBunkers.length} Bunkers
+                        Displaying {bunkers.length} of {total} Bunkers
                     </div>
                 </div>
 
                 {/* Map Section */}
                 <div className="flex-1 h-[50vh] lg:h-full relative bg-black">
-                    <DoomsdayMap bunkers={filteredBunkers} />
+                    <DoomsdayMap bunkers={bunkers} />
                 </div>
 
             </div>

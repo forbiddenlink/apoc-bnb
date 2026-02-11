@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/Toaster";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { KeyboardShortcuts } from "@/components/ui/KeyboardShortcuts";
 import { KonamiCodeListener } from "@/components/features/KonamiCodeListener";
+import { QueryProvider } from "@/components/providers/QueryProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -74,13 +75,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ErrorBoundary>
-          {children}
-          <ApocAiChat />
-          <Toaster />
-          <KeyboardShortcuts />
-          <KonamiCodeListener />
-        </ErrorBoundary>
+        <QueryProvider>
+          <ErrorBoundary>
+            {children}
+            <ApocAiChat />
+            <Toaster />
+            <KeyboardShortcuts />
+            <KonamiCodeListener />
+          </ErrorBoundary>
+        </QueryProvider>
       </body>
     </html>
   );
