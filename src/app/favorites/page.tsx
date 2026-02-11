@@ -2,17 +2,19 @@
 
 import { Navbar } from "@/components/layout/Navbar";
 import { BunkerCard } from "@/components/BunkerCard";
+import { BunkerListSkeleton } from "@/components/ui/BunkerSkeleton";
 import { Button } from "@/components/ui/button";
 import { useAppStore } from "@/lib/store";
-import { mockBunkers } from "@/lib/data/bunkers";
+import { useBunkers } from "@/lib/hooks/useBunkers";
 import { Heart, Search } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function FavoritesPage() {
     const { favorites } = useAppStore();
-    
-    const favoriteBunkers = mockBunkers.filter((bunker) => 
+    const { bunkers, isLoading } = useBunkers();
+
+    const favoriteBunkers = bunkers.filter((bunker) =>
         favorites.includes(bunker.id)
     );
 
@@ -37,7 +39,9 @@ export default function FavoritesPage() {
                     </p>
                 </motion.div>
 
-                {favoriteBunkers.length > 0 ? (
+                {isLoading ? (
+                    <BunkerListSkeleton count={favorites.length || 4} />
+                ) : favoriteBunkers.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                         {favoriteBunkers.map((bunker, index) => (
                             <BunkerCard key={bunker.id} bunker={bunker} index={index} />
