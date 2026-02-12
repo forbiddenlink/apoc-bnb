@@ -2,12 +2,14 @@
 
 import Image from "next/image";
 import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { BookingWidget } from "@/components/booking/BookingWidget";
 import { ReviewsList } from "@/components/reviews/ReviewsList";
 import { HostAvatar } from "@/components/ui/HostAvatar";
 import { HostQuirkBadge } from "@/components/ui/HostQuirkBadge";
 import { FavoriteButton } from "@/components/ui/FavoriteButton";
-import { ShieldCheck, Wind, Radio, WifiOff, Star, MapPin, Users } from "lucide-react";
+import { ShieldCheck, Wind, Radio, WifiOff, Star, MapPin, Users, AlertTriangle } from "lucide-react";
 import { CompareButton } from "@/components/ui/CompareButton";
 import { motion } from "framer-motion";
 import type { Bunker, Review } from "@/types";
@@ -18,11 +20,27 @@ interface BunkerDetailsContentProps {
 }
 
 export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentProps) {
+    const isHighRad = bunker.features.radLevel > 3;
+
     return (
-        <div className="min-h-screen bg-background font-sans">
+        <div className="min-h-screen bg-background font-sans noise-overlay">
             <Navbar />
 
-            <main className="pt-24 pb-20 container mx-auto px-4 max-w-7xl">
+            <main className="pt-24 pb-20 md:pb-20 pb-mobile-nav container mx-auto px-4 max-w-7xl">
+                {/* Rad Warning Banner for high-rad bunkers */}
+                {isHighRad && (
+                    <motion.div
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mb-6 p-3 bg-accent/10 border border-accent/30 rounded-lg flex items-center gap-3"
+                    >
+                        <AlertTriangle className="h-5 w-5 text-accent animate-pulse flex-shrink-0" />
+                        <div className="text-sm">
+                            <span className="font-bold text-accent">HIGH RADIATION ZONE</span>
+                            <span className="text-muted-foreground ml-2">This bunker has elevated radiation levels. Protective gear recommended.</span>
+                        </div>
+                    </motion.div>
+                )}
 
                 {/* Header */}
                 <motion.div
@@ -168,23 +186,40 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
 
                         {/* Features */}
                         <div className="py-6 border-b border-border">
-                            <h3 className="text-xl font-bold mb-4">Bunker Specifications</h3>
-                            <div className="grid grid-cols-2 gap-4 text-sm">
-                                <div>
-                                    <div className="text-muted-foreground">Oxygen Purity</div>
-                                    <div className="font-bold text-lg text-primary">{bunker.features.oxygenPurity}%</div>
+                            <h3 className="text-xl font-bold mb-6">Bunker Specifications</h3>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div className="containment-card-dotted p-4">
+                                    <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Oxygen</div>
+                                    <div className="font-black text-2xl text-primary">{bunker.features.oxygenPurity}%</div>
+                                    <div className="h-1 bg-muted rounded-full mt-2 overflow-hidden">
+                                        <div className="h-full bg-primary rounded-full" style={{ width: `${bunker.features.oxygenPurity}%` }} />
+                                    </div>
                                 </div>
-                                <div>
-                                    <div className="text-muted-foreground">Radiation Level</div>
-                                    <div className="font-bold text-lg text-secondary">{bunker.features.radLevel}/10</div>
+                                <div className={`p-4 ${isHighRad ? 'containment-card-critical' : 'containment-card-dotted'}`}>
+                                    <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Radiation</div>
+                                    <div className={`font-black text-2xl ${
+                                        bunker.features.radLevel <= 2 ? 'text-primary' :
+                                        bunker.features.radLevel <= 4 ? 'text-secondary' : 'text-accent'
+                                    }`}>
+                                        {bunker.features.radLevel}/10
+                                    </div>
+                                    <div className="h-1 bg-muted rounded-full mt-2 overflow-hidden">
+                                        <div
+                                            className={`h-full rounded-full ${
+                                                bunker.features.radLevel <= 2 ? 'bg-primary' :
+                                                bunker.features.radLevel <= 4 ? 'bg-secondary' : 'bg-accent'
+                                            }`}
+                                            style={{ width: `${bunker.features.radLevel * 10}%` }}
+                                        />
+                                    </div>
                                 </div>
-                                <div>
-                                    <div className="text-muted-foreground">Power Source</div>
-                                    <div className="font-bold">{bunker.features.powerSource}</div>
+                                <div className="containment-card-dotted p-4">
+                                    <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Power</div>
+                                    <div className="font-bold text-lg">{bunker.features.powerSource}</div>
                                 </div>
-                                <div>
-                                    <div className="text-muted-foreground">Water Source</div>
-                                    <div className="font-bold">{bunker.features.waterSource}</div>
+                                <div className="containment-card-dotted p-4">
+                                    <div className="text-xs text-muted-foreground uppercase tracking-wider mb-1">Water</div>
+                                    <div className="font-bold text-lg">{bunker.features.waterSource}</div>
                                 </div>
                             </div>
                         </div>
@@ -208,6 +243,9 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                 </div>
 
             </main>
+
+            <Footer />
+            <MobileBottomNav />
         </div>
     );
 }

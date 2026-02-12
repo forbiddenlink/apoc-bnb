@@ -49,11 +49,27 @@ export function BunkerCard({ bunker, index = 0, variant = "default", size }: Bun
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
 
-            {/* Rad Level Badge */}
-            <div className="absolute top-3 left-3 z-20 bg-black/50 backdrop-blur border border-primary/30 text-primary text-xs font-bold px-2 py-1 rounded uppercase">
+            {/* Rad Level Badge - Dynamic styling based on danger level */}
+            <div className={`absolute top-3 left-3 z-20 backdrop-blur text-xs font-bold px-2 py-1 rounded uppercase flex items-center gap-1.5
+              ${bunker.features.radLevel <= 2
+                ? "bg-black/60 border border-primary/40 text-primary"
+                : bunker.features.radLevel <= 4
+                  ? "bg-black/60 border border-secondary/50 text-secondary"
+                  : "bg-accent/20 border border-accent/60 text-accent danger-pulse"
+              }`}
+            >
+              <span className={`w-1.5 h-1.5 rounded-full ${
+                bunker.features.radLevel <= 2
+                  ? "bg-primary animate-pulse"
+                  : bunker.features.radLevel <= 4
+                    ? "bg-secondary animate-pulse"
+                    : "bg-accent animate-ping"
+              }`} />
               {bunker.features.radLevel <= 2
-                ? `${100 - bunker.features.radLevel * 5}% Radiation Free`
-                : `Rad Level: ${bunker.features.radLevel}`}
+                ? `${100 - bunker.features.radLevel * 5}% Rad-Free`
+                : bunker.features.radLevel <= 4
+                  ? `Moderate Rad`
+                  : `HIGH RAD ZONE`}
             </div>
 
             {/* Favorite Button */}
@@ -109,9 +125,10 @@ export function BunkerCard({ bunker, index = 0, variant = "default", size }: Bun
             )}
 
             {/* Price */}
-            <div className="flex items-baseline gap-1 mt-auto">
-              <span className="font-black text-xl text-secondary">{bunker.price.caps} CAPS</span>
-              <span className="text-muted-foreground text-xs">/ night</span>
+            <div className="flex items-baseline gap-1 mt-auto pt-3 border-t border-border/50">
+              <span className="font-black text-xl text-secondary">{bunker.price.caps}</span>
+              <span className="text-xs font-bold text-secondary/70">CAPS</span>
+              <span className="text-muted-foreground text-xs ml-1">/ night</span>
             </div>
           </div>
         </div>

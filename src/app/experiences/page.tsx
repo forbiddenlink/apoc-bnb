@@ -2,33 +2,43 @@
 
 import Image from "next/image";
 import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { Button } from "@/components/ui/button";
-import { Skull, Crosshair, Map as MapIcon, Trophy, Clock, Users, Target, AlertTriangle } from "lucide-react";
+import { Skull, Crosshair, Map as MapIcon, Trophy, Clock, Users, Target, AlertTriangle, Radiation } from "lucide-react";
 import { mockRaids } from "@/lib/data/raids";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
 
 export default function ExperiencesPage() {
     const handleJoinRaid = (raidTitle: string) => {
-        toast.success("Raid squad joined! 🎯", {
+        toast.success("Raid squad joined!", {
             description: `You're registered for "${raidTitle}". Good luck out there!`
         });
     };
 
     return (
-        <div className="min-h-screen bg-background font-sans">
+        <div className="min-h-screen bg-background font-sans noise-overlay">
             <Navbar />
 
-            <main className="pt-24 pb-20 container mx-auto px-4 max-w-7xl">
-                <div className="text-center mb-16">
-                    <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4">
-                        <span className="text-primary text-glow">Raid</span> Parties
+            <main className="pt-24 pb-20 md:pb-20 pb-mobile-nav container mx-auto px-4 max-w-7xl">
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-center mb-12 md:mb-16"
+                >
+                    <div className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/10 px-4 py-1.5 text-sm font-medium text-accent mb-6">
+                        <Radiation className="h-4 w-4 animate-pulse" />
+                        <span className="uppercase tracking-widest text-xs">High Risk, High Reward</span>
+                    </div>
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl font-black uppercase tracking-tighter mb-4">
+                        <span className="text-primary text-glow-intense">Raid</span> Parties
                     </h1>
-                    <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                    <p className="text-base sm:text-xl text-muted-foreground max-w-2xl mx-auto">
                         Join elite scavenging teams led by 5-star Warlords.
                         Keep what you kill. (10% tithe to the platform).
                     </p>
-                </div>
+                </motion.div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {mockRaids.map((raid, index) => (
@@ -148,6 +158,9 @@ export default function ExperiencesPage() {
                 </div>
 
             </main>
+
+            <Footer />
+            <MobileBottomNav />
         </div>
     );
 }

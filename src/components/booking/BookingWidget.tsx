@@ -91,7 +91,7 @@ export function BookingWidget({ bunkerId, price, priceBtc, bunkerName = "Unknown
                 onClose={handleCloseConfirmation}
             />
         </Modal>
-        <div className="bg-card border border-border p-6 rounded-xl shadow-xl sticky top-24">
+        <div className="bg-card border border-border p-4 sm:p-6 rounded-xl shadow-xl lg:sticky lg:top-24">
             <div className="flex justify-between items-start mb-6">
                 <div>
                     <span className="text-3xl font-black text-foreground">

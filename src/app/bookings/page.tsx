@@ -1,9 +1,11 @@
 "use client";
 
 import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { Button } from "@/components/ui/button";
 import { useAppStore } from "@/lib/store";
-import { CalendarCheck, Search, Clock, Users, MapPin } from "lucide-react";
+import { CalendarCheck, Search, Clock, Users, MapPin, Shield, Radiation } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Booking } from "@/types";
@@ -75,10 +77,10 @@ export default function BookingsPage() {
     const confirmedCount = bookings.filter(b => b.status === "confirmed").length;
 
     return (
-        <div className="min-h-screen bg-background font-sans">
+        <div className="min-h-screen bg-background font-sans noise-overlay">
             <Navbar />
 
-            <main className="pt-24 pb-20 container mx-auto px-4 max-w-4xl">
+            <main className="pt-24 pb-20 md:pb-20 pb-mobile-nav container mx-auto px-4 max-w-4xl">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -102,26 +104,36 @@ export default function BookingsPage() {
                         ))}
                     </div>
                 ) : (
-                    <div className="text-center py-20">
-                        <div className="mb-6">
-                            <CalendarCheck className="h-24 w-24 text-muted mx-auto opacity-20" />
-                        </div>
-                        <h2 className="text-2xl font-bold mb-3 text-foreground">
-                            No Bookings Yet
-                        </h2>
-                        <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-                            You haven&apos;t secured any shelters yet. When the bombs drop,
-                            you&apos;ll want somewhere safe to hide.
-                        </p>
-                        <Link href="/search">
-                            <Button variant="neobrutal" size="lg" className="gap-2">
-                                <Search className="h-5 w-5" />
-                                Find a Bunker
-                            </Button>
-                        </Link>
+                    <div className="text-center py-16 md:py-20">
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="containment-card-dotted p-8 md:p-12 max-w-md mx-auto"
+                        >
+                            <div className="mb-6 relative">
+                                <CalendarCheck className="h-20 w-20 md:h-24 md:w-24 text-primary/20 mx-auto" />
+                                <Shield className="h-8 w-8 text-primary/40 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse" />
+                            </div>
+                            <h2 className="text-xl md:text-2xl font-bold mb-3 text-foreground">
+                                No Bookings Yet
+                            </h2>
+                            <p className="text-sm md:text-base text-muted-foreground mb-8">
+                                You haven&apos;t secured any shelters yet. When the bombs drop,
+                                you&apos;ll want somewhere safe to hide.
+                            </p>
+                            <Link href="/search">
+                                <Button variant="neobrutal" size="lg" className="gap-2">
+                                    <Search className="h-5 w-5" />
+                                    Find a Bunker
+                                </Button>
+                            </Link>
+                        </motion.div>
                     </div>
                 )}
             </main>
+
+            <Footer />
+            <MobileBottomNav />
         </div>
     );
 }

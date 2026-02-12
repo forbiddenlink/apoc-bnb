@@ -42,14 +42,14 @@ export function GuestStories() {
   };
 
   return (
-    <section className="py-16 bg-muted/30">
+    <section className="py-12 md:py-16 bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-foreground mb-3">
+        <div className="text-center mb-8 md:mb-12">
+          <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
             Guest &#34;Testimonials&#34;
           </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-sm md:text-base text-muted-foreground max-w-2xl mx-auto">
             Real reviews from real survivors. Results may vary. Survival not guaranteed.
           </p>
         </div>
@@ -61,7 +61,7 @@ export function GuestStories() {
           onMouseLeave={() => setIsPaused(false)}
         >
           {/* Terminal-style container */}
-          <div className="bg-black border-2 border-secondary/50 rounded-lg p-8 relative overflow-hidden">
+          <div className="bg-black border-2 border-secondary/50 rounded-lg p-5 sm:p-8 relative overflow-hidden">
             {/* CRT scanlines */}
             <div
               className="absolute inset-0 pointer-events-none opacity-10"
@@ -86,7 +86,7 @@ export function GuestStories() {
                 className="relative z-10"
               >
                 {/* Quote */}
-                <blockquote className="text-xl font-mono text-secondary mb-6 leading-relaxed">
+                <blockquote className="text-base sm:text-xl font-mono text-secondary mb-6 leading-relaxed">
                   &#34;{currentStory.quote}&#34;
                 </blockquote>
 
