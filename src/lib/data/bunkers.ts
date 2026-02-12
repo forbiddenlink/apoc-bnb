@@ -92,7 +92,7 @@ Previous guests have reported hearing the Pip-Boy startup sound in their dreams 
     reviewCount: 28,
     images: [
       "/images/bunker-vault.png",
-      "https://images.unsplash.com/photo-1551269901-5c5e14c25df7?w=800&h=600&fit=crop",
+      "/images/bunker-vault-diner.png",
     ],
     amenities: [
       { id: "1", name: "Air Filtration", icon: "wind", available: true },
@@ -155,7 +155,7 @@ Best for: Survivors who need structure. People fleeing chaos. Anyone who respond
     reviewCount: 8,
     images: [
       "/images/bunker-silo-ext.png",
-      "https://images.unsplash.com/photo-1598928506311-c55ez9a9c8fa?w=800&h=600&fit=crop",
+      "/images/bunker-silo-barracks.png",
     ],
     amenities: [
       { id: "1", name: "Military-Grade Filtration", icon: "wind", available: true },
@@ -218,7 +218,7 @@ Amenities include: Steel door (it sticks sometimes), 'air' filtration (we assume
     reviewCount: 45,
     images: [
       "/images/bunker-grain.png",
-      "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop",
+      "/images/bunker-grain-interior.png",
     ],
     amenities: [
       { id: "1", name: "Basic Air Filter", icon: "wind", available: true },
@@ -330,7 +330,7 @@ Amenities include: Steel door (it sticks sometimes), 'air' filtration (we assume
     images: [
       "/images/bunker-cave.png",
       "/images/bunker6-underground-lake.png",
-      "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=800&h=600&fit=crop",
+      "/images/bunker-cave-room.png",
     ],
     amenities: [
       { id: "1", name: "Natural Rock Shield", icon: "mountain", available: true },
@@ -395,8 +395,8 @@ WARNING: Do not tap on the glass. The octopus takes it personally.`,
     reviewCount: 18,
     images: [
       "/images/bunker-underwater.png",
-      "/images/hydroponics.png",
-      "/images/armory.png",
+      "/images/bunker-underwater-lab.png",
+      "/images/bunker-underwater-quarters.png",
     ],
     amenities: [
       { id: "1", name: "Pressure-Regulated Air", icon: "wind", available: true },
@@ -461,8 +461,8 @@ Fun fact: The mall walkers never stopped. There are elderly survivors who do lap
     reviewCount: 42,
     images: [
       "/images/bunker-mall.png",
-      "/images/hero-bunker.png",
-      "/images/raid-supermarket.png",
+      "/images/bunker-mall-foodcourt.png",
+      "/images/bunker-mall-bedroom.png",
     ],
     amenities: [
       { id: "1", name: "Food Court Kitchen", icon: "utensils", available: true },
@@ -527,8 +527,8 @@ Dr. Glow is technically a doctor. Of physics. Not medicine. This is important to
     reviewCount: 31,
     images: [
       "/images/bunker-reactor.png",
-      "/images/armory.png",
-      "/images/hydroponics.png",
+      "/images/bunker-reactor-core.png",
+      "/images/bunker-reactor-bedroom.png",
     ],
     amenities: [
       { id: "1", name: "Unlimited Power", icon: "zap", available: true },
@@ -593,8 +593,8 @@ Bonus: The organ still works. The reverend plays it. Often. At 6 AM. To wake eve
     reviewCount: 67,
     images: [
       "/images/bunker-cathedral.png",
-      "/images/hydroponics.png",
-      "/images/raid-pharmacy.png",
+      "/images/bunker-cathedral-beds.png",
+      "/images/bunker-cathedral-organ.png",
     ],
     amenities: [
       { id: "1", name: "High Capacity Shelter", icon: "users", available: true },
@@ -659,8 +659,8 @@ Warning: Francine WILL check your bags. Not for weapons. For organization. She h
     reviewCount: 53,
     images: [
       "/images/bunker-airport.png",
-      "/images/armory.png",
-      "/images/hero-bunker.png",
+      "/images/bunker-airport-sleeping.png",
+      "/images/bunker-airport-shop.png",
     ],
     amenities: [
       { id: "1", name: "Spacious Terminal", icon: "maximize", available: true },
@@ -725,8 +725,8 @@ Guard towers manned. Spotlights functional. Barbed wire fresh. This is the safes
     reviewCount: 38,
     images: [
       "/images/bunker-prison.png",
-      "/images/hero-bunker.png",
-      "/images/raid-supermarket.png",
+      "/images/bunker-prison-cells.png",
+      "/images/bunker-prison-kitchen.png",
     ],
     amenities: [
       { id: "1", name: "Maximum Security", icon: "shield", available: true },
