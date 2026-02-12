@@ -91,7 +91,7 @@ Previous guests have reported hearing the Pip-Boy startup sound in their dreams 
     rating: 4.85,
     reviewCount: 28,
     images: [
-      "https://images.unsplash.com/photo-1504893524553-b855bce32c67?w=800&h=600&fit=crop",
+      "/images/bunker-vault.png",
       "https://images.unsplash.com/photo-1551269901-5c5e14c25df7?w=800&h=600&fit=crop",
     ],
     amenities: [
@@ -154,7 +154,7 @@ Best for: Survivors who need structure. People fleeing chaos. Anyone who respond
     rating: 4.92,
     reviewCount: 8,
     images: [
-      "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&h=600&fit=crop",
+      "/images/bunker-silo-ext.png",
       "https://images.unsplash.com/photo-1598928506311-c55ez9a9c8fa?w=800&h=600&fit=crop",
     ],
     amenities: [
@@ -166,7 +166,7 @@ Best for: Survivors who need structure. People fleeing chaos. Anyone who respond
     host: {
       id: "host-3",
       name: "General Winters",
-      avatar: "/avatars/general.png",
+      avatar: "/avatars/winters.png",
       isSuperhost: false,
       yearsHosting: 1,
       bio: "Self-appointed rank. Pre-war career: CrossFit instructor and weekend paintball referee. Seized this military installation during the chaos by simply walking in with a clipboard and acting like he belonged. Now runs it with the intensity of someone who has definitely memorized Sun Tzu quotes. House rules are shouted, not posted. Bed checks happen. Push-ups are 'encouraged' for minor infractions. Responds to all messages within 30 seconds, usually in all caps, always ending with 'HOOAH.' Not a Superhost because three guests filed complaints about mandatory 5AM drills. He considers this a badge of honor.",
@@ -217,7 +217,7 @@ Amenities include: Steel door (it sticks sometimes), 'air' filtration (we assume
     rating: 4.3,
     reviewCount: 45,
     images: [
-      "https://images.unsplash.com/photo-1558618047-f4b511abca86?w=800&h=600&fit=crop",
+      "/images/bunker-grain.png",
       "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&h=600&fit=crop",
     ],
     amenities: [
@@ -328,7 +328,7 @@ Amenities include: Steel door (it sticks sometimes), 'air' filtration (we assume
     rating: 4.75,
     reviewCount: 19,
     images: [
-      "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=600&fit=crop",
+      "/images/bunker-cave.png",
       "/images/bunker6-underground-lake.png",
       "https://images.unsplash.com/photo-1486870591958-9b9d0d1dda99?w=800&h=600&fit=crop",
     ],
@@ -394,7 +394,7 @@ WARNING: Do not tap on the glass. The octopus takes it personally.`,
     rating: 4.65,
     reviewCount: 18,
     images: [
-      "/images/hero-bunker.png",
+      "/images/bunker-underwater.png",
       "/images/hydroponics.png",
       "/images/armory.png",
     ],
@@ -460,7 +460,7 @@ Fun fact: The mall walkers never stopped. There are elderly survivors who do lap
     rating: 4.88,
     reviewCount: 42,
     images: [
-      "/images/armory.png",
+      "/images/bunker-mall.png",
       "/images/hero-bunker.png",
       "/images/raid-supermarket.png",
     ],
@@ -526,7 +526,7 @@ Dr. Glow is technically a doctor. Of physics. Not medicine. This is important to
     rating: 4.72,
     reviewCount: 31,
     images: [
-      "/images/hero-bunker.png",
+      "/images/bunker-reactor.png",
       "/images/armory.png",
       "/images/hydroponics.png",
     ],
@@ -592,7 +592,7 @@ Bonus: The organ still works. The reverend plays it. Often. At 6 AM. To wake eve
     rating: 4.55,
     reviewCount: 67,
     images: [
-      "/images/hero-bunker.png",
+      "/images/bunker-cathedral.png",
       "/images/hydroponics.png",
       "/images/raid-pharmacy.png",
     ],
@@ -658,7 +658,7 @@ Warning: Francine WILL check your bags. Not for weapons. For organization. She h
     rating: 4.78,
     reviewCount: 53,
     images: [
-      "/images/raid-tech.png",
+      "/images/bunker-airport.png",
       "/images/armory.png",
       "/images/hero-bunker.png",
     ],
@@ -724,7 +724,7 @@ Guard towers manned. Spotlights functional. Barbed wire fresh. This is the safes
     rating: 4.42,
     reviewCount: 38,
     images: [
-      "/images/armory.png",
+      "/images/bunker-prison.png",
       "/images/hero-bunker.png",
       "/images/raid-supermarket.png",
     ],
@@ -790,7 +790,7 @@ Warning: Water rationing in effect. Shower time: 90 seconds. Dan times it. With 
     rating: 3.95,
     reviewCount: 22,
     images: [
-      "/images/hero-bunker.png",
+      "/images/bunker-water-tower.png",
       "/images/hydroponics.png",
       "/images/raid-tech.png",
     ],
@@ -856,7 +856,7 @@ The buses don't move. Tim insists they COULD. Nobody asks him to prove it. The w
     rating: 4.68,
     reviewCount: 44,
     images: [
-      "/images/raid-supermarket.png",
+      "/images/bunker-bus.png",
       "/images/hero-bunker.png",
       "/images/hydroponics.png",
     ],
