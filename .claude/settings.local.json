@@ -31,7 +31,8 @@
       "Bash(curl:*)",
       "Bash(lsof:*)",
       "Bash(xargs kill:*)",
-      "Bash(bash .claude/scripts/generate-reasoning.sh:*)"
+      "Bash(bash .claude/scripts/generate-reasoning.sh:*)",
+      "Bash(xargs:*)"
     ]
   }
 }

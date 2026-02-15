@@ -50,7 +50,7 @@ export const mockReviews: Review[] = [
     bunkerId: "bunker-3",
     userId: "user-5",
     userName: "TacticalTim",
-    userAvatar: "/avatars/tim.png",
+    userAvatar: "/avatars/tactical-tim.png",
     rating: 5,
     comment: "General Winters runs a TIGHT operation. Wake-up at 0600. Breakfast at 0630. Room inspection at 0700. I failed room inspection twice. I don't fail things. The armory access is real. The training is mandatory. I've never been more prepared for anything in my life. I've also never been more tired.",
     date: "2025-11-15",
