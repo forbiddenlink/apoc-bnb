@@ -37,6 +37,8 @@ export interface Host {
 
 export interface BunkerFeatures {
   radLevel: number; // 0-10 scale
+  capacity: number; // New parameter
+  securityLevel: number; // 1-5 scale
   oxygenPurity: number; // percentage
   depth: number; // feet underground
   blastDoorRating: string;

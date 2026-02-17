@@ -122,7 +122,7 @@ export default function BookingsPage() {
                                 you&apos;ll want somewhere safe to hide.
                             </p>
                             <Link href="/search">
-                                <Button variant="neobrutal" size="lg" className="gap-2">
+                                <Button variant="default" size="lg" className="gap-2">
                                     <Search className="h-5 w-5" />
                                     Find a Bunker
                                 </Button>

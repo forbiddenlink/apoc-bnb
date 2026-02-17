@@ -44,7 +44,7 @@ export default function HostPage() {
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
                             <Button
-                                variant="neobrutal"
+                                variant="default"
                                 size="xl"
                                 className="text-lg md:text-xl px-8 md:px-12"
                                 onClick={handleStartHosting}
@@ -169,7 +169,7 @@ export default function HostPage() {
                                 List your first bunker in under 10 minutes. Join 2,847 hosts already earning.
                             </p>
                             <Button
-                                variant="neobrutal"
+                                variant="default"
                                 size="xl"
                                 className="text-lg"
                                 onClick={handleStartHosting}

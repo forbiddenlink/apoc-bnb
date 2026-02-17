@@ -60,7 +60,7 @@ export class ErrorBoundary extends Component<Props, State> {
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Button 
                 onClick={() => window.location.href = '/'}
-                variant="neobrutal"
+                variant="default"
                 size="lg"
                 className="gap-2"
               >

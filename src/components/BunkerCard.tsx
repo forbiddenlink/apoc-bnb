@@ -14,12 +14,12 @@ interface BunkerCardProps {
   size?: "sm" | "md" | "lg" | "tall";
 }
 
-export function BunkerCard({ bunker, index = 0, variant = "default", size }: BunkerCardProps) {
+export function BunkerCard({ bunker, index = 0, variant = "default", size }: Readonly<BunkerCardProps>) {
   const variantClasses = {
-    default: "containment-card",
-    dotted: "containment-card-dotted",
-    hazard: "containment-card-hazard",
-    featured: "containment-active",
+    default: "bg-black/40 border border-white/5 hover:border-primary/50",
+    dotted: "bg-black/40 border border-white/10 hover:border-primary/50",
+    hazard: "bg-black/40 border border-accent/30 hover:border-accent hover:shadow-[0_0_20px_rgba(255,0,60,0.15)]",
+    featured: "bg-gradient-to-br from-black/60 to-primary/5 border border-primary/30",
   };
 
   const sizeClasses = {
@@ -37,98 +37,99 @@ export function BunkerCard({ bunker, index = 0, variant = "default", size }: Bun
       className={size ? sizeClasses[size] : ""}
     >
       <Link href={`/bunkers/${bunker.id}`}>
-        <div className={`group relative overflow-hidden cursor-pointer h-full flex flex-col ${variantClasses[variant]}`}>
-          {/* Image */}
-          <div className="aspect-[4/3] bg-muted relative overflow-hidden">
+        <div className={`group relative h-full flex flex-col backdrop-blur-sm transition-all duration-500 overflow-hidden rounded-sm ${variantClasses[variant]}`}>
+          {/* HUD Corner Accents */}
+          <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-white/20 group-hover:border-primary transition-colors duration-300 z-30" />
+          <div className="absolute top-0 right-0 w-2 h-2 border-r border-t border-white/20 group-hover:border-primary transition-colors duration-300 z-30" />
+          <div className="absolute bottom-0 left-0 w-2 h-2 border-l border-b border-white/20 group-hover:border-primary transition-colors duration-300 z-30" />
+          <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-white/20 group-hover:border-primary transition-colors duration-300 z-30" />
+
+          {/* Image Container */}
+          <div className="aspect-video relative overflow-hidden border-b border-white/5">
+            <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10 mix-blend-overlay" />
+            
+            {/* Scanline Effect on Hover */}
+            <div className="absolute inset-0 z-20 opacity-0 group-hover:opacity-100 pointer-events-none bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-size-[100%_4px,3px_100%]" />
+            
             <Image
               src={bunker.images[0]}
               alt={bunker.title}
               fill
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-110"
+              className="object-cover transition-transform duration-700 group-hover:scale-105 filter group-hover:contrast-110"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10" />
+            <div className="absolute inset-0 bg-linear-to-t from-black via-transparent to-transparent opacity-80 z-10" />
 
-            {/* Rad Level Badge - Dynamic styling based on danger level */}
-            <div className={`absolute top-3 left-3 z-20 backdrop-blur text-xs font-bold px-2 py-1 rounded uppercase flex items-center gap-1.5
-              ${bunker.features.radLevel <= 2
-                ? "bg-black/60 border border-primary/40 text-primary"
-                : bunker.features.radLevel <= 4
-                  ? "bg-black/60 border border-secondary/50 text-secondary"
-                  : "bg-accent/20 border border-accent/60 text-accent danger-pulse"
-              }`}
-            >
-              <span className={`w-1.5 h-1.5 rounded-full ${
-                bunker.features.radLevel <= 2
-                  ? "bg-primary animate-pulse"
-                  : bunker.features.radLevel <= 4
-                    ? "bg-secondary animate-pulse"
-                    : "bg-accent animate-ping"
-              }`} />
-              {bunker.features.radLevel <= 2
-                ? `${100 - bunker.features.radLevel * 5}% Rad-Free`
-                : bunker.features.radLevel <= 4
-                  ? `Moderate Rad`
-                  : `HIGH RAD ZONE`}
+            {/* Status Badge */}
+            <div className="absolute top-3 left-3 z-30 flex items-center gap-2">
+               <div className={`
+                 text-[10px] font-bold px-2 py-0.5 uppercase tracking-widest backdrop-blur-md border
+                 ${bunker.features.radLevel <= 2 
+                   ? "bg-primary/10 text-primary border-primary/30" 
+                   : "bg-accent/10 text-accent border-accent/30 animate-pulse"}
+               `}>
+                 {bunker.features.radLevel <= 2 ? "RAD-SAFE" : "HAZARD"}
+               </div>
             </div>
 
             {/* Favorite Button */}
-            <div className="absolute top-3 right-3 z-20">
+            <div className="absolute top-3 right-3 z-30">
               <FavoriteButton bunkerId={bunker.id} size="sm" />
             </div>
-
-            {/* Tags */}
-            {bunker.tags.length > 0 && (
-              <div className="absolute bottom-3 left-3 z-20 flex gap-1 flex-wrap">
-                {bunker.tags.slice(0, 2).map((tag) => (
-                  <span
-                    key={tag}
-                    className="bg-secondary/90 text-black text-xs font-bold px-2 py-0.5 rounded uppercase"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
           </div>
 
           {/* Content */}
-          <div className="p-4 flex-1 flex flex-col">
-            {/* Location */}
-            <div className="flex items-center gap-1 text-xs text-muted-foreground mb-2">
-              <MapPin className="h-3 w-3" />
-              <span>{bunker.location.name} • {bunker.location.region}</span>
-            </div>
+          <div className="p-4 flex-1 flex flex-col relative">
+            {/* Grid Background Effect */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-size-[20px_20px] pointer-events-none opactity-20" />
 
-            {/* Title & Rating */}
-            <div className="flex justify-between items-start mb-2 gap-2">
-              <h3 className="font-bold text-lg leading-tight group-hover:text-primary transition-colors line-clamp-2 flex-1">
-                {bunker.title}
-              </h3>
-              <div className="flex items-center gap-1 text-sm font-bold flex-shrink-0">
-                <Star className="h-4 w-4 text-secondary fill-secondary" />
-                <span>{bunker.rating.toFixed(2)}</span>
+            <div className="relative z-10">
+              {/* Header */}
+              <div className="flex justify-between items-start mb-2 gap-2">
+                <div>
+                  <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground uppercase tracking-wider mb-1">
+                    <MapPin className="h-3 w-3 text-primary/70" />
+                    <span>{bunker.location.region}</span>
+                  </div>
+                  <h3 className="font-bold text-lg leading-tight text-white group-hover:text-primary transition-colors line-clamp-1 font-sans tracking-wide">
+                    {bunker.title}
+                  </h3>
+                </div>
+                <div className="flex items-center gap-1 text-sm font-bold text-secondary bg-secondary/5 px-1.5 py-0.5 rounded border border-secondary/20">
+                  <Star className="h-3.5 w-3.5 fill-secondary" />
+                  <span>{bunker.rating.toFixed(1)}</span>
+                </div>
               </div>
-            </div>
 
-            {/* Description */}
-            <p className="text-muted-foreground text-sm mb-4 line-clamp-2 flex-1">
-              {bunker.description}
-            </p>
-
-            {/* Host Badge */}
-            {bunker.host.isSuperhost && (
-              <div className="text-xs text-primary font-bold mb-3 flex items-center gap-1">
-                <span className="inline-block h-2 w-2 bg-primary rounded-full animate-pulse" />
-                SUPERHOST
+              {/* Specs Grid */}
+              <div className="grid grid-cols-2 gap-2 my-3 text-xs text-muted-foreground">
+                 <div className="flex items-center gap-1.5 border-l border-white/10 pl-2">
+                   <span className="text-white/40">CAP:</span>
+                   <span className="text-white/80">{bunker.features.capacity} Units</span>
+                 </div>
+                 <div className="flex items-center gap-1.5 border-l border-white/10 pl-2">
+                    <span className="text-white/40">SEC:</span>
+                    <span className="text-white/80">Lvl {bunker.features.securityLevel}</span>
+                 </div>
               </div>
-            )}
 
-            {/* Price */}
-            <div className="flex items-baseline gap-1 mt-auto pt-3 border-t border-border/50">
-              <span className="font-black text-xl text-secondary">{bunker.price.caps}</span>
-              <span className="text-xs font-bold text-secondary/70">CAPS</span>
-              <span className="text-muted-foreground text-xs ml-1">/ night</span>
+              {/* Price Footer */}
+              <div className="mt-auto pt-3 border-t border-white/5 flex justify-between items-end">
+                 <div className="flex flex-col">
+                    <span className="text-[10px] text-muted-foreground uppercase tracking-widest">Rate / Night</span>
+                    <div className="flex items-baseline gap-1">
+                      <span className="font-bold text-lg text-secondary">{bunker.price.caps}</span>
+                      <span className="text-xs font-bold text-secondary/70">CAPS</span>
+                    </div>
+                 </div>
+                 
+                 <div className="h-8 w-8 flex items-center justify-center border border-white/10 rounded-sm group-hover:bg-primary group-hover:text-black group-hover:border-primary transition-all duration-300">
+                    <span className="sr-only">View</span>
+                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="transform group-hover:rotate-45 transition-transform duration-300">
+                        <path d="M1 11L11 1M11 1H1M11 1V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                 </div>
+              </div>
             </div>
           </div>
         </div>

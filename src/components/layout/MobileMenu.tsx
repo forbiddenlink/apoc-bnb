@@ -143,11 +143,11 @@ export function MobileMenu() {
               </nav>
 
               {/* Footer Actions */}
-              <div className="p-4 border-t border-border space-y-3">
-                <Button variant="ghost" size="sm" className="w-full justify-start">
+              <div className="p-4 border-t border-white/10 space-y-3 bg-black/40">
+                <Button variant="tactical" size="sm" className="w-full justify-start">
                   Sign In
                 </Button>
-                <Button variant="neobrutal" size="sm" className="w-full gap-2">
+                <Button variant="tactical-gold" size="sm" className="w-full gap-2 justify-center shadow-[0_0_15px_rgba(212,175,55,0.15)]">
                   <Radiation className="h-4 w-4" />
                   <span>Survivors Only</span>
                 </Button>

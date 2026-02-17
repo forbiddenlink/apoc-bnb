@@ -238,7 +238,7 @@ export function FilterPanel() {
             <Button variant="outline" size="lg" className="flex-1" onClick={handleReset}>
               Reset All
             </Button>
-            <Button variant="neobrutal" size="lg" className="flex-1" onClick={handleApply}>
+            <Button variant="default" size="lg" className="flex-1" onClick={handleApply}>
               Apply Filters
             </Button>
           </div>

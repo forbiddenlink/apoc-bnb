@@ -54,28 +54,30 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 sm:px-4 py-1.5 text-xs sm:text-sm font-medium text-primary mb-6 sm:mb-8"
+            className="inline-flex items-center gap-3 border-l-2 border-primary bg-primary/5 pl-4 pr-6 py-2 text-xs font-medium text-primary tracking-[0.2em] uppercase mb-8 sm:mb-12 backdrop-blur-sm"
           >
-            <ShieldAlert className="h-3 w-3 sm:h-4 sm:w-4 animate-pulse" />
-            <span className="uppercase tracking-widest">DEFCON 3: Weekends filling up fast</span>
+            <ShieldAlert className="h-4 w-4 animate-pulse" />
+            <span>DEFCON 3: Weekends filling up fast</span>
           </motion.div>
 
           <motion.h1
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, ease: "circOut" }}
-            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-neutral-500 uppercase tracking-tighter mb-4 sm:mb-6 leading-[1.1]"
+            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-light text-white uppercase tracking-widest mb-6 sm:mb-8 leading-none"
           >
-            Survival is <GlitchText text="Luxury" className="text-primary text-glow-intense" />.
+            Survival <br className="hidden sm:block" />
+            <span className="font-bold text-transparent bg-clip-text bg-gradient-to-br from-primary via-primary/80 to-primary/50 text-glow-intense">Luxury</span>
           </motion.h1>
 
           <motion.div
-            initial={{ opacity: 0, y: 50 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.3, duration: 0.8 }}
           >
-            <p className="text-base sm:text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-8 sm:mb-10 font-medium px-2">
-              The world ended. Your standards didn&apos;t. Book verified fallout-free bunkers, orbital suites, and hollowed-out mountains.
+            <p className="text-sm sm:text-base md:text-lg text-muted-foreground max-w-xl mx-auto mb-10 sm:mb-14 font-medium px-4 tracking-widest uppercase opacity-80">
+              The world ended. Your standards didn&apos;t. <br className="hidden md:block" />
+              Book verified fallout-free bunkers & orbital suites.
             </p>
           </motion.div>
 
@@ -84,70 +86,70 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.4 }}
-            className="w-full max-w-4xl bg-card border border-border rounded-xl p-2 sm:p-3 shadow-2xl flex flex-col md:flex-row gap-2 relative group hover:border-primary/50 transition-colors"
+            className="w-full max-w-5xl bg-black/60 backdrop-blur-xl border border-white/10 p-2 sm:p-2 shadow-[0_0_50px_rgba(0,0,0,0.5)] flex flex-col md:flex-row gap-1 relative group"
           >
-            <div className="absolute -inset-1 bg-gradient-to-r from-primary/0 via-primary/20 to-primary/0 rounded-xl blur-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute top-0 left-0 w-4 h-4 border-l border-t border-primary/50 -translate-x-1 -translate-y-1" />
+            <div className="absolute top-0 right-0 w-4 h-4 border-r border-t border-primary/50 translate-x-1 -translate-y-1" />
+            <div className="absolute bottom-0 left-0 w-4 h-4 border-l border-b border-primary/50 -translate-x-1 translate-y-1" />
+            <div className="absolute bottom-0 right-0 w-4 h-4 border-r border-b border-primary/50 translate-x-1 translate-y-1" />
 
-            <div className="flex-1 bg-background/50 rounded-lg p-3 hover:bg-background/80 transition-colors cursor-pointer border border-transparent hover:border-primary/20 relative z-10">
-              <div className="flex items-center gap-2 sm:gap-3 text-muted-foreground mb-1">
-                <MapPin className="h-4 w-4 text-primary" />
-                <span className="text-[10px] sm:text-xs uppercase font-bold tracking-wider">Safe Zone</span>
+            <div className="flex-1 bg-white/5 p-4 hover:bg-white/10 transition-colors cursor-pointer border-r border-white/5 relative z-10 group/item">
+              <div className="flex items-center gap-3 text-muted-foreground mb-1.5">
+                <MapPin className="h-3.5 w-3.5 text-primary/70 group-hover/item:text-primary transition-colors" />
+                <span className="text-[10px] uppercase font-bold tracking-[0.2em]">Location</span>
               </div>
               <input
                 type="text"
                 aria-label="Search bunker location"
                 value={searchParams.location}
                 onChange={(e) => setSearchParams({ ...searchParams, location: e.target.value })}
-                className="font-semibold text-sm sm:text-base text-foreground bg-transparent border-none outline-none w-full"
-                placeholder="Enter location..."
+                className="font-light text-lg text-white bg-transparent border-none outline-none w-full placeholder:text-white/20"
+                placeholder="SECTOR 7..."
               />
             </div>
 
-            <div className="w-px bg-border my-2 hidden md:block"></div>
-
-            <div className="flex-1 bg-background/50 rounded-lg p-3 hover:bg-background/80 transition-colors cursor-pointer border border-transparent hover:border-primary/20 relative z-10">
-              <div className="flex items-center gap-2 sm:gap-3 text-muted-foreground mb-1">
-                <Calendar className="h-4 w-4 text-secondary" />
-                <span className="text-[10px] sm:text-xs uppercase font-bold tracking-wider">Check-in</span>
+            <div className="flex-1 bg-white/5 p-4 hover:bg-white/10 transition-colors cursor-pointer border-r border-white/5 relative z-10 group/item">
+              <div className="flex items-center gap-3 text-muted-foreground mb-1.5">
+                <Calendar className="h-3.5 w-3.5 text-secondary/70 group-hover/item:text-secondary transition-colors" />
+                <span className="text-[10px] uppercase font-bold tracking-[0.2em]">Timeline</span>
               </div>
-              <div className="font-semibold text-sm sm:text-base text-foreground">Next Impact</div>
+              <div className="font-light text-lg text-white">Next Impact</div>
             </div>
 
-            <div className="w-px bg-border my-2 hidden md:block"></div>
-
-            <div className="flex-[0.5] bg-background/50 rounded-lg p-3 hover:bg-background/80 transition-colors border border-transparent hover:border-primary/20 relative z-10">
-              <div className="flex items-center gap-2 sm:gap-3 text-muted-foreground mb-1">
-                <Users className="h-4 w-4 text-muted-foreground" />
-                <span className="text-[10px] sm:text-xs uppercase font-bold tracking-wider">Survivors</span>
+            <div className="flex-[0.6] bg-white/5 p-4 hover:bg-white/10 transition-colors relative z-10 group/item">
+              <div className="flex items-center gap-3 text-muted-foreground mb-1.5">
+                <Users className="h-3.5 w-3.5 text-muted-foreground group-hover/item:text-white transition-colors" />
+                <span className="text-[10px] uppercase font-bold tracking-[0.2em]">Personnel</span>
               </div>
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  aria-label="Decrease number of survivors"
-                  onClick={() => setSearchParams({ ...searchParams, guests: Math.max(1, searchParams.guests - 1) })}
-                  className="h-7 w-7 rounded-md bg-muted hover:bg-primary hover:text-black flex items-center justify-center font-bold transition-colors"
-                >
-                  -
-                </button>
-                <span className="font-semibold text-foreground min-w-[1.5rem] text-center">{searchParams.guests}</span>
-                <button
-                  type="button"
-                  aria-label="Increase number of survivors"
-                  onClick={() => setSearchParams({ ...searchParams, guests: searchParams.guests + 1 })}
-                  className="h-7 w-7 rounded-md bg-muted hover:bg-primary hover:text-black flex items-center justify-center font-bold transition-colors"
-                >
-                  +
-                </button>
+              <div className="flex items-center justify-between">
+                <span className="font-light text-lg text-white">{searchParams.guests} Units</span>
+                <div className="flex gap-1">
+                  <button
+                    type="button"
+                    aria-label="Decrease number of survivors"
+                    onClick={() => setSearchParams({ ...searchParams, guests: Math.max(1, searchParams.guests - 1) })}
+                    className="h-6 w-6 rounded-none border border-white/20 hover:bg-white/10 hover:border-white text-white flex items-center justify-center transition-all"
+                  >
+                    -
+                  </button>
+                  <button
+                    type="button"
+                    aria-label="Increase number of survivors"
+                    onClick={() => setSearchParams({ ...searchParams, guests: searchParams.guests + 1 })}
+                    className="h-6 w-6 rounded-none border border-white/20 hover:bg-white/10 hover:border-white text-white flex items-center justify-center transition-all"
+                  >
+                    +
+                  </button>
+                </div>
               </div>
             </div>
 
             <Button
               size="xl"
-              variant="neobrutal"
-              className="md:w-auto w-full min-h-[52px] md:min-h-0 text-base sm:text-xl relative z-10"
+              variant="default"
+              className="md:w-auto w-full min-h-[70px] md:min-h-0 text-lg tracking-widest relative z-10 rounded-none shadow-none hover:shadow-[0_0_30px_rgba(57,255,20,0.3)]"
               onClick={handleSearch}
             >
-              <Search className="h-5 w-5 sm:h-6 sm:w-6 mr-2" />
               SEARCH
             </Button>
           </motion.div>
@@ -165,23 +167,21 @@ export default function Home() {
         </section>
 
         {/* -- FEATURED BUNKERS -- */}
-        <section className="container mx-auto px-4 py-12 relative">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-4">
-              <h2 className="text-2xl font-bold uppercase tracking-tight flex items-center gap-2">
-                <span className="w-2 h-8 bg-secondary block"></span>
-                Trending Safe Havens
-              </h2>
-              <div className="hidden md:block">
-                <SurvivorApprovedSticker size="sm" seed={77} />
-              </div>
+        <section className="container mx-auto px-4 py-12 relative z-10">
+          <div className="flex items-end justify-between mb-12 pb-4 border-b border-white/10">
+            <div>
+               <div className="text-secondary text-xs font-bold uppercase tracking-widest mb-2">Verified Locations</div>
+               <h2 className="text-3xl md:text-5xl font-light uppercase tracking-tight text-white">
+                 Trending <span className="text-muted-foreground">Havens</span>
+               </h2>
             </div>
+            
             <Button 
-              variant="link" 
-              className="text-muted-foreground hover:text-primary"
+              variant="tactical" 
+              className="hidden md:flex"
               onClick={() => router.push("/search")}
             >
-              View all Bunkers →
+              View Global Map
             </Button>
           </div>
 
@@ -210,14 +210,15 @@ export default function Home() {
         <GuestStories />
 
         {/* -- STATS BANNER -- */}
-        <section className="py-16 border-y border-border bg-card/50">
+        {/* -- STATS BANNER -- */}
+        <section className="py-24 border-y border-white/5 bg-black/60 backdrop-blur-md">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-12 text-center">
               {[
-                { value: "2,847", label: "Verified Bunkers", icon: Radiation },
-                { value: "98.7%", label: "Survival Rate", icon: ShieldAlert },
-                { value: "12.5K", label: "Happy Survivors", icon: Users },
-                { value: "0", label: "Mutant Incidents", icon: Radiation },
+                { value: "2,847", label: "Verified Bunkers", icon: Radiation, color: "text-primary" },
+                { value: "99.9%", label: "Survival Rate", icon: ShieldAlert, color: "text-secondary" },
+                { value: "12.5K", label: "Active Residents", icon: Users, color: "text-white" },
+                { value: "0", label: "Breach Incidents", icon: ShieldAlert, color: "text-accent" },
               ].map((stat, index) => (
                 <motion.div
                   key={stat.label}
@@ -225,13 +226,15 @@ export default function Home() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1 }}
-                  className="flex flex-col items-center"
+                  className="flex flex-col items-center group"
                 >
-                  <stat.icon className="h-6 w-6 text-primary mb-3 opacity-60" />
-                  <span className="text-3xl md:text-4xl font-black text-foreground mb-1">
+                  <div className={`p-3 rounded-full bg-white/5 mb-4 group-hover:bg-white/10 transition-colors border border-white/5 group-hover:border-white/20`}>
+                    <stat.icon className={`h-6 w-6 ${stat.color} opacity-80`} />
+                  </div>
+                  <span className="text-4xl md:text-5xl font-light text-white mb-2 tracking-tighter">
                     {stat.value}
                   </span>
-                  <span className="text-xs md:text-sm text-muted-foreground uppercase tracking-wider">
+                  <span className="text-[10px] md:text-xs text-muted-foreground uppercase tracking-[0.2em] font-medium">
                     {stat.label}
                   </span>
                 </motion.div>

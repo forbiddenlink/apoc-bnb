@@ -107,7 +107,7 @@ export default function ProfilePage() {
                     <p className="text-sm text-muted-foreground mb-4">
                         Sync your favorites and bookings across devices
                     </p>
-                    <Button variant="neobrutal" className="w-full sm:w-auto">
+                    <Button variant="default" className="w-full sm:w-auto">
                         Sign In
                     </Button>
                 </motion.div>

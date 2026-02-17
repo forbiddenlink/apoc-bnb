@@ -51,6 +51,8 @@ WARNING: Surface excursions at your own risk. We keep a tally board. Current rec
     capacity: 8,
     features: {
       radLevel: 2,
+      capacity: 8,
+      securityLevel: 4,
       oxygenPurity: 99.9,
       depth: 300,
       blastDoorRating: "Class A",
@@ -113,6 +115,8 @@ Previous guests have reported hearing the Pip-Boy startup sound in their dreams 
     capacity: 12,
     features: {
       radLevel: 1,
+      capacity: 12,
+      securityLevel: 5,
       oxygenPurity: 98.5,
       depth: 250,
       blastDoorRating: "Vault-Tec Standard",
@@ -176,6 +180,8 @@ Best for: Survivors who need structure. People fleeing chaos. Anyone who respond
     capacity: 6,
     features: {
       radLevel: 4,
+      capacity: 6,
+      securityLevel: 5,
       oxygenPurity: 97.0,
       depth: 400,
       blastDoorRating: "Military Spec",
@@ -238,6 +244,8 @@ Amenities include: Steel door (it sticks sometimes), 'air' filtration (we assume
     capacity: 4,
     features: {
       radLevel: 3,
+      capacity: 4,
+      securityLevel: 2,
       oxygenPurity: 95.0,
       depth: 50,
       blastDoorRating: "Standard",
@@ -294,6 +302,8 @@ Amenities include: Steel door (it sticks sometimes), 'air' filtration (we assume
     capacity: 2,
     features: {
       radLevel: 0,
+      capacity: 2,
+      securityLevel: 5,
       oxygenPurity: 100,
       depth: 0,
       blastDoorRating: "Airlock Sealed",
@@ -351,6 +361,8 @@ Amenities include: Steel door (it sticks sometimes), 'air' filtration (we assume
     capacity: 10,
     features: {
       radLevel: 1,
+      capacity: 10,
+      securityLevel: 4,
       oxygenPurity: 98.0,
       depth: 200,
       blastDoorRating: "Reinforced Steel",
@@ -418,6 +430,8 @@ WARNING: Do not tap on the glass. The octopus takes it personally.`,
     capacity: 6,
     features: {
       radLevel: 0,
+      capacity: 6,
+      securityLevel: 4,
       oxygenPurity: 97.5,
       depth: 200,
       blastDoorRating: "Submarine Grade",
@@ -484,6 +498,8 @@ Fun fact: The mall walkers never stopped. There are elderly survivors who do lap
     capacity: 20,
     features: {
       radLevel: 2,
+      capacity: 20,
+      securityLevel: 3,
       oxygenPurity: 98.2,
       depth: 0,
       blastDoorRating: "Reinforced Retail",
@@ -550,6 +566,8 @@ Dr. Glow is technically a doctor. Of physics. Not medicine. This is important to
     capacity: 8,
     features: {
       radLevel: 3,
+      capacity: 8,
+      securityLevel: 4,
       oxygenPurity: 98.8,
       depth: 0,
       blastDoorRating: "Reactor Containment",
@@ -616,6 +634,8 @@ Bonus: The organ still works. The reverend plays it. Often. At 6 AM. To wake eve
     capacity: 40,
     features: {
       radLevel: 1,
+      capacity: 40,
+      securityLevel: 2,
       oxygenPurity: 97.8,
       depth: 0,
       blastDoorRating: "Oak Doors (Blessed)",
@@ -682,6 +702,8 @@ Warning: Francine WILL check your bags. Not for weapons. For organization. She h
     capacity: 30,
     features: {
       radLevel: 2,
+      capacity: 30,
+      securityLevel: 3,
       oxygenPurity: 97.2,
       depth: 0,
       blastDoorRating: "Automatic Sliding Doors",
@@ -748,6 +770,8 @@ Guard towers manned. Spotlights functional. Barbed wire fresh. This is the safes
     capacity: 24,
     features: {
       radLevel: 1,
+      capacity: 24,
+      securityLevel: 5,
       oxygenPurity: 96.5,
       depth: 0,
       blastDoorRating: "Maximum Security",
@@ -814,6 +838,8 @@ Warning: Water rationing in effect. Shower time: 90 seconds. Dan times it. With 
     capacity: 4,
     features: {
       radLevel: 2,
+      capacity: 4,
+      securityLevel: 3,
       oxygenPurity: 97.0,
       depth: -80,
       blastDoorRating: "Hatch",
@@ -880,6 +906,8 @@ The buses don't move. Tim insists they COULD. Nobody asks him to prove it. The w
     capacity: 16,
     features: {
       radLevel: 2,
+      capacity: 16,
+      securityLevel: 2,
       oxygenPurity: 96.0,
       depth: 0,
       blastDoorRating: "Emergency Bus Doors",

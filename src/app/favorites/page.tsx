@@ -68,7 +68,7 @@ export default function FavoritesPage() {
                                 Click the heart icon on any bunker to save it.
                             </p>
                             <Link href="/search">
-                                <Button variant="neobrutal" size="lg" className="gap-2">
+                                <Button variant="default" size="lg" className="gap-2">
                                     <Search className="h-5 w-5" />
                                     Browse Bunkers
                                 </Button>

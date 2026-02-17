@@ -147,7 +147,7 @@ export default function ExperiencesPage() {
 
                                 <Button
                                     className="w-full gap-2 font-black"
-                                    variant="neobrutal"
+                                    variant="default"
                                     onClick={() => handleJoinRaid(raid.title)}
                                 >
                                     <Crosshair className="h-4 w-4" /> JOIN SQUAD

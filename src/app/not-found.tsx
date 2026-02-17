@@ -32,7 +32,7 @@ export default function NotFound() {
 
                 <div className="pt-8">
                     <Link href="/">
-                        <Button size="xl" variant="neobrutal" className="w-full">
+                        <Button size="xl" variant="default" className="w-full">
                             RETURN TO SAFETY
                         </Button>
                     </Link>

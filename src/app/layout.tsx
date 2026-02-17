@@ -7,6 +7,7 @@ import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { KeyboardShortcuts } from "@/components/ui/KeyboardShortcuts";
 import { KonamiCodeListener } from "@/components/features/KonamiCodeListener";
 import { QueryProvider } from "@/components/providers/QueryProvider";
+import { NoiseOverlay } from "@/components/ui/NoiseOverlay";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -78,6 +79,7 @@ export default function RootLayout({
         <QueryProvider>
           <ErrorBoundary>
             {children}
+            <NoiseOverlay />
             <ApocAiChat />
             <Toaster />
             <KeyboardShortcuts />
