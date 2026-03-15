@@ -8,6 +8,8 @@ import { KeyboardShortcuts } from "@/components/ui/KeyboardShortcuts";
 import { KonamiCodeListener } from "@/components/features/KonamiCodeListener";
 import { QueryProvider } from "@/components/providers/QueryProvider";
 import { NoiseOverlay } from "@/components/ui/NoiseOverlay";
+import { Analytics } from '@vercel/analytics/react'
+import { SpeedInsights } from '@vercel/speed-insights/next'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -86,6 +88,8 @@ export default function RootLayout({
             <KonamiCodeListener />
           </ErrorBoundary>
         </QueryProvider>
+              <Analytics />
+              <SpeedInsights />
       </body>
     </html>
   );
