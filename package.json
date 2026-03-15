@@ -48,5 +48,6 @@
   "license": "UNLICENSED",
   "engines": {
     "node": ">=20.0.0"
-  }
+  },
+  "description": "Apocalyptic Airbnb-style rental marketplace built with Next.js, Mapbox, and TanStack Query"
 }
