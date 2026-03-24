@@ -55,6 +55,10 @@ export default function HostPage() {
                                 variant="outline"
                                 size="xl"
                                 className="text-lg md:text-xl px-8 md:px-12"
+                                onClick={() => {
+                                    const section = document.getElementById('how-it-works');
+                                    section?.scrollIntoView({ behavior: 'smooth' });
+                                }}
                             >
                                 Learn More
                             </Button>
@@ -118,7 +122,7 @@ export default function HostPage() {
                 </section>
 
                 {/* How It Works */}
-                <section className="container mx-auto px-4 py-12 md:py-16 border-y border-border bg-card/30">
+                <section id="how-it-works" className="container mx-auto px-4 py-12 md:py-16 border-y border-border bg-card/30">
                     <h2 className="text-2xl md:text-3xl font-black uppercase text-center mb-8 md:mb-12">
                         How It Works
                     </h2>

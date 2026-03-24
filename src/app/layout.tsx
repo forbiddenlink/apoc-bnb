@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ApocAiChat } from "@/components/chat/ApocAiChat";
@@ -8,6 +9,7 @@ import { KeyboardShortcuts } from "@/components/ui/KeyboardShortcuts";
 import { KonamiCodeListener } from "@/components/features/KonamiCodeListener";
 import { QueryProvider } from "@/components/providers/QueryProvider";
 import { NoiseOverlay } from "@/components/ui/NoiseOverlay";
+import { RouteProgress } from "@/components/ui/RouteProgress";
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 
@@ -63,9 +65,6 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
-  verification: {
-    google: 'your-google-verification-code',
-  },
 };
 
 export default function RootLayout({
@@ -79,6 +78,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <QueryProvider>
+          <Suspense fallback={null}>
+            <RouteProgress />
+          </Suspense>
           <ErrorBoundary>
             {children}
             <NoiseOverlay />
@@ -87,9 +89,9 @@ export default function RootLayout({
             <KeyboardShortcuts />
             <KonamiCodeListener />
           </ErrorBoundary>
+          <Analytics />
+          <SpeedInsights />
         </QueryProvider>
-              <Analytics />
-              <SpeedInsights />
       </body>
     </html>
   );

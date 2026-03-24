@@ -6,6 +6,7 @@ import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { Button } from "@/components/ui/button";
 import { ApocMascot } from "@/components/ui/ApocMascot";
 import { useAppStore } from "@/lib/store";
+import { toast } from "sonner";
 import { User, Shield, Heart, Calendar, Settings, LogOut, ChevronRight, Radiation } from "lucide-react";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -16,8 +17,8 @@ export default function ProfilePage() {
     const menuItems = [
         { label: "My Favorites", icon: Heart, href: "/favorites", count: favorites.length, color: "text-accent" },
         { label: "My Bookings", icon: Calendar, href: "/bookings", count: bookings.length, color: "text-primary" },
-        { label: "Survival Stats", icon: Shield, href: "#", color: "text-secondary" },
-        { label: "Settings", icon: Settings, href: "#", color: "text-muted-foreground" },
+        { label: "Survival Stats", icon: Shield, href: "/about", color: "text-secondary" },
+        { label: "Settings", icon: Settings, href: "/about", color: "text-muted-foreground" },
     ];
 
     return (
@@ -107,7 +108,7 @@ export default function ProfilePage() {
                     <p className="text-sm text-muted-foreground mb-4">
                         Sync your favorites and bookings across devices
                     </p>
-                    <Button variant="default" className="w-full sm:w-auto">
+                    <Button variant="default" className="w-full sm:w-auto" onClick={() => toast.info("Authentication systems offline.", { description: "Survivor ID verification requires a working satellite uplink." })}>
                         Sign In
                     </Button>
                 </motion.div>

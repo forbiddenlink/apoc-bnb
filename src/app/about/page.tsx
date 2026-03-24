@@ -1,6 +1,8 @@
 "use client";
 
 import { Navbar } from "@/components/layout/Navbar";
+import { Footer } from "@/components/layout/Footer";
+import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
 import { GlitchText } from "@/components/ui/GlitchText";
 import { motion } from "framer-motion";
 import {
@@ -32,10 +34,10 @@ const staggerContainer = {
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-background font-sans">
+    <div className="min-h-screen bg-background font-sans noise-overlay">
       <Navbar />
 
-      <main className="pt-24 pb-20">
+      <main className="pt-24 pb-20 md:pb-20 pb-mobile-nav">
         {/* Hero Section */}
         <section className="container mx-auto px-4 py-16 text-center">
           <motion.div
@@ -470,6 +472,9 @@ export default function AboutPage() {
           </motion.div>
         </section>
       </main>
+
+      <Footer />
+      <MobileBottomNav />
     </div>
   );
 }

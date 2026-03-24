@@ -112,7 +112,7 @@ export function ReviewsList({ reviews, averageRating, totalReviews }: ReviewsLis
             <span className="text-3xl font-black">{averageRating.toFixed(2)}</span>
           </div>
           <div className="text-muted-foreground">
-            <div className="font-bold text-foreground">{totalReviews} Reviews</div>
+            <div className="font-bold text-foreground">{reviews.length} Reviews</div>
             <div className="text-xs">From verified survivors</div>
           </div>
         </div>

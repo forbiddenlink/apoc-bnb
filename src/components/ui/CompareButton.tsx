@@ -2,6 +2,7 @@
 
 import { Scale } from "lucide-react";
 import Link from "next/link";
+import { toast } from "sonner";
 import { useComparison } from "@/lib/hooks/useComparison";
 
 interface CompareButtonProps {
@@ -16,7 +17,9 @@ export function CompareButton({ bunkerId }: CompareButtonProps) {
       removeBunker(bunkerId);
     } else {
       if (bunkerIds.length >= 3) {
-        alert("Maximum 3 bunkers can be compared at once");
+        toast.error("Maximum 3 bunkers can be compared at once.", {
+          description: "Remove one before adding another."
+        });
         return;
       }
       addBunker(bunkerId);

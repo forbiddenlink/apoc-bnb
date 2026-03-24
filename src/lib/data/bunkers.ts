@@ -938,8 +938,8 @@ export const filterBunkers = (filters: Partial<{
   location: string;
 }>): Bunker[] => {
   return mockBunkers.filter((bunker) => {
-    if (filters.maxPrice && bunker.price.caps > filters.maxPrice) return false;
-    if (filters.minRating && bunker.rating < filters.minRating) return false;
+    if (filters.maxPrice !== undefined && bunker.price.caps > filters.maxPrice) return false;
+    if (filters.minRating !== undefined && filters.minRating > 0 && bunker.rating < filters.minRating) return false;
     if (filters.radFree && bunker.features.radLevel > 2) return false;
     if (filters.location && !bunker.location.name.toLowerCase().includes(filters.location.toLowerCase())) return false;
     return bunker.availability;

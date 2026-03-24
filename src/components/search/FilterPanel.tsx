@@ -168,6 +168,9 @@ export function FilterPanel() {
               Radiation-Free Only
             </label>
             <button
+              role="switch"
+              aria-checked={tempFilters.radFree}
+              aria-label="Toggle radiation-free only"
               onClick={() => setTempFilters({ ...tempFilters, radFree: !tempFilters.radFree })}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
                 tempFilters.radFree ? "bg-primary" : "bg-muted"
@@ -195,7 +198,7 @@ export function FilterPanel() {
               </button>
               <span className="text-2xl font-bold">{tempFilters.guests}</span>
               <button
-                onClick={() => setTempFilters({ ...tempFilters, guests: tempFilters.guests + 1 })}
+                onClick={() => setTempFilters({ ...tempFilters, guests: Math.min(50, tempFilters.guests + 1) })}
                 className="h-10 w-10 rounded-full bg-muted hover:bg-primary hover:text-black flex items-center justify-center font-bold text-lg"
               >
                 +
