@@ -32,32 +32,68 @@ const staggerContainer = {
   }
 };
 
+// Declassified document stamp component
+function ClassifiedStamp({ text = "DECLASSIFIED" }: { text?: string }) {
+  return (
+    <div className="absolute -right-2 -top-2 md:right-4 md:top-4 rotate-12 pointer-events-none">
+      <div className="border-2 border-accent/60 text-accent/60 px-3 py-1 text-xs md:text-sm font-black tracking-widest uppercase">
+        {text}
+      </div>
+    </div>
+  );
+}
+
+// Document corner accents
+function DocumentCorners() {
+  return (
+    <>
+      <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-secondary/30" />
+      <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-secondary/30" />
+      <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-secondary/30" />
+      <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-secondary/30" />
+    </>
+  );
+}
+
 export default function AboutPage() {
   return (
     <div className="min-h-screen bg-background font-sans noise-overlay">
       <Navbar />
 
       <main className="pt-24 pb-20 md:pb-20 pb-mobile-nav">
-        {/* Hero Section */}
-        <section className="container mx-auto px-4 py-16 text-center">
+        {/* Hero Section - Declassified Archives */}
+        <section className="container mx-auto px-4 py-16 text-center relative">
+          {/* Scan line effect */}
+          <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.02]">
+            <div className="absolute inset-0 bg-gradient-to-b from-primary/20 to-transparent animate-scanline" />
+          </div>
+
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8 }}
+            className="relative"
           >
-            <div className="inline-flex items-center gap-2 rounded-full border border-secondary/30 bg-secondary/10 px-4 py-1.5 text-sm font-medium text-secondary mb-6">
+            <div className="inline-flex items-center gap-2 rounded border border-secondary/30 bg-secondary/10 px-4 py-1.5 text-label text-secondary mb-6 relative">
+              <div className="absolute -left-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-secondary animate-pulse rounded-full" />
               <Skull className="h-4 w-4" />
-              <span className="uppercase tracking-widest">Declassified Lore</span>
+              <span>DECLASSIFIED ARCHIVES</span>
+              <div className="absolute -right-1 top-1/2 -translate-y-1/2 w-2 h-2 bg-secondary animate-pulse rounded-full" />
             </div>
 
-            <h1 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-neutral-500 uppercase tracking-tighter mb-6">
+            <h1 className="text-h1 md:text-display text-transparent bg-clip-text bg-gradient-to-b from-white to-neutral-500 uppercase tracking-tighter mb-6">
               The World That <GlitchText text="Was" className="text-primary text-glow" />
             </h1>
 
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            <p className="text-body text-muted-foreground max-w-3xl mx-auto leading-relaxed">
               Before the bunkers. Before the bottle caps. Before APOC-BNB became humanity&apos;s
-              most trusted platform for luxury survival accommodations. There was... The Event.
+              most trusted platform for luxury survival accommodations. There was... <span className="text-accent font-bold">The Event.</span>
             </p>
+
+            {/* Document ID */}
+            <div className="mt-8 text-mono text-xs text-muted-foreground">
+              DOCUMENT ID: APOC-HIST-001 | CLEARANCE: PUBLIC | LAST UPDATED: YEAR 3 PE
+            </div>
           </motion.div>
         </section>
 
@@ -71,14 +107,21 @@ export default function AboutPage() {
             className="max-w-4xl mx-auto"
           >
             <motion.div variants={fadeInUp} className="flex items-center gap-3 mb-8">
-              <Radiation className="h-8 w-8 text-secondary" />
-              <h2 className="text-3xl font-black uppercase tracking-tight">The Event</h2>
+              <div className="p-2 bg-secondary/10 rounded border border-secondary/30">
+                <Radiation className="h-6 w-6 text-secondary" />
+              </div>
+              <div>
+                <div className="text-label text-secondary mb-1">CHAPTER 01</div>
+                <h2 className="text-h2 font-black uppercase tracking-tight">The Event</h2>
+              </div>
             </motion.div>
 
             <motion.div
               variants={fadeInUp}
-              className="bg-card border border-border rounded-xl p-8 space-y-6"
+              className="bg-card border border-border rounded-xl p-8 space-y-6 relative overflow-hidden"
             >
+              <DocumentCorners />
+              <ClassifiedStamp />
               <div className="border-l-4 border-secondary pl-6 italic text-muted-foreground">
                 &quot;Nobody agrees on what happened. Everyone agrees it was bad.&quot;
                 <span className="block mt-2 text-sm not-italic">— The Overseer, Vault 101 Replica</span>
@@ -131,11 +174,16 @@ export default function AboutPage() {
             className="max-w-4xl mx-auto"
           >
             <motion.div variants={fadeInUp} className="flex items-center gap-3 mb-8">
-              <MapPin className="h-8 w-8 text-primary" />
-              <h2 className="text-3xl font-black uppercase tracking-tight">The Zones</h2>
+              <div className="p-2 bg-primary/10 rounded border border-primary/30">
+                <MapPin className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <div className="text-label text-primary mb-1">CHAPTER 02</div>
+                <h2 className="text-h2 font-black uppercase tracking-tight">The Zones</h2>
+              </div>
             </motion.div>
 
-            <motion.p variants={fadeInUp} className="text-muted-foreground mb-8">
+            <motion.p variants={fadeInUp} className="text-muted-foreground mb-8 p-4 border-l-2 border-primary/30 bg-primary/5">
               What used to be &quot;countries&quot; are now &quot;zones.&quot; Borders are more suggestions than rules.
               The good news: no customs. The bad news: everything else.
             </motion.p>
@@ -208,8 +256,13 @@ export default function AboutPage() {
             className="max-w-4xl mx-auto"
           >
             <motion.div variants={fadeInUp} className="flex items-center gap-3 mb-8">
-              <Coins className="h-8 w-8 text-secondary" />
-              <h2 className="text-3xl font-black uppercase tracking-tight">The Bottle Cap Economy</h2>
+              <div className="p-2 bg-secondary/10 rounded border border-secondary/30">
+                <Coins className="h-6 w-6 text-secondary" />
+              </div>
+              <div>
+                <div className="text-label text-secondary mb-1">CHAPTER 03</div>
+                <h2 className="text-h2 font-black uppercase tracking-tight">The Bottle Cap Economy</h2>
+              </div>
             </motion.div>
 
             <motion.div
@@ -288,17 +341,25 @@ export default function AboutPage() {
         </section>
 
         {/* Timeline Section */}
-        <section className="container mx-auto px-4 py-16">
+        <section className="container mx-auto px-4 py-16 relative">
+          {/* Hazard stripes background */}
+          <div className="absolute inset-0 hazard-stripes opacity-5 pointer-events-none" />
+
           <motion.div
             variants={staggerContainer}
             initial="initial"
             whileInView="animate"
             viewport={{ once: true }}
-            className="max-w-4xl mx-auto"
+            className="max-w-4xl mx-auto relative z-10"
           >
             <motion.div variants={fadeInUp} className="flex items-center gap-3 mb-8">
-              <Calendar className="h-8 w-8 text-accent" />
-              <h2 className="text-3xl font-black uppercase tracking-tight">Timeline Since The Event</h2>
+              <div className="p-2 bg-accent/10 rounded border border-accent/30">
+                <Calendar className="h-6 w-6 text-accent" />
+              </div>
+              <div>
+                <div className="text-label text-accent mb-1">CHAPTER 04</div>
+                <h2 className="text-h2 font-black uppercase tracking-tight">Timeline Since The Event</h2>
+              </div>
             </motion.div>
 
             <motion.div variants={fadeInUp} className="relative">
@@ -371,14 +432,20 @@ export default function AboutPage() {
             className="max-w-4xl mx-auto"
           >
             <motion.div variants={fadeInUp} className="flex items-center gap-3 mb-8">
-              <Building2 className="h-8 w-8 text-primary" />
-              <h2 className="text-3xl font-black uppercase tracking-tight">About APOC-BNB</h2>
+              <div className="p-2 bg-primary/10 rounded border border-primary/30">
+                <Building2 className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <div className="text-label text-primary mb-1">CHAPTER 05</div>
+                <h2 className="text-h2 font-black uppercase tracking-tight">About APOC-BNB</h2>
+              </div>
             </motion.div>
 
             <motion.div
               variants={fadeInUp}
-              className="bg-card border border-border rounded-xl overflow-hidden"
+              className="bg-card border border-border rounded-xl overflow-hidden relative"
             >
+              <DocumentCorners />
               <div className="bg-gradient-to-r from-primary/20 to-secondary/20 p-8 border-b border-border">
                 <p className="text-2xl font-bold text-foreground italic">
                   &quot;The world ended. Your standards didn&apos;t.&quot;
@@ -453,22 +520,37 @@ export default function AboutPage() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="max-w-2xl mx-auto"
+            className="max-w-2xl mx-auto relative"
           >
-            <Clock className="h-12 w-12 text-secondary mx-auto mb-4" />
-            <h2 className="text-3xl font-black uppercase tracking-tight mb-4">
-              The Past is Prologue
-            </h2>
-            <p className="text-muted-foreground mb-8">
-              Now that you know where we came from, it&apos;s time to find where you&apos;re going.
-              Browse our verified bunkers and book your next survival experience.
-            </p>
-            <a
-              href="/search"
-              className="inline-flex items-center gap-2 bg-primary text-black font-bold px-8 py-4 rounded-lg hover:bg-primary-dim transition-colors uppercase tracking-wide"
-            >
-              Browse All Bunkers
-            </a>
+            <div className="containment-active p-8 md:p-12 relative overflow-hidden">
+              <DocumentCorners />
+
+              <div className="relative z-10">
+                <div className="w-16 h-16 mx-auto mb-6 rounded-full bg-secondary/10 border border-secondary/30 flex items-center justify-center">
+                  <Clock className="h-8 w-8 text-secondary" />
+                </div>
+                <div className="text-label text-secondary mb-2">END OF DOCUMENT</div>
+                <h2 className="text-h2 font-black uppercase tracking-tight mb-4">
+                  The Past is Prologue
+                </h2>
+                <p className="text-muted-foreground mb-8">
+                  Now that you know where we came from, it&apos;s time to find where you&apos;re going.
+                  Browse our verified bunkers and book your next survival experience.
+                </p>
+                <a
+                  href="/search"
+                  className="inline-flex items-center gap-2 bg-primary text-black font-bold px-8 py-4 rounded-lg hover:bg-primary/90 transition-all uppercase tracking-wide group relative overflow-hidden"
+                >
+                  <span className="relative z-10">Browse All Bunkers</span>
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
+                </a>
+              </div>
+
+              {/* Document footer */}
+              <div className="mt-8 pt-4 border-t border-border text-mono text-xs text-muted-foreground">
+                APOC-BNB HISTORICAL ARCHIVES | ACCESS GRANTED | YEAR 3 PE
+              </div>
+            </div>
           </motion.div>
         </section>
       </main>
