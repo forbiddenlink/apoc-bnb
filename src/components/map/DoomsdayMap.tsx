@@ -1,19 +1,34 @@
 "use client";
-import Map, { Marker, NavigationControl, Popup } from 'react-map-gl';
+import Map, { Marker, NavigationControl, Popup, Source, Layer } from 'react-map-gl';
+import type { MapRef, ViewStateChangeEvent } from 'react-map-gl';
+import type { FillLayerSpecification, LineLayerSpecification, LngLatBoundsLike } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { useState, useMemo, useCallback, useEffect } from 'react';
-import { Radiation, MapPin, Crosshair, Wifi, Shield, AlertTriangle } from 'lucide-react';
+import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
+import { Radiation, MapPin, Crosshair, Shield, Users } from 'lucide-react';
 import { Bunker } from '@/types';
 import Link from 'next/link';
+import { useMapClustering } from '@/lib/hooks/useMapClustering';
+import type { ClusterProperties, BunkerPointProperties, PointProperties } from '@/lib/hooks/useMapClustering';
+import {
+  radiationZones,
+  createAllRadiationBuffers,
+  getRadiationZoneColor,
+  getRadiationZoneStrokeColor,
+  calculateDistance,
+} from '@/lib/geo';
+import type { RadiationZone } from '@/lib/geo';
+import type { BBox } from 'geojson';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
 interface DoomsdayMapProps {
   bunkers?: Bunker[];
   selectedBunkerId?: string;
+  showRadiationZones?: boolean;
+  enableClustering?: boolean;
 }
 
-// Custom hex marker component
+// Custom hex marker component for individual bunkers
 function HexMarker({ radLevel, isSelected, isHovered }: { radLevel: number; isSelected: boolean; isHovered: boolean }) {
     const getColor = () => {
         if (radLevel <= 2) return { fill: 'var(--primary)', glow: 'rgba(57,255,20,0.5)' };
@@ -78,13 +93,99 @@ function HexMarker({ radLevel, isSelected, isHovered }: { radLevel: number; isSe
     );
 }
 
-export default function DoomsdayMap({ bunkers, selectedBunkerId }: DoomsdayMapProps) {
+// Cluster marker component
+function ClusterMarker({
+    pointCount,
+    onClick
+}: {
+    pointCount: number;
+    onClick: () => void;
+}) {
+    // Size scales with number of points
+    const size = Math.min(60, 30 + (pointCount / 3));
+
+    return (
+        <div
+            className="cursor-pointer transition-transform duration-200 hover:scale-110"
+            onClick={onClick}
+            onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onClick();
+                }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-label={`Cluster of ${pointCount} bunkers. Click to zoom in.`}
+        >
+            <div
+                className="relative flex items-center justify-center rounded-full bg-primary/80 border-2 border-primary shadow-lg shadow-primary/30"
+                style={{ width: size, height: size }}
+            >
+                {/* Pulse effect */}
+                <div
+                    className="absolute inset-0 rounded-full bg-primary/30 animate-ping"
+                    style={{ animationDuration: '2s' }}
+                />
+                {/* Count */}
+                <div className="relative flex items-center gap-1 text-black font-bold text-sm">
+                    <Users className="h-3 w-3" />
+                    <span>{pointCount}</span>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+// Radiation zone tooltip component
+function RadiationZoneTooltip({ zone }: { zone: RadiationZone }) {
+    const levelColors = {
+        low: 'text-primary',
+        moderate: 'text-secondary',
+        high: 'text-orange-500',
+        extreme: 'text-accent',
+    };
+
+    return (
+        <div className="bg-black/95 backdrop-blur-sm p-3 rounded border border-accent/30 text-xs max-w-[200px]">
+            <div className="flex items-center gap-2 mb-2">
+                <Radiation className={`h-4 w-4 ${levelColors[zone.level]}`} />
+                <span className="font-bold text-foreground">{zone.name}</span>
+            </div>
+            <div className="space-y-1">
+                <div className="flex justify-between">
+                    <span className="text-muted-foreground">THREAT</span>
+                    <span className={`font-bold uppercase ${levelColors[zone.level]}`}>
+                        {zone.level}
+                    </span>
+                </div>
+                <div className="flex justify-between">
+                    <span className="text-muted-foreground">RADIUS</span>
+                    <span className="text-foreground">{zone.radiusKm} km</span>
+                </div>
+                <p className="text-muted-foreground mt-2 pt-2 border-t border-border">
+                    {zone.description}
+                </p>
+            </div>
+        </div>
+    );
+}
+
+export default function DoomsdayMap({
+    bunkers,
+    selectedBunkerId,
+    showRadiationZones = true,
+    enableClustering = true,
+}: DoomsdayMapProps) {
+    const mapRef = useRef<MapRef>(null);
     const [viewState, setViewState] = useState({
-        latitude: 40.7128,
-        longitude: -74.0060,
+        latitude: 39.8283,
+        longitude: -98.5795,
         zoom: 4
     });
+    const [mapBounds, setMapBounds] = useState<BBox | null>(null);
     const [selectedMarker, setSelectedMarker] = useState<string | null>(null);
+    const [hoveredZone, setHoveredZone] = useState<RadiationZone | null>(null);
     const [currentTime, setCurrentTime] = useState(new Date());
 
     // Update time every second for HUD
@@ -93,9 +194,68 @@ export default function DoomsdayMap({ bunkers, selectedBunkerId }: DoomsdayMapPr
         return () => clearInterval(interval);
     }, []);
 
-    const markers = useMemo(() => {
-        return bunkers || [];
-    }, [bunkers]);
+    const markers = useMemo(() => bunkers || [], [bunkers]);
+
+    // Create radiation zone GeoJSON
+    const radiationGeoJSON = useMemo(() => {
+        const buffers = createAllRadiationBuffers();
+        return {
+            type: 'FeatureCollection' as const,
+            features: buffers,
+        };
+    }, []);
+
+    // Update bounds when map moves
+    const handleMove = useCallback((evt: ViewStateChangeEvent) => {
+        setViewState(evt.viewState);
+
+        const map = mapRef.current?.getMap();
+        if (map) {
+            const bounds = map.getBounds();
+            if (bounds) {
+                setMapBounds([
+                    bounds.getWest(),
+                    bounds.getSouth(),
+                    bounds.getEast(),
+                    bounds.getNorth(),
+                ]);
+            }
+        }
+    }, []);
+
+    // Initialize bounds on load
+    const handleLoad = useCallback(() => {
+        const map = mapRef.current?.getMap();
+        if (map) {
+            const bounds = map.getBounds();
+            if (bounds) {
+                setMapBounds([
+                    bounds.getWest(),
+                    bounds.getSouth(),
+                    bounds.getEast(),
+                    bounds.getNorth(),
+                ]);
+            }
+        }
+    }, []);
+
+    // Get clusters using the hook
+    const { clusters, getClusterExpansionZoom } = useMapClustering({
+        bunkers: markers,
+        zoom: viewState.zoom,
+        bounds: mapBounds,
+    });
+
+    // Handle cluster click - zoom in to expand
+    const handleClusterClick = useCallback((clusterId: number, longitude: number, latitude: number) => {
+        const expansionZoom = Math.min(getClusterExpansionZoom(clusterId), 20);
+
+        mapRef.current?.flyTo({
+            center: [longitude, latitude],
+            zoom: expansionZoom,
+            duration: 500,
+        });
+    }, [getClusterExpansionZoom]);
 
     // Memoize selected bunker to avoid redundant .find() calls
     const selectedBunker = useMemo(() => {
@@ -105,6 +265,53 @@ export default function DoomsdayMap({ bunkers, selectedBunkerId }: DoomsdayMapPr
 
     const handleClosePopup = useCallback(() => {
         setSelectedMarker(null);
+    }, []);
+
+    // Layer styles for radiation zones
+    const radiationFillLayer: FillLayerSpecification = {
+        id: 'radiation-fill',
+        type: 'fill',
+        source: 'radiation-zones',
+        paint: {
+            'fill-color': [
+                'match',
+                ['get', 'level'],
+                'low', 'rgba(57, 255, 20, 0.12)',
+                'moderate', 'rgba(212, 175, 55, 0.15)',
+                'high', 'rgba(255, 140, 0, 0.18)',
+                'extreme', 'rgba(255, 0, 60, 0.22)',
+                'rgba(128, 128, 128, 0.1)'
+            ],
+            'fill-opacity': 0.8,
+        },
+    };
+
+    const radiationLineLayer: LineLayerSpecification = {
+        id: 'radiation-line',
+        type: 'line',
+        source: 'radiation-zones',
+        paint: {
+            'line-color': [
+                'match',
+                ['get', 'level'],
+                'low', 'rgba(57, 255, 20, 0.5)',
+                'moderate', 'rgba(212, 175, 55, 0.6)',
+                'high', 'rgba(255, 140, 0, 0.7)',
+                'extreme', 'rgba(255, 0, 60, 0.8)',
+                'rgba(128, 128, 128, 0.5)'
+            ],
+            'line-width': 2,
+            'line-dasharray': [3, 2],
+        },
+    };
+
+    // Count bunkers in each zone level for stats
+    const zoneStats = useMemo(() => {
+        const stats = { low: 0, moderate: 0, high: 0, extreme: 0 };
+        for (const zone of radiationZones) {
+            stats[zone.level]++;
+        }
+        return stats;
     }, []);
 
     if (!TOKEN) {
@@ -132,8 +339,10 @@ export default function DoomsdayMap({ bunkers, selectedBunkerId }: DoomsdayMapPr
     return (
         <div className="w-full h-full relative overflow-hidden">
             <Map
+                ref={mapRef}
                 {...viewState}
-                onMove={evt => setViewState(evt.viewState)}
+                onMove={handleMove}
+                onLoad={handleLoad}
                 style={{ width: '100%', height: '100%' }}
                 mapStyle="mapbox://styles/mapbox/dark-v11"
                 mapboxAccessToken={TOKEN}
@@ -141,35 +350,140 @@ export default function DoomsdayMap({ bunkers, selectedBunkerId }: DoomsdayMapPr
             >
                 <NavigationControl position="bottom-right" />
 
-                {/* Render Bunker Markers with hex shape */}
-                {markers.map((bunker) => (
+                {/* Radiation Zone Overlays */}
+                {showRadiationZones && (
+                    <Source id="radiation-zones" type="geojson" data={radiationGeoJSON}>
+                        <Layer {...radiationFillLayer} />
+                        <Layer {...radiationLineLayer} />
+                    </Source>
+                )}
+
+                {/* Render clusters or individual markers */}
+                {enableClustering && clusters.length > 0 ? (
+                    clusters.map((point) => {
+                        const [longitude, latitude] = point.geometry.coordinates;
+                        const props = point.properties;
+
+                        // Check if it's a cluster
+                        if (props.cluster) {
+                            const clusterProps = props as ClusterProperties;
+                            return (
+                                <Marker
+                                    key={`cluster-${clusterProps.cluster_id}`}
+                                    longitude={longitude}
+                                    latitude={latitude}
+                                    anchor="center"
+                                >
+                                    <ClusterMarker
+                                        pointCount={clusterProps.point_count}
+                                        onClick={() => handleClusterClick(clusterProps.cluster_id, longitude, latitude)}
+                                    />
+                                </Marker>
+                            );
+                        }
+
+                        // Individual bunker marker
+                        const bunkerProps = props as BunkerPointProperties;
+                        const bunker = bunkerProps.bunker;
+                        return (
+                            <Marker
+                                key={bunker.id}
+                                longitude={longitude}
+                                latitude={latitude}
+                                anchor="center"
+                            >
+                                <div
+                                    className="cursor-pointer"
+                                    onClick={() => setSelectedMarker(bunker.id)}
+                                    onKeyDown={(e) => {
+                                        if (e.key === 'Enter' || e.key === ' ') {
+                                            e.preventDefault();
+                                            setSelectedMarker(bunker.id);
+                                        }
+                                    }}
+                                    role="button"
+                                    tabIndex={0}
+                                    aria-label={`View ${bunker.title} in ${bunker.location.name} - ${bunker.price.caps} CAPS per night, radiation level ${bunker.features.radLevel}/10`}
+                                >
+                                    <HexMarker
+                                        radLevel={bunker.features.radLevel}
+                                        isSelected={selectedMarker === bunker.id}
+                                        isHovered={selectedBunkerId === bunker.id}
+                                    />
+                                </div>
+                            </Marker>
+                        );
+                    })
+                ) : (
+                    // Fallback: render all markers without clustering
+                    markers.map((bunker) => (
+                        <Marker
+                            key={bunker.id}
+                            longitude={bunker.location.coordinates[0]}
+                            latitude={bunker.location.coordinates[1]}
+                            anchor="center"
+                        >
+                            <div
+                                className="cursor-pointer"
+                                onClick={() => setSelectedMarker(bunker.id)}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter' || e.key === ' ') {
+                                        e.preventDefault();
+                                        setSelectedMarker(bunker.id);
+                                    }
+                                }}
+                                role="button"
+                                tabIndex={0}
+                                aria-label={`View ${bunker.title} in ${bunker.location.name} - ${bunker.price.caps} CAPS per night, radiation level ${bunker.features.radLevel}/10`}
+                            >
+                                <HexMarker
+                                    radLevel={bunker.features.radLevel}
+                                    isSelected={selectedMarker === bunker.id}
+                                    isHovered={selectedBunkerId === bunker.id}
+                                />
+                            </div>
+                        </Marker>
+                    ))
+                )}
+
+                {/* Radiation Zone Center Markers */}
+                {showRadiationZones && radiationZones.map((zone) => (
                     <Marker
-                        key={bunker.id}
-                        longitude={bunker.location.coordinates[0]}
-                        latitude={bunker.location.coordinates[1]}
+                        key={zone.id}
+                        longitude={zone.center[0]}
+                        latitude={zone.center[1]}
                         anchor="center"
                     >
                         <div
                             className="cursor-pointer"
-                            onClick={() => setSelectedMarker(bunker.id)}
-                            onKeyDown={(e) => {
-                                if (e.key === 'Enter' || e.key === ' ') {
-                                    e.preventDefault();
-                                    setSelectedMarker(bunker.id);
-                                }
-                            }}
-                            role="button"
-                            tabIndex={0}
-                            aria-label={`View ${bunker.title} in ${bunker.location.name} - ${bunker.price.caps} CAPS per night, radiation level ${bunker.features.radLevel}/10`}
+                            onMouseEnter={() => setHoveredZone(zone)}
+                            onMouseLeave={() => setHoveredZone(null)}
                         >
-                            <HexMarker
-                                radLevel={bunker.features.radLevel}
-                                isSelected={selectedMarker === bunker.id}
-                                isHovered={selectedBunkerId === bunker.id}
+                            <Radiation
+                                className={`h-5 w-5 opacity-60 ${
+                                    zone.level === 'low' ? 'text-primary' :
+                                    zone.level === 'moderate' ? 'text-secondary' :
+                                    zone.level === 'high' ? 'text-orange-500' :
+                                    'text-accent animate-pulse'
+                                }`}
                             />
                         </div>
                     </Marker>
                 ))}
+
+                {/* Hovered Zone Popup */}
+                {hoveredZone && (
+                    <Popup
+                        longitude={hoveredZone.center[0]}
+                        latitude={hoveredZone.center[1]}
+                        anchor="top"
+                        closeButton={false}
+                        closeOnClick={false}
+                        offset={15}
+                    >
+                        <RadiationZoneTooltip zone={hoveredZone} />
+                    </Popup>
+                )}
 
                 {/* Enhanced Popup for selected marker */}
                 {selectedBunker && (
@@ -236,8 +550,12 @@ export default function DoomsdayMap({ bunkers, selectedBunkerId }: DoomsdayMapPr
                         </span>
                     </div>
                     <div className="flex justify-between">
-                        <span className="text-muted-foreground">TARGETS</span>
+                        <span className="text-muted-foreground">BUNKERS</span>
                         <span className="text-secondary">{markers.length}</span>
+                    </div>
+                    <div className="flex justify-between">
+                        <span className="text-muted-foreground">RAD ZONES</span>
+                        <span className="text-accent">{radiationZones.length}</span>
                     </div>
                     <div className="flex justify-between">
                         <span className="text-muted-foreground">TIME</span>
@@ -252,30 +570,71 @@ export default function DoomsdayMap({ bunkers, selectedBunkerId }: DoomsdayMapPr
                 </div>
             </div>
 
-            {/* Legend with better styling */}
-            <div className="absolute bottom-4 left-4 bg-black/90 backdrop-blur-sm p-3 rounded border border-border text-xs space-y-2">
-                <div className="flex items-center gap-2 font-bold text-foreground border-b border-border pb-2">
-                    <Shield className="h-3 w-3" />
-                    THREAT LEVELS
-                </div>
-                <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 flex items-center justify-center">
-                        <div className="w-2.5 h-3 bg-primary" style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }} />
+            {/* Legend with radiation zones */}
+            <div className="absolute bottom-4 left-4 bg-black/90 backdrop-blur-sm p-3 rounded border border-border text-xs space-y-3 max-w-[200px]">
+                {/* Bunker threat levels */}
+                <div>
+                    <div className="flex items-center gap-2 font-bold text-foreground border-b border-border pb-2 mb-2">
+                        <Shield className="h-3 w-3" />
+                        BUNKER THREAT
                     </div>
-                    <span className="text-muted-foreground">SAFE (0-2)</span>
-                </div>
-                <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 flex items-center justify-center">
-                        <div className="w-2.5 h-3 bg-secondary" style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }} />
+                    <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                            <div className="w-4 h-4 flex items-center justify-center">
+                                <div className="w-2.5 h-3 bg-primary" style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }} />
+                            </div>
+                            <span className="text-muted-foreground">SAFE (0-2)</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-4 h-4 flex items-center justify-center">
+                                <div className="w-2.5 h-3 bg-secondary" style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }} />
+                            </div>
+                            <span className="text-muted-foreground">CAUTION (3-5)</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-4 h-4 flex items-center justify-center">
+                                <div className="w-2.5 h-3 bg-accent" style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }} />
+                            </div>
+                            <span className="text-muted-foreground">DANGER (6+)</span>
+                        </div>
                     </div>
-                    <span className="text-muted-foreground">CAUTION (3-5)</span>
                 </div>
-                <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 flex items-center justify-center">
-                        <div className="w-2.5 h-3 bg-accent" style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }} />
+
+                {/* Radiation zones */}
+                {showRadiationZones && (
+                    <div>
+                        <div className="flex items-center gap-2 font-bold text-foreground border-b border-border pb-2 mb-2">
+                            <Radiation className="h-3 w-3" />
+                            RAD ZONES
+                        </div>
+                        <div className="space-y-1">
+                            <div className="flex items-center gap-2">
+                                <div className="w-3 h-3 rounded-full bg-primary/30 border border-primary/50" />
+                                <span className="text-muted-foreground">Low ({zoneStats.low})</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-3 h-3 rounded-full bg-secondary/30 border border-secondary/50" />
+                                <span className="text-muted-foreground">Moderate ({zoneStats.moderate})</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-3 h-3 rounded-full bg-orange-500/30 border border-orange-500/50" />
+                                <span className="text-muted-foreground">High ({zoneStats.high})</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                                <div className="w-3 h-3 rounded-full bg-accent/30 border border-accent/50" />
+                                <span className="text-muted-foreground">Extreme ({zoneStats.extreme})</span>
+                            </div>
+                        </div>
                     </div>
-                    <span className="text-muted-foreground">DANGER (6+)</span>
-                </div>
+                )}
+
+                {/* Clustering indicator */}
+                {enableClustering && (
+                    <div className="flex items-center gap-2 pt-2 border-t border-border">
+                        <Users className="h-3 w-3 text-primary" />
+                        <span className="text-muted-foreground">Clustered view enabled</span>
+                    </div>
+                )}
             </div>
 
             {/* Scan line effect overlay */}
