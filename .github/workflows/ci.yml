@@ -14,4 +14,4 @@ jobs:
           node-version: '22'
           cache: 'npm'
       - run: npm ci --legacy-peer-deps
-      - run: npm run build
+      - run: SKIP_ENV_VALIDATION=1 npm run build
