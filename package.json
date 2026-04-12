@@ -33,7 +33,7 @@
     "framer-motion": "^12.26.2",
     "lucide-react": "^0.562.0",
     "mapbox-gl": "^3.18.0",
-    "next": "16.1.6",
+    "next": "^16.2.3",
     "next-axiom": "^1.5.0",
     "next-safe-action": "^8.3.0",
     "nuqs": "^2.8.9",
@@ -76,5 +76,11 @@
   "engines": {
     "node": ">=20.0.0"
   },
-  "description": "Apocalyptic Airbnb-style rental marketplace built with Next.js, Mapbox, and TanStack Query"
+  "description": "Apocalyptic Airbnb-style rental marketplace built with Next.js, Mapbox, and TanStack Query",
+  "pnpm": {
+    "overrides": {
+      "next": ">=16.2.3",
+      "vite": ">=8.0.5"
+    }
+  }
 }
