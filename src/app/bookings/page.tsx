@@ -9,7 +9,7 @@ import { CalendarCheck, Search, Clock, Users, MapPin, Shield, Radiation, FileTex
 import Link from "next/link";
 import { motion } from "framer-motion";
 import type { Booking } from "@/types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Status tab component
 function StatusTabs({ active, onChange, counts }: {
@@ -126,6 +126,8 @@ function BookingCard({ booking, index }: { booking: Booking; index: number }) {
 }
 
 export default function BookingsPage() {
+    useEffect(() => { document.title = "Mission Log | APOC-BNB"; }, []);
+
     const { bookings } = useAppStore();
     const [activeTab, setActiveTab] = useState("all");
 

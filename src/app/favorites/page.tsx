@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
@@ -13,6 +14,8 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function FavoritesPage() {
+    useEffect(() => { document.title = "Watchlist | APOC-BNB"; }, []);
+
     const { favorites } = useAppStore();
     const { bunkers, isLoading } = useBunkers();
 

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { getRandomLogs, type ClassifiedEntry } from "@/lib/data/terminal-logs";
+import { getRandomLogs, getRandomIncidentLogs, type ClassifiedEntry, type ClassifiedIncidentLog } from "@/lib/data/terminal-logs";
 
 // Generate random words for password guessing
 const WORD_LIST = [
@@ -29,6 +29,7 @@ export function TerminalHacking() {
   const [messages, setMessages] = useState<string[]>([]);
   const [words, setWords] = useState<TerminalWord[]>([]);
   const [logs, setLogs] = useState<ClassifiedEntry[]>([]);
+  const [incidentLogs, setIncidentLogs] = useState<ClassifiedIncidentLog[]>([]);
   const [bootComplete, setBootComplete] = useState(false);
 
   const initializeGame = useCallback(() => {
@@ -117,9 +118,10 @@ export function TerminalHacking() {
 
     // Check if password is correct
     if (clickedWord.isPassword) {
-      setMessages(prev => [...prev, "> ACCESS GRANTED", "> LOADING CLASSIFIED FILES..."]);
+      setMessages(prev => [...prev, "> ACCESS GRANTED", "> LOADING CLASSIFIED FILES...", "> DECRYPTING INCIDENT REPORTS..."]);
       setIsHacked(true);
       setLogs(getRandomLogs(5));
+      setIncidentLogs(getRandomIncidentLogs(4));
       return;
     }
 
@@ -149,6 +151,7 @@ export function TerminalHacking() {
     setMessages([]);
     setWords([]);
     setLogs([]);
+    setIncidentLogs([]);
     initializeGame();
   };
 
@@ -226,6 +229,57 @@ export function TerminalHacking() {
                 )}
               </motion.div>
             ))}
+
+            {/* Classified Incident Reports */}
+            {incidentLogs.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: logs.length * 0.3 + 0.5 }}
+                className="mt-8 pt-6 border-t-2 border-red-500/40"
+              >
+                <div className="text-xl mb-4 text-red-400 animate-pulse">
+                  === [CLASSIFIED] INCIDENT REPORTS ===
+                </div>
+                <div className="text-xs text-red-400/70 mb-6">
+                  CLEARANCE LEVEL: EYES ONLY | UNAUTHORIZED ACCESS WILL BE PROSECUTED
+                </div>
+
+                {incidentLogs.map((incident, idx) => (
+                  <motion.div
+                    key={incident.id}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: logs.length * 0.3 + 0.8 + idx * 0.4 }}
+                    className="border-l-2 border-red-500/30 pl-4 py-3 mb-4"
+                  >
+                    <div className="text-red-400 font-bold mb-1">
+                      [CLASSIFIED] INCIDENT REPORT: {incident.title}
+                    </div>
+                    <div className="text-xs opacity-70 space-y-0.5 mb-2">
+                      <div>BUNKER: {incident.bunkerName.toUpperCase()}</div>
+                      <div>DATE: {incident.date}</div>
+                      <div>SEVERITY: {incident.severity.toUpperCase()}</div>
+                    </div>
+                    <div className="mb-2 text-green-400/90">
+                      DETAILS: {incident.description}
+                    </div>
+                    <div className="text-sm opacity-70 mb-1">
+                      RESOLUTION: {incident.resolution}
+                    </div>
+                    <div
+                      className={`text-xs font-bold ${
+                        incident.status === "ACTIVE INVESTIGATION"
+                          ? "text-red-400 animate-pulse"
+                          : "text-green-500/70"
+                      }`}
+                    >
+                      STATUS: {incident.status}
+                    </div>
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
 
             <button
               onClick={resetGame}

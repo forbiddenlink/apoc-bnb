@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
@@ -56,11 +57,13 @@ function DocumentCorners() {
 }
 
 export default function AboutPage() {
+  useEffect(() => { document.title = "Declassified Archives | APOC-BNB"; }, []);
+
   return (
     <div className="min-h-screen bg-background font-sans noise-overlay">
       <Navbar />
 
-      <main className="pt-24 pb-20 md:pb-20 pb-mobile-nav">
+      <main id="main-content" className="pt-24 pb-20 md:pb-20 pb-mobile-nav">
         {/* Hero Section - Declassified Archives */}
         <section className="container mx-auto px-4 py-16 text-center relative">
           {/* Scan line effect */}

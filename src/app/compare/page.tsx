@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
@@ -8,6 +9,8 @@ import { Crosshair } from "lucide-react";
 import { motion } from "framer-motion";
 
 export default function ComparePage() {
+  useEffect(() => { document.title = "Tactical Analysis | APOC-BNB"; }, []);
+
   return (
     <div className="min-h-screen bg-background font-sans noise-overlay">
       <Navbar />

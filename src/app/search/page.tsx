@@ -182,12 +182,14 @@ function BunkerListItem({
 }
 
 export default function SearchPage() {
+    useEffect(() => { document.title = "Find a Bunker | APOC-BNB"; }, []);
+
     const { searchFilters } = useAppStore();
     const { bunkers, total, isLoading, isError } = useBunkers(searchFilters);
     const [hoveredBunkerId, setHoveredBunkerId] = useState<string | null>(null);
 
     return (
-        <div className="min-h-screen bg-background flex flex-col font-sans noise-overlay">
+        <div id="main-content" className="min-h-screen bg-background flex flex-col font-sans noise-overlay">
             <Navbar />
 
             <div className="flex-1 flex flex-col pt-[60px] h-[calc(100vh-60px)]">

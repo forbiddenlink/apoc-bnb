@@ -48,6 +48,8 @@ function EnlistButton({ onClick }: { onClick: () => void }) {
 export default function HostPage() {
     const [missionCode, setMissionCode] = useState("GENERATING...");
 
+    useEffect(() => { document.title = "Become a Warlord | APOC-BNB"; }, []);
+
     useEffect(() => {
         // Generate random mission code
         const code = `WH-${Math.random().toString(36).substring(2, 6).toUpperCase()}-${Date.now().toString(36).substring(-4).toUpperCase()}`;
@@ -189,6 +191,97 @@ export default function HostPage() {
                                 </div>
                                 <h3 className="text-h3 mb-2">{benefit.title}</h3>
                                 <p className="text-body-sm text-muted-foreground">{benefit.description}</p>
+                            </motion.div>
+                        ))}
+                    </div>
+                </section>
+
+                {/* Warlord Testimonials - Field Reports */}
+                <section className="container mx-auto px-4 py-12 md:py-16">
+                    <div className="text-center mb-8 md:mb-12">
+                        <div className="text-label text-secondary mb-2">FIELD REPORTS</div>
+                        <h2 className="text-h2 font-black uppercase">
+                            What Our Warlords Say
+                        </h2>
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+                        {[
+                            {
+                                name: "Karen the Warlord",
+                                initial: "K",
+                                bunker: "The Galleria Fortress",
+                                earnings: "4,200 CAPS/mo",
+                                quote: "I was managing a mall before the apocalypse. Now I'm managing a mall AFTER the apocalypse. The difference? Nobody argues with me anymore. APOC-BNB gave me a platform. The laminated rulesheets? Those were always there."
+                            },
+                            {
+                                name: "The Overseer",
+                                initial: "O",
+                                bunker: "Vault 101 Replica",
+                                earnings: "3,800 CAPS/mo",
+                                quote: "I built this vault as a 'hobby project.' My ex-wife called it 'concerning.' Now it's a 5-star rated facility with a waitlist. Who's concerning NOW, Linda?"
+                            },
+                            {
+                                name: "Wasteland Willie",
+                                initial: "W",
+                                bunker: "Cozy Underground Haven",
+                                earnings: "1,200 CAPS/mo",
+                                quote: "Listen, I ain't gonna pretend it's fancy. But people keep booking. They keep coming back. One guy's been here 6 months. I think he forgot he can leave. Whatever. His CAPS are good."
+                            },
+                            {
+                                name: "Teacher Tim",
+                                initial: "T",
+                                bunker: "The Learning Caravan",
+                                earnings: "1,800 CAPS/mo",
+                                quote: "Hosting lets me do what I love: teach. My guests learn survival skills, edible plant identification, and the importance of a positive attitude. Several have cried. I consider this progress."
+                            },
+                            {
+                                name: "Dr. Glow",
+                                initial: "D",
+                                bunker: "Reactor Core Penthouse",
+                                earnings: "3,500 CAPS/mo",
+                                quote: "The reactor needed maintenance anyway. Might as well have company while I do it. The extra CAPS fund my research. Into what? It's better if you don't ask."
+                            },
+                            {
+                                name: "Flight Attendant Francine",
+                                initial: "F",
+                                bunker: "Terminal Sanctuary",
+                                earnings: "2,800 CAPS/mo",
+                                quote: "The planes stopped. The service didn't. APOC-BNB understood that. My guests arrive on time, follow the safety demonstration, and receive the hospitality they deserve. Even if they didn't choose this airline."
+                            }
+                        ].map((testimonial, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-50px" }}
+                                transition={{ delay: index * 0.1, duration: 0.4 }}
+                                className="bg-card border border-border hover:border-primary/30 rounded p-5 md:p-6 group relative overflow-hidden transition-colors"
+                            >
+                                {/* HUD corners on hover */}
+                                <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-primary/30 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-primary/30 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-primary/30 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-primary/30 opacity-0 group-hover:opacity-100 transition-opacity" />
+
+                                {/* Quote */}
+                                <p className="text-body-sm text-muted-foreground italic mb-5 leading-relaxed">
+                                    &ldquo;{testimonial.quote}&rdquo;
+                                </p>
+
+                                {/* Host info */}
+                                <div className="flex items-center gap-3">
+                                    {/* Avatar placeholder */}
+                                    <div className="h-10 w-10 rounded border border-primary/30 bg-primary/10 flex items-center justify-center font-black text-primary text-sm flex-shrink-0">
+                                        {testimonial.initial}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                        <div className="font-bold text-sm text-foreground">{testimonial.name}</div>
+                                        <div className="text-xs text-muted-foreground truncate">{testimonial.bunker}</div>
+                                    </div>
+                                    <div className="text-label text-secondary flex-shrink-0">
+                                        {testimonial.earnings}
+                                    </div>
+                                </div>
                             </motion.div>
                         ))}
                     </div>

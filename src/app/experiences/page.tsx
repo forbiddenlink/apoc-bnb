@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import Image from "next/image";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -11,6 +12,8 @@ import { motion } from "framer-motion";
 import { toast } from "sonner";
 
 export default function ExperiencesPage() {
+    useEffect(() => { document.title = "Raid Parties | APOC-BNB"; }, []);
+
     const handleJoinRaid = (raidTitle: string) => {
         toast.success("Raid squad joined!", {
             description: `You're registered for "${raidTitle}". Good luck out there!`

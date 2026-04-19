@@ -12,6 +12,7 @@ import { HostAvatar } from "@/components/ui/HostAvatar";
 import { HostQuirkBadge } from "@/components/ui/HostQuirkBadge";
 import { FavoriteButton } from "@/components/ui/FavoriteButton";
 import { CompareButton } from "@/components/ui/CompareButton";
+import { IncidentReport } from "@/components/bunker/IncidentReport";
 import { PageTransition, ScrollReveal } from "@/components/ui/PageTransition";
 import {
     ShieldCheck, Wind, Radio, WifiOff, Star, MapPin, Users, AlertTriangle,
@@ -386,6 +387,11 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                         {/* Reviews */}
                         <ScrollReveal>
                             <ReviewsList reviews={reviews} averageRating={bunker.rating} totalReviews={bunker.reviewCount} />
+                        </ScrollReveal>
+
+                        {/* Verified Incidents */}
+                        <ScrollReveal>
+                            <IncidentReport bunkerId={bunker.id} />
                         </ScrollReveal>
                     </div>
 

@@ -55,7 +55,7 @@ export default function Home() {
 
             <Navbar />
 
-            <main className="relative pt-24 pb-mobile-nav md:pb-20">
+            <main id="main-content" className="relative pt-24 pb-mobile-nav md:pb-20">
                 {/* Floating Warning Stickers */}
                 <FloatingStickers variant="hero" />
 

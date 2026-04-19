@@ -4,10 +4,12 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
 import { ApocAiChat } from "@/components/chat/ApocAiChat";
+import { CookieConsent } from "@/components/ui/CookieConsent";
 import { Toaster } from "@/components/ui/Toaster";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { KeyboardShortcuts } from "@/components/ui/KeyboardShortcuts";
 import { KonamiCodeListener } from "@/components/features/KonamiCodeListener";
+import { EmergencyBroadcast } from "@/components/ui/EmergencyBroadcast";
 import { QueryProvider } from "@/components/providers/QueryProvider";
 import { NoiseOverlay } from "@/components/ui/NoiseOverlay";
 import { RouteProgress } from "@/components/ui/RouteProgress";
@@ -92,6 +94,12 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-primary focus:text-black focus:px-4 focus:py-2 focus:font-bold focus:text-sm"
+        >
+          Skip to main content
+        </a>
         <PostHogProvider>
           <NuqsAdapter>
             <QueryProvider>
@@ -102,9 +110,11 @@ export default function RootLayout({
                 {children}
                 <NoiseOverlay />
                 <ApocAiChat />
+                <CookieConsent />
                 <Toaster />
                 <KeyboardShortcuts />
                 <KonamiCodeListener />
+                <EmergencyBroadcast />
               </ErrorBoundary>
               <Analytics />
               <SpeedInsights />
