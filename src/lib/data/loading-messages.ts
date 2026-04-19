@@ -20,6 +20,22 @@ export const loadingMessages = [
   "Avoiding Brotherhood patrols...",
   "Testing air filtration systems...",
   "Encrypting with pre-war tech...",
+  "Arguing with the AI assistant...",
+  "Recalibrating moral compass...",
+  "Checking host's criminal record...",
+  "Measuring radiation levels (fingers crossed)...",
+  "Negotiating with raiders for bandwidth...",
+  "Rebooting from pre-war backup...",
+  "Asking the raven for directions...",
+  "Warming up the reactor (not literally)...",
+  "Consulting the banned items list...",
+  "Calculating survival probability...",
+  "Defrosting emergency rations...",
+  "Teaching the AI about sarcasm...",
+  "Verifying host is still alive...",
+  "Searching for signal (good luck)...",
+  "Flipping through Reverend Rapture's PowerPoint...",
+  "Polishing Karen's laminated rules...",
 ];
 
 export function getRandomLoadingMessage(): string {

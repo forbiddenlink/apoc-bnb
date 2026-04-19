@@ -1,6 +1,9 @@
 // Classified bunker complaint logs and internal memos
 // Revealed when "hacking" the terminal
 
+import { verifiedIncidents } from "./reviews";
+import { mockBunkers } from "./bunkers";
+
 export interface ClassifiedEntry {
   id: string;
   bunkerId: string;
@@ -291,4 +294,47 @@ export const getRandomLogs = (count: number = 5): ClassifiedEntry[] => {
 // Helper to get logs for specific bunker
 export const getBunkerLogs = (bunkerId: string): ClassifiedEntry[] => {
   return classifiedLogs.filter(log => log.bunkerId === bunkerId || log.bunkerId === "system");
+};
+
+// Classified incident reports — derived from real verified incidents
+// These are what APOC-BNB doesn't want you to see
+export interface ClassifiedIncidentLog {
+  id: string;
+  bunkerId: string;
+  bunkerName: string;
+  title: string;
+  date: string;
+  severity: string;
+  description: string;
+  resolution: string;
+  status: "CASE CLOSED" | "ACTIVE INVESTIGATION";
+}
+
+const bunkerNameMap = Object.fromEntries(
+  mockBunkers.map((b) => [b.id, b.title])
+);
+
+export const classifiedIncidentLogs: ClassifiedIncidentLog[] =
+  verifiedIncidents.map((incident) => ({
+    id: `classified-${incident.id}`,
+    bunkerId: incident.bunkerId,
+    bunkerName: bunkerNameMap[incident.bunkerId] ?? "UNKNOWN FACILITY",
+    title: incident.title,
+    date: incident.date,
+    severity: incident.severity,
+    description: incident.description,
+    resolution: incident.resolutionNote ?? "REDACTED" as string,
+    status: incident.resolved
+      ? ("CASE CLOSED" as const)
+      : ("ACTIVE INVESTIGATION" as const),
+  }));
+
+// Helper to get random classified incident logs
+export const getRandomIncidentLogs = (
+  count: number = 5
+): ClassifiedIncidentLog[] => {
+  const shuffled = [...classifiedIncidentLogs].sort(
+    () => Math.random() - 0.5
+  );
+  return shuffled.slice(0, count);
 };

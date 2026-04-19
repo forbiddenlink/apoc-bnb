@@ -31,14 +31,14 @@ const footerLinks = {
     ],
     support: [
         { label: "Emergency Protocol", href: "#" },
-        { label: "Radiation FAQ", href: "#" },
+        { label: "Radiation FAQ", href: "/faq" },
         { label: "Contact Bunker HQ", href: "#" },
         { label: "Report Mutant", href: "#" },
     ],
     legal: [
-        { label: "Terms of Survival", href: "#" },
-        { label: "Privacy Bunker", href: "#" },
-        { label: "Liability Waiver", href: "#" },
+        { label: "Terms of Survival", href: "/terms" },
+        { label: "Privacy Bunker", href: "/terms" },
+        { label: "Liability Waiver", href: "/terms" },
         { label: "Cookie Rations", href: "#" },
     ],
 };

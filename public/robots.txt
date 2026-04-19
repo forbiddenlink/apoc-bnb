@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://apoc-bnb.vercel.app
+
+# Sitemaps
+Sitemap: https://apoc-bnb.vercel.app/sitemap.xml

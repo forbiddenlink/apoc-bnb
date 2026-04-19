@@ -267,6 +267,17 @@ Amenities include: Steel door (it sticks sometimes), 'air' filtration (we assume
     id: "bunker-5",
     title: "Orbital Safe House",
     description: "Space station suite with zero radiation guarantee",
+    longDescription: `The International Space Station. Yes, THAT one. Captain Cosmos was mid-mission when The Event happened. He watched the whole thing from 250 miles up with a pouch of reconstituted shrimp cocktail in one hand and mounting existential horror in the other.
+
+He hasn't fully processed it. He might never process it. But he HAS converted the station into the most exclusive listing on APOC-BnB. Capacity: 2. Waitlist: 847. Availability: Never.
+
+The zero-gravity experience is, objectively, incredible. You will float. You will laugh. You will bump into things. You will try to drink water and it will become a sphere and you will cry because it's beautiful and because everything you've ever known is a smoldering marble outside the window.
+
+About the Earth-viewing: there's a 3-minute rule. Captain Cosmos implemented it after the third guest had a complete psychological break staring at what used to be the Eastern Seaboard. The tears don't fall in zero-g. They just... accumulate on your face in a growing, wobbling dome of sadness. It's actually kind of mesmerizing, which makes the whole thing worse.
+
+The food situation: freeze-dried everything. The ice cream is a lie (it's chalk that believes in itself). All water has been recycled approximately 847 times. Through what, you ask? Through EVERYTHING. Captain Cosmos will cheerfully explain the urine reclamation process during dinner. He does this every time. He thinks it's a fun fact.
+
+Why is it always sold out? Two beds. Two hundred miles above every problem you've ever had. Everyone wants to escape the apocalypse. Nobody wants to escape it more than the man who watched it happen from space and still signs off every message with 'Stay stellar!' like his heart isn't in pieces.`,
     location: {
       name: "Low Earth Orbit",
       coordinates: [0, 0],
@@ -326,6 +337,17 @@ Amenities include: Steel door (it sticks sometimes), 'air' filtration (we assume
     id: "bunker-6",
     title: "Mountain Fortress",
     description: "Hollowed-out mountain with natural protection",
+    longDescription: `Mountain Man Mike has been waiting for this moment since 2015. He told everyone. His family. His coworkers. The guy at the hardware store who sold him 400 pounds of dried lentils. "Society will collapse," he said. "I'll be ready," he said. They laughed. They are not laughing now. Mike is. Quietly. Into his beard. Which is magnificent.
+
+The mountain fortress is hollowed out of solid granite -- 200 feet of natural radiation shielding in every direction. Mike did most of the work himself over seven years with a pickaxe, a wheelbarrow, and what he describes as "righteous energy." The result is surprisingly sophisticated: carved living quarters, a communal kitchen with a wood-burning stove, and an underground lake so pristine you can kayak on it. Yes. Kayaking. Two hundred feet below the surface. In the dark. With bioluminescent algae providing ambient lighting. It's either the most magical or most terrifying experience you'll have. Both, usually.
+
+Communication is handled by Mike's raven, also named Mike. The raven delivers handwritten notes between guests and the surface. Why is the raven also named Mike? Guests have asked. One guest spent six days investigating. They found journals. Photographs. Something else. They left early, muttering. We no longer discuss the naming convention. The raven watches. Always.
+
+The composting toilet situation is non-negotiable. There are four of them. They work. Mike will explain the nitrogen cycle to you whether you want him to or not. He considers this essential survival knowledge. He is technically correct. You will know more about human waste decomposition than you ever wanted to.
+
+Important warnings: The old mining shaft in the east corridor is OFF LIMITS. Children have entered it. They found something. They started a small society. We send supply lists via the raven. They seem happy. Do not follow them.
+
+Synthetic fabrics are banned. Mike can detect polyester from 30 feet. He claims it "disrespects the mountain." Wool, cotton, leather only. Shoes with arch support are also banned. "We suffer as nature intended," reads the wooden plaque at the entrance. Mike carved it himself. He's proud of it.`,
     location: {
       name: "Rocky Peaks",
       coordinates: [-105.2705, 40.015],

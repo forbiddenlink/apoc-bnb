@@ -42,6 +42,21 @@ export const survivalTips = [
   "Tip: Learn your host's quirks early. It might save your life. Or at least your sanity.",
   "Warning: 'Pet-friendly' doesn't always mean your kind of pet.",
   "Note: Some bunkers are hotels. Some are death traps. Read reviews to know which.",
+  "If the raven delivers your room key, thank it. It remembers who doesn't.",
+  "Gold stars from Teacher Tim are non-transferable. We learned this the hard way.",
+  "Karen's PDF is 47 pages. Read all 47. She WILL quiz you at check-in.",
+  "The Cinnabon smell at Terminal Sanctuary has been investigated by 3 scientific teams. No conclusions.",
+  "Aqua-Dan's 'ocean view' is a salt flat. Do not correct him. He controls the water.",
+  "If Dr. Glow says the readings are 'spicy,' leave immediately.",
+  "The Overseer's jumpsuit is not optional. Resistance is futile. Also unnecessary. The jumpsuit is comfortable.",
+  "Captain Cosmos's 'Stay stellar!' sign-off is not ironic. He means it. Deeply.",
+  "Former Warden Walsh assigns inmate numbers based on a system only he understands.",
+  "Reverend Rapture considers sermons under 2 hours 'brief.' Plan accordingly.",
+  "If Mountain Man Mike's raven follows you, it's not stalking. It's 'monitoring.' (It's stalking.)",
+  "The octopus at Atlantis Research Station has a name. Captain Nemo won't tell you. She prefers it that way.",
+  "General Winters's 'one accident' policy means what you think it means.",
+  "Never ask Wasteland Willie about the bean vault combination. That information died with the last person who asked.",
+  "The Learning Caravan's FIELD TRIP bus has never left the lot. Teacher Tim insists 'next week.'",
 ];
 
 export const getRandomTip = (): string => {

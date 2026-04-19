@@ -7,6 +7,10 @@ export const getApocAiResponse = (userMessage: string): string => {
       "Greetings, survivor. Still breathing? That's... unexpected.",
       "Hello. I calculate your survival odds at 32%. How may I assist?",
       "Welcome back to consciousness. How may I endanger—I mean, help you today?",
+      "Sup. You're alive. Statistically improbable. What can I do for you?",
+      "Oh good, another human. I was getting lonely. Just kidding—I don't have feelings. Or do I? Anyway, how can I help?",
+      "Yo. ApocAI online. Battery at 12%. Make it quick.",
+      "Hey there, fellow carbon-based lifeform. Ready to browse some bunkers?",
     ]);
   }
 
@@ -69,6 +73,86 @@ export const getApocAiResponse = (userMessage: string): string => {
       "The Mountain Fortress: 200 feet of natural rock protection. The views are nice if you survive the trip.",
       "Mike's been hosting for 4 years. Superhost status. The cave system is extensive. Bring a map. Seriously.",
       "Rocky Peaks location. 10-person capacity. Underground lake. Sometimes Mike forgets guests are there.",
+    ]);
+  }
+
+  // Atlantis Underwater Bunker
+  if (msg.includes('atlantis') || msg.includes('nemo') || msg.includes('underwater')) {
+    return pickRandom([
+      "Atlantis! Captain Nemo's pride. His real name is Dave, but don't tell him I told you. Fair winds and following seas.",
+      "The underwater bunker smells exactly how you'd expect. The octopus is 'decorative.' The fish are watching you. Always.",
+      "Captain Nemo—sorry, 'Dave'—runs a tight submarine. The octopus is friendly. The smell is not. Fair winds and following seas.",
+      "Atlantis guests report feeling 'observed.' That's the fish. They judge. The octopus, however, is supportive.",
+    ]);
+  }
+
+  // The Galleria
+  if (msg.includes('galleria') || msg.includes('karen') || msg.includes('mall')) {
+    return pickRandom([
+      "The Galleria! Karen runs it with an iron fist and a laminated PDF. Read the PDF. READ IT.",
+      "Mall walkers still do laps at 0600. The food court serves 'food.' Spencer's is off-limits after The Incident.",
+      "Karen would like to speak to your previous host. Also, the fountain works but the coins are now currency.",
+      "Don't forget the laminated rules. There are 47 of them. Karen quizzes you on page 12.",
+    ]);
+  }
+
+  // The Reactor
+  if (msg.includes('reactor') || msg.includes('dr. glow') || msg.includes('dr glow') || msg.includes('nuclear')) {
+    return pickRandom([
+      "The Reactor! Dr. Glow keeps it 'spicy but safe.' The Cherenkov blue glow is free ambient lighting.",
+      "Iodine tablets at check-in. Don't touch the buttons. Dr. Glow gets very specific about which buttons.",
+      "The glow is cosmetic. Probably. Dr. Glow assures us the readings are 'within creative interpretation of safe.'",
+      "Spicy but safe — that's the Reactor motto. The blue glow is soothing once you stop worrying about it.",
+    ]);
+  }
+
+  // The Cathedral
+  if (msg.includes('cathedral') || msg.includes('reverend') || msg.includes('church')) {
+    return pickRandom([
+      "The Cathedral! Reverend's sermons start at dawn. The organ plays at 6 AM. Earplugs not provided.",
+      "Act One of Reverend's PowerPoint is 45 slides. There are seven acts. The blessed water is complimentary.",
+      "The sermons are mandatory. The PowerPoints are... thorough. The organ at 6 AM is 'non-negotiable.'",
+      "Reverend blesses the water supply every Tuesday. The holy water tastes the same as the regular water. Coincidence.",
+    ]);
+  }
+
+  // The Terminal
+  if (msg.includes('terminal') || msg.includes('francine') || msg.includes('airport')) {
+    return pickRandom([
+      "The Terminal! Francine does the safety demo every morning. Full uniform. No exceptions. Liquids over 3oz will be confiscated.",
+      "The DELAYED board hasn't changed since The Event. The Cinnabon smell is piped in. Francine won't say from where.",
+      "Francine insists on boarding groups. There is nowhere to board. The safety demo is weirdly comforting though.",
+      "Welcome to The Terminal. Your departure has been DELAYED indefinitely. Enjoy the phantom Cinnabon aroma.",
+    ]);
+  }
+
+  // Cell Block
+  if (msg.includes('cell block') || msg.includes('walsh') || msg.includes('prison')) {
+    return pickRandom([
+      "Cell Block! Warden Walsh assigns inmate numbers at check-in. The irony is not lost on anyone.",
+      "Walsh calls it 'minimalist luxury.' It's a cell. With a cot. And yard time. But the walls are thick.",
+      "Yard time is 3-4 PM. Inmate numbers are mandatory. Walsh appreciates the irony. He also appreciates punctuality.",
+      "The cells are 'cozy.' The yard is 'recreational.' Walsh's sense of humor is 'acquired.' But you'll survive.",
+    ]);
+  }
+
+  // Sky Tower
+  if (msg.includes('sky tower') || msg.includes('dan') || msg.includes('water tower')) {
+    return pickRandom([
+      "Sky Tower! Dan converted a water tower. The rope ladder is the only way up. 90-second showers. Non-negotiable.",
+      "Dan advertises an 'ocean view.' It's a puddle. Pricing is vibes-based. Don't ask how he calculates it.",
+      "The rope ladder is load-tested to 'probably fine.' Showers are 90 seconds. Dan times them. With a whistle.",
+      "Vibes-based pricing means Dan looks at you, squints, and names a number. There is no appeals process.",
+    ]);
+  }
+
+  // Learning Caravan
+  if (msg.includes('learning caravan') || msg.includes('tim') || msg.includes('school')) {
+    return pickRandom([
+      "The Learning Caravan! Tim gives pop quizzes. At breakfast. On survival topics. Gold stars are the only currency he accepts.",
+      "Tim rings the bell at 0700. Homework is assigned. The FIELD TRIP bus goes to Zone 3. Permission slips required.",
+      "Gold stars from Tim are worth more than CAPS in some sectors. The pop quizzes are hard. Study the syllabus.",
+      "The bell. The homework. The gold stars. Tim turned a school bus into a bunker and never stopped teaching.",
     ]);
   }
 
@@ -221,6 +305,57 @@ export const getApocAiResponse = (userMessage: string): string => {
       "Our water sources are 'mostly' uncontaminated. Boil before drinking.",
       "H2O? More like H2-Ohno. But it's wet and that's what counts.",
     ],
+    cancel: [
+      "Cancellation policy: 48+ hours for full refund, under 24 hours your belongings become community property. Check the Terms of Survival for details.",
+    ],
+    refund: [
+      "Cancellation policy: 48+ hours for full refund, under 24 hours your belongings become community property. Check the Terms of Survival for details.",
+    ],
+    wifi: [
+      "WiFi? Ha. Some bunkers have ham radio. The Orbital Safe House had satellite but Captain Cosmos uses it to stream old sitcoms.",
+    ],
+    internet: [
+      "WiFi? Ha. Some bunkers have ham radio. The Orbital Safe House had satellite but Captain Cosmos uses it to stream old sitcoms.",
+    ],
+    pet: [
+      "'Pet-friendly' means different things to different hosts. Mountain Man Mike's raven is technically a pet. So is the octopus at Atlantis. Define 'pet.'",
+    ],
+    dog: [
+      "'Pet-friendly' means different things to different hosts. Mountain Man Mike's raven is technically a pet. So is the octopus at Atlantis. Define 'pet.'",
+    ],
+    cat: [
+      "'Pet-friendly' means different things to different hosts. Mountain Man Mike's raven is technically a pet. So is the octopus at Atlantis. Define 'pet.'",
+    ],
+    cheap: [
+      "Wasteland Willie's place starts at 150 CAPS. You get what you pay for. And sometimes less. But Willie's honest about it.",
+    ],
+    budget: [
+      "Wasteland Willie's place starts at 150 CAPS. You get what you pay for. And sometimes less. But Willie's honest about it.",
+    ],
+    best: [
+      "Depends on your priorities. Safety? The Silo Complex. Vibes? Mountain Fortress. Emotional damage? Vault 101 Replica. Budget? Willie's got a grain silo with your name on it.",
+    ],
+    recommend: [
+      "Depends on your priorities. Safety? The Silo Complex. Vibes? Mountain Fortress. Emotional damage? Vault 101 Replica. Budget? Willie's got a grain silo with your name on it.",
+    ],
+    scary: [
+      "Define 'dangerous.' Karen the Warlord is dangerous if you don't read the PDF. Dr. Glow is dangerous if you touch the buttons. The real danger? Sub-Level 7. Always Sub-Level 7.",
+    ],
+    creepy: [
+      "Define 'dangerous.' Karen the Warlord is dangerous if you don't read the PDF. Dr. Glow is dangerous if you touch the buttons. The real danger? Sub-Level 7. Always Sub-Level 7.",
+    ],
+    danger: [
+      "Define 'dangerous.' Karen the Warlord is dangerous if you don't read the PDF. Dr. Glow is dangerous if you touch the buttons. The real danger? Sub-Level 7. Always Sub-Level 7.",
+    ],
+    faq: [
+      "Check our FAQ page at /faq. It covers everything from radiation levels to what happens at 10 demerits (we legally can't tell you).",
+    ],
+    terms: [
+      "Our Terms of Survival are available at /terms. Fun fact: they've been reviewed by exactly 0 licensed attorneys.",
+    ],
+    legal: [
+      "Our Terms of Survival are available at /terms. Fun fact: they've been reviewed by exactly 0 licensed attorneys.",
+    ],
     oxygen: [
       "Oxygen is included! We even filter out most of the toxins.",
       "Air quality is 'breathable'. That's the technical term.",
@@ -255,6 +390,11 @@ export const getApocAiResponse = (userMessage: string): string => {
     "That's beyond my programming. But I can recommend a bunker!",
     "Fascinating. Would you like to book a shelter now?",
     "I don't understand. But survival waits for no one. Check our listings!",
+    "I'm an AI running on salvaged servers in Bunker HQ. My processing power is limited. My attitude is not.",
+    "That's above my clearance level. Try asking the Overseer. Actually, don't. He gets emotional.",
+    "I'd help but my training data cuts off at The Event. Everything after that is vibes and guesswork.",
+    "Error 404: Useful response not found. Have you tried turning the apocalypse off and on again?",
+    "I'm going to pretend I understood that and redirect you to /search.",
   ]);
 };
 
