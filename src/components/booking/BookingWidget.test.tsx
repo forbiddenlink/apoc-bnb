@@ -1,5 +1,5 @@
 import { expect, test, describe, vi } from 'vitest'
-import { render, screen, fireEvent } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { BookingWidget } from './BookingWidget'
 import '@testing-library/jest-dom'
 
@@ -11,11 +11,21 @@ vi.mock('@/lib/hooks/useBookBunker', () => ({
     }),
 }))
 
+// Mock the useSoundEffects hook
+vi.mock('@/lib/hooks/useSoundEffects', () => ({
+    useSoundEffects: () => ({
+        playSuccess: vi.fn(),
+        playError: vi.fn(),
+        playClick: vi.fn(),
+    }),
+}))
+
 describe('BookingWidget', () => {
     test('renders with initial price in CAPS', () => {
         render(<BookingWidget bunkerId="test-bunker-1" price={100} />)
         expect(screen.getByText('100')).toBeInTheDocument()
-        expect(screen.getByText('CAPS')).toBeInTheDocument()
+        // "CAPS" appears multiple times (price label, total, breakdown), so use getAllByText
+        expect(screen.getAllByText('CAPS').length).toBeGreaterThan(0)
     })
 
     test('calculates total price with taxes (Bottle Caps)', () => {
@@ -30,20 +40,19 @@ describe('BookingWidget', () => {
         expect(screen.getByText(/375/)).toBeInTheDocument()
     })
 
-    test('switches currency to BTC', () => {
+    test('switches currency to BTC', async () => {
         // 100 CAPS / 10000 = 0.0100 BTC
         render(<BookingWidget bunkerId="test-bunker-1" price={100} />)
 
-        // Find BTC button (it has the Coins icon)
-        // We can find it by the button's class or role if we added one, but here we can try finding by click action or just index.
-        // The component has two buttons in the toggle, 1st is CAPS, 2nd is BTC.
-        // Click the BTC button using the aria-label we added
-        const btcButton = screen.getByLabelText('Switch to BTC currency');
-        fireEvent.click(btcButton);
+        // The currency toggle is a role="group" with two buttons; BTC is the second one
+        const toggleGroup = screen.getByRole('group');
+        const buttons = toggleGroup.querySelectorAll('button');
+        fireEvent.click(buttons[1]); // Second button is BTC
 
-        // Check if price updated
-        // 100 / 10000 = 0.0100
-        expect(screen.getByText('0.0100')).toBeInTheDocument()
-        expect(screen.getByText('BTC')).toBeInTheDocument()
+        // AnimatedPrice has a 150ms delay before updating the displayed value
+        await waitFor(() => {
+            expect(screen.getByText('0.0100')).toBeInTheDocument()
+        })
+        expect(screen.getAllByText('BTC').length).toBeGreaterThan(0)
     })
 })

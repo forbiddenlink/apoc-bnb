@@ -9,24 +9,28 @@ describe('BunkerCard', () => {
 
     test('renders bunker information', () => {
         render(<BunkerCard bunker={bunker} />)
-        
+
         expect(screen.getByText(bunker.title)).toBeInTheDocument()
-        expect(screen.getByText(`${bunker.price.caps} CAPS`)).toBeInTheDocument()
-        expect(screen.getByText(bunker.rating.toFixed(2))).toBeInTheDocument()
+        // Price is split across separate spans: <span>420</span> <span>CAPS</span>
+        expect(screen.getByText(String(bunker.price.caps))).toBeInTheDocument()
+        expect(screen.getByText('CAPS')).toBeInTheDocument()
+        // Component uses .toFixed(1), not .toFixed(2)
+        expect(screen.getByText(bunker.rating.toFixed(1))).toBeInTheDocument()
     })
 
-    test('displays superhost badge when applicable', () => {
+    test('displays rad-level badge', () => {
         render(<BunkerCard bunker={bunker} />)
-        
-        if (bunker.host.isSuperhost) {
-            expect(screen.getByText('SUPERHOST')).toBeInTheDocument()
-        }
+
+        // Component renders RAD-SAFE or HAZARD based on radLevel, not SUPERHOST
+        const expectedBadge = bunker.features.radLevel <= 2 ? 'RAD-SAFE' : 'HAZARD'
+        expect(screen.getByText(expectedBadge)).toBeInTheDocument()
     })
 
     test('shows radiation level badge', () => {
         render(<BunkerCard bunker={bunker} />)
-        
-        const radBadge = screen.getByText(/Radiation/i)
+
+        // Component renders RAD-SAFE or HAZARD, not "Radiation"
+        const radBadge = screen.getByText(/RAD-SAFE|HAZARD/)
         expect(radBadge).toBeInTheDocument()
     })
 })

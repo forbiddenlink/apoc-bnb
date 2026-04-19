@@ -127,6 +127,9 @@ export function DefconIndicator() {
     return (
         <div className="relative hidden md:block">
             <motion.div
+                role="status"
+                aria-live="polite"
+                aria-label={`DEFCON level ${defcon}: ${actualLevel.label}`}
                 animate={isBlinking ? { scale: [1, 1.05, 1] } : {}}
                 transition={{ duration: 0.3, repeat: isBlinking ? 3 : 0 }}
                 className={cn(

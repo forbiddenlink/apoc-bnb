@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 interface PageTransitionProps {
     children: ReactNode;
@@ -9,6 +9,21 @@ interface PageTransitionProps {
 }
 
 const easeOutExpo: [number, number, number, number] = [0.16, 1, 0.3, 1];
+
+function usePrefersReducedMotion(): boolean {
+    const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+    useEffect(() => {
+        const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
+        setPrefersReducedMotion(mql.matches);
+
+        const handler = (e: MediaQueryListEvent) => setPrefersReducedMotion(e.matches);
+        mql.addEventListener("change", handler);
+        return () => mql.removeEventListener("change", handler);
+    }, []);
+
+    return prefersReducedMotion;
+}
 
 const pageVariants: Variants = {
     initial: {
@@ -33,6 +48,12 @@ const pageVariants: Variants = {
     },
 };
 
+const reducedMotionPageVariants: Variants = {
+    initial: { opacity: 1, y: 0 },
+    enter: { opacity: 1, y: 0, transition: { duration: 0 } },
+    exit: { opacity: 1, transition: { duration: 0 } },
+};
+
 const childVariants: Variants = {
     initial: {
         opacity: 0,
@@ -48,13 +69,20 @@ const childVariants: Variants = {
     },
 };
 
+const reducedMotionChildVariants: Variants = {
+    initial: { opacity: 1, y: 0 },
+    enter: { opacity: 1, y: 0, transition: { duration: 0 } },
+};
+
 export function PageTransition({ children, className }: PageTransitionProps) {
+    const prefersReducedMotion = usePrefersReducedMotion();
+
     return (
         <motion.div
             initial="initial"
             animate="enter"
             exit="exit"
-            variants={pageVariants}
+            variants={prefersReducedMotion ? reducedMotionPageVariants : pageVariants}
             className={className}
         >
             {children}
@@ -63,8 +91,10 @@ export function PageTransition({ children, className }: PageTransitionProps) {
 }
 
 export function StaggerChild({ children, className }: PageTransitionProps) {
+    const prefersReducedMotion = usePrefersReducedMotion();
+
     return (
-        <motion.div variants={childVariants} className={className}>
+        <motion.div variants={prefersReducedMotion ? reducedMotionChildVariants : childVariants} className={className}>
             {children}
         </motion.div>
     );
@@ -76,14 +106,16 @@ export function ScrollReveal({
     className,
     delay = 0,
 }: PageTransitionProps & { delay?: number }) {
+    const prefersReducedMotion = usePrefersReducedMotion();
+
     return (
         <motion.div
-            initial={{ opacity: 0, y: 30 }}
+            initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-50px" }}
             transition={{
-                duration: 0.5,
-                delay,
+                duration: prefersReducedMotion ? 0 : 0.5,
+                delay: prefersReducedMotion ? 0 : delay,
                 ease: easeOutExpo,
             }}
             className={className}
@@ -99,6 +131,8 @@ export function StaggerGrid({
     className,
     staggerDelay = 0.08,
 }: PageTransitionProps & { staggerDelay?: number }) {
+    const prefersReducedMotion = usePrefersReducedMotion();
+
     return (
         <motion.div
             initial="initial"
@@ -108,7 +142,7 @@ export function StaggerGrid({
                 initial: {},
                 enter: {
                     transition: {
-                        staggerChildren: staggerDelay,
+                        staggerChildren: prefersReducedMotion ? 0 : staggerDelay,
                     },
                 },
             }}
@@ -120,9 +154,14 @@ export function StaggerGrid({
 }
 
 export function StaggerItem({ children, className }: PageTransitionProps) {
+    const prefersReducedMotion = usePrefersReducedMotion();
+
     return (
         <motion.div
-            variants={{
+            variants={prefersReducedMotion ? {
+                initial: { opacity: 1, y: 0 },
+                enter: { opacity: 1, y: 0, transition: { duration: 0 } },
+            } : {
                 initial: { opacity: 0, y: 20 },
                 enter: {
                     opacity: 1,
