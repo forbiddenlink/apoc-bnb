@@ -223,8 +223,8 @@ Amenities include: Steel door (it sticks sometimes), 'air' filtration (we assume
     rating: 4.3,
     reviewCount: 45,
     images: [
-      "/images/bunker-grain.png",
-      "/images/bunker-grain-interior.png",
+      "/images/bunker-silo-ext.png",
+      "/images/bunker-cave-room.png",
     ],
     amenities: [
       { id: "1", name: "Basic Air Filter", icon: "wind", available: true },
@@ -497,8 +497,8 @@ Fun fact: The mall walkers never stopped. There are elderly survivors who do lap
     reviewCount: 42,
     images: [
       "/images/bunker-mall.png",
-      "/images/bunker-mall-foodcourt.png",
-      "/images/bunker-mall-bedroom.png",
+      "/images/bunker-vault-diner.png",
+      "/images/bunker5-interior.png",
     ],
     amenities: [
       { id: "1", name: "Food Court Kitchen", icon: "utensils", available: true },
@@ -564,9 +564,9 @@ Dr. Glow is technically a doctor. Of physics. Not medicine. This is important to
     rating: 4.72,
     reviewCount: 31,
     images: [
-      "/images/bunker-reactor.png",
-      "/images/bunker-reactor-core.png",
-      "/images/bunker-reactor-bedroom.png",
+      "/images/bunker1-silo.png",
+      "/images/bunker1-spa.png",
+      "/images/armory.png",
     ],
     amenities: [
       { id: "1", name: "Unlimited Power", icon: "zap", available: true },
@@ -632,9 +632,9 @@ Bonus: The organ still works. The reverend plays it. Often. At 6 AM. To wake eve
     rating: 4.55,
     reviewCount: 67,
     images: [
-      "/images/bunker-cathedral.png",
-      "/images/bunker-cathedral-beds.png",
-      "/images/bunker-cathedral-organ.png",
+      "/images/bunker-cave.png",
+      "/images/bunker6-underground-lake.png",
+      "/images/bunker-vault.png",
     ],
     amenities: [
       { id: "1", name: "High Capacity Shelter", icon: "users", available: true },
@@ -700,9 +700,9 @@ Warning: Francine WILL check your bags. Not for weapons. For organization. She h
     rating: 4.78,
     reviewCount: 53,
     images: [
-      "/images/bunker-airport.png",
-      "/images/bunker-airport-sleeping.png",
-      "/images/bunker-airport-shop.png",
+      "/images/bunker-mall.png",
+      "/images/bunker5-space-station.png",
+      "/images/bunker5-interior.png",
     ],
     amenities: [
       { id: "1", name: "Spacious Terminal", icon: "maximize", available: true },
@@ -768,9 +768,9 @@ Guard towers manned. Spotlights functional. Barbed wire fresh. This is the safes
     rating: 4.42,
     reviewCount: 38,
     images: [
-      "/images/bunker-prison.png",
-      "/images/bunker-prison-cells.png",
-      "/images/bunker-prison-kitchen.png",
+      "/images/bunker-silo-ext.png",
+      "/images/bunker-silo-barracks.png",
+      "/images/armory.png",
     ],
     amenities: [
       { id: "1", name: "Maximum Security", icon: "shield", available: true },
@@ -836,9 +836,9 @@ Warning: Water rationing in effect. Shower time: 90 seconds. Dan times it. With 
     rating: 3.95,
     reviewCount: 22,
     images: [
-      "/images/bunker-water-tower.png",
-      "/images/bunker13-view.png",
-      "/images/hydroponics.png",
+      "/images/bunker5-earth-view.png",
+      "/images/bunker1-silo.png",
+      "/images/bunker1-spa.png",
     ],
     amenities: [
       { id: "1", name: "Water Access (Paid)", icon: "droplet", available: true },
@@ -904,9 +904,9 @@ The buses don't move. Tim insists they COULD. Nobody asks him to prove it. The w
     rating: 4.68,
     reviewCount: 44,
     images: [
-      "/images/bunker-bus.png",
-      "/images/bunker14-interior.png",
-      "/images/bunker14-classroom.png",
+      "/images/bunker-underwater-lab.png",
+      "/images/armory.png",
+      "/images/bunker-silo-barracks.png",
     ],
     amenities: [
       { id: "1", name: "Mobile (Theoretically)", icon: "truck", available: true },

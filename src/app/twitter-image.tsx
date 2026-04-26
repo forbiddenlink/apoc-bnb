@@ -21,31 +21,60 @@ export default async function Image() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: '#0a0a0a',
-          backgroundImage: 'radial-gradient(circle at 25% 25%, #1a1a1a 0%, #0a0a0a 50%)',
+          backgroundColor: '#050505',
+          backgroundImage: 'radial-gradient(circle at 50% 50%, #152515 0%, #050505 60%)',
           position: 'relative',
         }}
       >
+        {/* Scanline effect overlay */}
+        <div
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 0, 0, 0.4) 2px, rgba(0, 0, 0, 0.4) 4px)',
+            opacity: 0.5,
+          }}
+        />
+
         {/* Radiation symbol */}
         <div
           style={{
             display: 'flex',
-            fontSize: 100,
-            marginBottom: 10,
+            marginBottom: 30,
+            opacity: 0.9,
           }}
         >
-          ☢️
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            width="120" 
+            height="120" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="#39ff14" 
+            strokeWidth="1.5" 
+            strokeLinecap="round" 
+            strokeLinejoin="round"
+          >
+            <path d="M12 12h.01"/>
+            <path d="M7.5 4.2c-.3-.5-.9-.7-1.3-.4C4 5.5 2.7 8.1 2.3 11c-.1.5.3 1 .8 1.1l7.6-2-3.2-5.9z"/>
+            <path d="M16.5 4.2c.3-.5.9-.7 1.3-.4C20 5.5 21.3 8.1 21.7 11c.1.5-.3 1-.8 1.1l-7.6-2 3.2-5.9z"/>
+            <path d="M12 15c-3.3 0-6.1 1.9-7.5 4.6-.2.4 0 1 .5 1.2 2 .6 4.3.9 6.8.9 2.5 0 4.8-.3 6.8-.9.5-.2.7-.8.5-1.2C18.1 16.9 15.3 15 12 15z"/>
+          </svg>
         </div>
 
         {/* Logo */}
         <div
           style={{
             display: 'flex',
-            fontSize: 72,
+            fontSize: 84,
             fontWeight: 900,
             color: '#ffffff',
-            letterSpacing: '-3px',
+            letterSpacing: '0.1em',
             textTransform: 'uppercase',
+            textShadow: '0 0 30px rgba(57, 255, 20, 0.3)',
           }}
         >
           APOC-BNB
@@ -55,11 +84,12 @@ export default async function Image() {
         <div
           style={{
             display: 'flex',
-            fontSize: 28,
+            fontSize: 36,
             fontWeight: 600,
             color: '#39ff14',
-            marginTop: 16,
-            textShadow: '0 0 20px rgba(57, 255, 20, 0.5)',
+            marginTop: 20,
+            letterSpacing: '0.05em',
+            textShadow: '0 0 20px rgba(57, 255, 20, 0.8)',
           }}
         >
           Survival is Luxury
@@ -72,8 +102,8 @@ export default async function Image() {
             bottom: 0,
             left: 0,
             right: 0,
-            height: 6,
-            background: 'linear-gradient(90deg, #39ff14, #ffea00, #ff003c)',
+            height: 10,
+            background: 'linear-gradient(90deg, rgba(57,255,20,0.8), rgba(212,175,55,0.8), rgba(255,0,60,0.8))',
           }}
         />
       </div>

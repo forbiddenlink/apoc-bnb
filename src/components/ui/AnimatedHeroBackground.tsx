@@ -2,10 +2,25 @@
 
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export function AnimatedHeroBackground() {
     return (
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            {/* Cinematic background image layer */}
+            <div className="absolute inset-0 opacity-20 mix-blend-overlay">
+                <Image 
+                    src="/images/hero-bunker.png" 
+                    alt="Apocalyptic bunker background" 
+                    fill 
+                    priority
+                    className="object-cover"
+                    quality={100}
+                />
+            </div>
+            {/* Dark vignette overlay to ensure text readability */}
+            <div className="absolute inset-0 bg-background/60" />
+
             {/* Slow-moving radial gradient */}
             <motion.div
                 className="absolute inset-0"
