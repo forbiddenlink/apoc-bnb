@@ -1,6 +1,6 @@
 "use client";
-import Map, { Marker, NavigationControl, Popup, Source, Layer } from 'react-map-gl';
-import type { MapRef, ViewStateChangeEvent } from 'react-map-gl';
+import Map, { Marker, NavigationControl, Popup, Source, Layer } from 'react-map-gl/mapbox';
+import type { MapRef, ViewStateChangeEvent } from 'react-map-gl/mapbox';
 import type { FillLayerSpecification, LineLayerSpecification, LngLatBoundsLike } from 'mapbox-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import { useState, useMemo, useCallback, useEffect, useRef } from 'react';
