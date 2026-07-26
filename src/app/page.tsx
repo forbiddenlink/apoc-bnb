@@ -65,6 +65,10 @@ export default function Home() {
                     {/* Radiation haze shader background */}
                     <RadiationHazeCanvas />
 
+                    {/* Hero content — explicit stacking context above the shader canvas
+                        (the canvas is -z-10, this is belt-and-suspenders so content never
+                        disappears once its opacity-only entrance animations settle) */}
+                    <div className="relative z-10 flex flex-col items-center w-full">
                     {/* Alert Badge */}
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
@@ -250,6 +254,7 @@ export default function Home() {
 
                     {/* Scroll Indicator */}
                     <ScrollIndicator />
+                    </div>
                 </section>
 
                 {/* -- FEATURED BUNKERS -- */}

@@ -108,11 +108,22 @@ export function RadiationHazeCanvas({ className }: { className?: string }) {
             gl.uniform1f(uTime, 0);
             gl.drawArrays(gl.TRIANGLES, 0, 3);
         } else {
-            const io = new IntersectionObserver(([e]) => (e.isIntersecting ? play() : stop()), {
-                threshold: 0,
-            });
+            // Track the latest intersection state so a visibilitychange (e.g. tab
+            // refocus) never resumes the loop while the canvas is scrolled offscreen.
+            let isIntersecting = false;
+            const io = new IntersectionObserver(
+                ([e]) => {
+                    isIntersecting = e.isIntersecting;
+                    if (isIntersecting && !document.hidden) play();
+                    else stop();
+                },
+                { threshold: 0 }
+            );
             io.observe(canvas);
-            const onVis = () => (document.hidden ? stop() : play());
+            const onVis = () => {
+                if (document.hidden) stop();
+                else if (isIntersecting) play();
+            };
             document.addEventListener("visibilitychange", onVis);
             return () => {
                 stop();
@@ -127,7 +138,12 @@ export function RadiationHazeCanvas({ className }: { className?: string }) {
     }, []);
 
     return (
-        <div className={cn("absolute inset-0 overflow-hidden pointer-events-none", className)}>
+        <div
+            className={cn(
+                "absolute inset-0 -z-10 overflow-hidden pointer-events-none",
+                className
+            )}
+        >
             {/* Cinematic background image layer (LCP element — preserved verbatim) */}
             <div className="absolute inset-0 opacity-20 mix-blend-overlay">
                 <Image
