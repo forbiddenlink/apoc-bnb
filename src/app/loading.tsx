@@ -20,9 +20,6 @@ export default function Loading() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center relative overflow-hidden">
-      {/* Scanline effect */}
-      <div className="pointer-events-none fixed inset-0 z-40 scanline opacity-20" />
-
       {/* Bunker Buddy mascot */}
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}

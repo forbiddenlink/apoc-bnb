@@ -51,9 +51,6 @@ export default function Home() {
 
     return (
         <PageTransition className="min-h-screen bg-background relative overflow-hidden font-sans">
-            {/* Scanline Effect Overlay */}
-            <div className="pointer-events-none fixed inset-0 z-40 scanline opacity-15" />
-
             <Navbar />
 
             <main id="main-content" className="relative pt-24 pb-mobile-nav md:pb-20">
