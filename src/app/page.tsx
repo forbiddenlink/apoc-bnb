@@ -15,7 +15,8 @@ import { SystemStatus } from "@/components/ui/SystemStatus";
 import { FloatingStickers } from "@/components/ui/WarningStickers";
 import { SurvivalTip } from "@/components/ui/SurvivalTip";
 import { GuestStories } from "@/components/features/GuestStories";
-import { AnimatedHeroBackground, ScrollIndicator } from "@/components/ui/AnimatedHeroBackground";
+import { RadiationHazeCanvas } from "@/components/ui/RadiationHazeCanvas";
+import { ScrollIndicator } from "@/components/ui/ScrollIndicator";
 import { CommandCenterStats } from "@/components/ui/CommandCenterStats";
 import { TypewriterText } from "@/components/ui/TypewriterText";
 import { PageTransition, ScrollReveal, StaggerGrid, StaggerItem } from "@/components/ui/PageTransition";
@@ -61,8 +62,8 @@ export default function Home() {
 
                 {/* -- HERO SECTION -- */}
                 <section className="relative container mx-auto px-4 py-16 sm:py-24 lg:py-32 flex flex-col items-center text-center z-10 min-h-[90vh] justify-center">
-                    {/* Animated Background */}
-                    <AnimatedHeroBackground />
+                    {/* Radiation haze shader background */}
+                    <RadiationHazeCanvas />
 
                     {/* Alert Badge */}
                     <motion.div
