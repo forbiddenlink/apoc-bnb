@@ -9,11 +9,12 @@ export function AnimatedHeroBackground() {
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {/* Cinematic background image layer */}
             <div className="absolute inset-0 opacity-20 mix-blend-overlay">
-                <Image 
-                    src="/images/hero-bunker.png" 
-                    alt="Apocalyptic bunker background" 
-                    fill 
+                <Image
+                    src="/images/hero-bunker.png"
+                    alt="Apocalyptic bunker background"
+                    fill
                     priority
+                    sizes="100vw"
                     className="object-cover"
                     quality={100}
                 />
