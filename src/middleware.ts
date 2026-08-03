@@ -2,15 +2,24 @@ import arcjet, { shield, detectBot } from "@arcjet/next";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 
-const aj = arcjet({
-  key: process.env.ARCJET_KEY!,
-  rules: [
-    shield({ mode: "LIVE" }),
-    detectBot({ mode: "LIVE", allow: ["CATEGORY:SEARCH_ENGINE"] }),
-  ],
-});
+const arcjetKey = process.env.ARCJET_KEY;
+
+const aj = arcjetKey
+  ? arcjet({
+      key: arcjetKey,
+      rules: [
+        shield({ mode: "LIVE" }),
+        detectBot({ mode: "LIVE", allow: ["CATEGORY:SEARCH_ENGINE"] }),
+      ],
+    })
+  : null;
 
 export async function middleware(request: NextRequest) {
+  // Skip protection when no key is configured (local/dev without Arcjet)
+  if (!aj) {
+    return NextResponse.next();
+  }
+
   const decision = await aj.protect(request);
   if (decision.isDenied()) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });

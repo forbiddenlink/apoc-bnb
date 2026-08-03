@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -24,20 +24,22 @@ export function TypewriterText({
     const [displayedText, setDisplayedText] = useState("");
     const [isComplete, setIsComplete] = useState(false);
     const [showCursorState, setShowCursorState] = useState(true);
+    const onCompleteRef = useRef(onComplete);
+    onCompleteRef.current = onComplete;
 
     useEffect(() => {
+        let intervalId: ReturnType<typeof setInterval> | undefined;
         const timeout = setTimeout(() => {
             let currentIndex = 0;
-            const interval = setInterval(() => {
+            intervalId = setInterval(() => {
                 if (currentIndex <= text.length) {
                     setDisplayedText(text.slice(0, currentIndex));
                     currentIndex++;
                 } else {
-                    clearInterval(interval);
+                    if (intervalId) clearInterval(intervalId);
                     setIsComplete(true);
-                    onComplete?.();
+                    onCompleteRef.current?.();
 
-                    // Blink cursor twice then hide
                     if (showCursor) {
                         setTimeout(() => {
                             setShowCursorState(false);
@@ -45,12 +47,13 @@ export function TypewriterText({
                     }
                 }
             }, speed);
-
-            return () => clearInterval(interval);
         }, delay);
 
-        return () => clearTimeout(timeout);
-    }, [text, speed, delay, onComplete, showCursor]);
+        return () => {
+            clearTimeout(timeout);
+            if (intervalId) clearInterval(intervalId);
+        };
+    }, [text, speed, delay, showCursor]);
 
     return (
         <span className={cn("relative inline", className)}>

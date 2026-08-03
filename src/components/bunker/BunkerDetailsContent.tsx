@@ -19,7 +19,7 @@ import {
     Leaf, Sparkles, Monitor, Package, Crosshair, Satellite, Map, Mountain,
     Droplet, Flame, Eye, Rocket, Globe, Zap, Activity, Heart, UtensilsCrossed,
     Film, Maximize, ShoppingBag, TrendingUp, Smile, Sun, Unlock, Music,
-    X, Truck, BookOpen, Ban, Thermometer, ArrowUp, Gauge,
+    X, Truck, BookOpen, Ban, Thermometer, ArrowUp, Gauge, ChevronLeft, ChevronRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Bunker, Review } from "@/types";
@@ -213,8 +213,7 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                 {/* Gallery */}
                 <ScrollReveal delay={0.1}>
                     <div className="mb-12">
-                        {/* Main Image */}
-                        <div className="relative h-[50vh] md:h-[60vh] overflow-hidden border border-white/10 mb-2">
+                        <div className="relative h-[50vh] md:h-[60vh] overflow-hidden border border-white/10 mb-2 group/gallery">
                             <motion.div
                                 key={activeImage}
                                 initial={{ opacity: 0, scale: 1.05 }}
@@ -230,18 +229,49 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                                     priority
                                 />
                             </motion.div>
-                            {/* Gradient overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                            {/* Image counter */}
-                            <div className="absolute bottom-4 right-4 px-3 py-1 bg-black/60 backdrop-blur-sm border border-white/10 text-sm font-mono">
-                                {activeImage + 1} / {bunker.images.length}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+
+                            {bunker.images.length > 1 && (
+                                <>
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            setActiveImage(
+                                                (activeImage - 1 + bunker.images.length) % bunker.images.length
+                                            )
+                                        }
+                                        className="absolute left-3 top-1/2 -translate-y-1/2 z-20 h-10 w-10 flex items-center justify-center border border-white/20 bg-black/75 text-white hover:border-primary hover:text-primary transition-colors"
+                                        aria-label="Previous photo"
+                                    >
+                                        <ChevronLeft className="h-5 w-5" />
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            setActiveImage((activeImage + 1) % bunker.images.length)
+                                        }
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 z-20 h-10 w-10 flex items-center justify-center border border-white/20 bg-black/75 text-white hover:border-primary hover:text-primary transition-colors"
+                                        aria-label="Next photo"
+                                    >
+                                        <ChevronRight className="h-5 w-5" />
+                                    </button>
+                                </>
+                            )}
+
+                            <div className="absolute bottom-4 left-4 right-4 z-20 flex items-end justify-between gap-3 pointer-events-none">
+                                <span className="text-[10px] uppercase tracking-[0.2em] text-white/70 font-mono bg-black/50 px-2 py-1 border border-white/10">
+                                    Facility recon
+                                </span>
+                                <div className="px-3 py-1 bg-black/70 backdrop-blur-sm border border-white/10 text-sm font-mono tabular-nums">
+                                    {activeImage + 1} / {bunker.images.length}
+                                </div>
                             </div>
                         </div>
-                        {/* Thumbnails */}
                         <div className="flex gap-2 overflow-x-auto no-scrollbar">
                             {bunker.images.map((image, index) => (
                                 <button
-                                    key={index}
+                                    key={image}
+                                    type="button"
                                     onClick={() => setActiveImage(index)}
                                     className={cn(
                                         "relative flex-shrink-0 w-20 h-14 overflow-hidden border-2 transition-all",
@@ -249,6 +279,8 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                                             ? "border-primary shadow-[0_0_10px_rgba(57,255,20,0.3)]"
                                             : "border-white/10 hover:border-white/30"
                                     )}
+                                    aria-label={`View photo ${index + 1}`}
+                                    aria-current={activeImage === index ? "true" : undefined}
                                 >
                                     <Image src={image} alt={`Thumbnail ${index + 1}`} fill className="object-cover" />
                                 </button>

@@ -11,7 +11,6 @@ export function GuestStories() {
 
   const currentStory = guestStories[currentIndex];
 
-  // Auto-rotate stories
   useEffect(() => {
     if (isPaused) return;
 
@@ -44,8 +43,10 @@ export function GuestStories() {
   return (
     <section className="py-12 md:py-16 bg-muted/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="text-center mb-8 md:mb-12">
+          <p className="text-label text-secondary mb-2 tracking-[0.25em]">
+            FIELD REPORTS · REDACTED FOR MORALE
+          </p>
           <h2 className="text-2xl md:text-3xl font-bold text-foreground mb-3">
             Guest &#34;Testimonials&#34;
           </h2>
@@ -54,14 +55,12 @@ export function GuestStories() {
           </p>
         </div>
 
-        {/* Story Carousel */}
         <div
           className="relative max-w-4xl mx-auto"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
         >
-          {/* Terminal-style container */}
-          <div className="bg-black border-2 border-secondary/50 rounded-lg p-5 sm:p-8 relative overflow-hidden">
+          <div className="bg-black border-2 border-secondary/50 rounded-sm p-5 sm:p-8 relative overflow-hidden">
             {/* CRT scanlines */}
             <div
               className="absolute inset-0 pointer-events-none opacity-10"
@@ -76,83 +75,91 @@ export function GuestStories() {
               }}
             />
 
+            {/* Terminal chrome header */}
+            <div className="relative z-10 flex items-center justify-between gap-3 mb-5 pb-3 border-b border-secondary/20 font-mono text-[10px] sm:text-xs tracking-wider text-secondary/70 uppercase">
+              <span>LOG //{String(currentIndex + 1).padStart(2, "0")}</span>
+              <span className="truncate">
+                {currentStory.survived ? "STATUS: ALIVE" : "STATUS: …COMPLICATED"}
+              </span>
+              <span className="hidden sm:inline tabular-nums">
+                {currentIndex + 1}/{guestStories.length}
+              </span>
+            </div>
+
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentIndex}
-                initial={{ opacity: 0, x: 50 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -50 }}
-                transition={{ duration: 0.5 }}
-                className="relative z-10"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -12 }}
+                transition={{ duration: 0.35 }}
+                className="relative z-10 min-h-[9.5rem] sm:min-h-[8rem]"
               >
-                {/* Quote */}
-                <blockquote className="text-base sm:text-xl font-mono text-secondary mb-6 leading-relaxed">
+                <blockquote className="text-base sm:text-xl font-mono text-secondary mb-6 leading-relaxed pr-0">
                   &#34;{currentStory.quote}&#34;
                 </blockquote>
 
-                {/* Guest Info & Rating */}
                 <div className="flex items-center justify-between flex-wrap gap-4">
-                  <div className="flex items-center gap-3">
-                    <div>
-                      <div className="flex items-center gap-2 mb-1">
-                        <p className="font-bold text-secondary">
-                          {currentStory.guestName}
-                        </p>
-                        {!currentStory.survived && (
-                          <Skull className="h-4 w-4 text-red-500" />
-                        )}
-                      </div>
-                      <p className="text-sm text-secondary/70">
-                        Stayed at {currentStory.bunkerRef}
-                      </p>
+                  <div>
+                    <div className="flex items-center gap-2 mb-1">
+                      <p className="font-bold text-secondary">{currentStory.guestName}</p>
+                      {!currentStory.survived && (
+                        <Skull className="h-4 w-4 text-accent" aria-hidden="true" />
+                      )}
                     </div>
+                    <p className="text-sm text-secondary/70">
+                      Stayed at {currentStory.bunkerRef}
+                    </p>
                   </div>
-
-                  {/* Star Rating */}
-                  <div className="flex gap-0.5">
+                  <div className="flex gap-0.5" aria-label={`${currentStory.rating} star rating`}>
                     {renderStars(currentStory.rating)}
                   </div>
                 </div>
               </motion.div>
             </AnimatePresence>
 
-            {/* Navigation Buttons */}
-            <div className="absolute top-1/2 -translate-y-1/2 left-4 right-4 flex justify-between pointer-events-none">
+            {/* Controls BELOW the quote — never over text */}
+            <div className="relative z-10 mt-6 pt-4 border-t border-secondary/20 flex items-center justify-between gap-3">
               <button
+                type="button"
                 onClick={goToPrev}
-                className="pointer-events-auto bg-black/80 border border-secondary/50 rounded-full p-2 hover:bg-secondary/20 transition-colors"
+                className="inline-flex items-center gap-1.5 border border-secondary/40 bg-black/80 px-3 py-2 text-xs font-mono uppercase tracking-widest text-secondary hover:bg-secondary/15 hover:border-secondary transition-colors"
                 aria-label="Previous story"
               >
-                <ChevronLeft className="h-5 w-5 text-secondary" />
+                <ChevronLeft className="h-4 w-4" />
+                <span className="hidden sm:inline">Prev</span>
               </button>
+
+              <div className="flex justify-center gap-2 flex-wrap">
+                {guestStories.map((_, index) => (
+                  <button
+                    key={index}
+                    type="button"
+                    onClick={() => setCurrentIndex(index)}
+                    className={`h-2 rounded-full transition-all ${
+                      index === currentIndex
+                        ? "bg-secondary w-8"
+                        : "bg-secondary/30 w-2 hover:bg-secondary/50"
+                    }`}
+                    aria-label={`Go to story ${index + 1}`}
+                    aria-current={index === currentIndex ? "true" : undefined}
+                  />
+                ))}
+              </div>
+
               <button
+                type="button"
                 onClick={goToNext}
-                className="pointer-events-auto bg-black/80 border border-secondary/50 rounded-full p-2 hover:bg-secondary/20 transition-colors"
+                className="inline-flex items-center gap-1.5 border border-secondary/40 bg-black/80 px-3 py-2 text-xs font-mono uppercase tracking-widest text-secondary hover:bg-secondary/15 hover:border-secondary transition-colors"
                 aria-label="Next story"
               >
-                <ChevronRight className="h-5 w-5 text-secondary" />
+                <span className="hidden sm:inline">Next</span>
+                <ChevronRight className="h-4 w-4" />
               </button>
-            </div>
-
-            {/* Indicator Dots */}
-            <div className="flex justify-center gap-2 mt-8">
-              {guestStories.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentIndex(index)}
-                  className={`h-2 rounded-full transition-all ${
-                    index === currentIndex
-                      ? "bg-secondary w-8"
-                      : "bg-secondary/30 w-2 hover:bg-secondary/50"
-                  }`}
-                  aria-label={`Go to story ${index + 1}`}
-                />
-              ))}
             </div>
           </div>
 
-          {/* Terminal glow effect */}
-          <div className="absolute inset-0 -z-10 bg-secondary/10 blur-xl rounded-lg" />
+          <div className="absolute inset-0 -z-10 bg-secondary/10 blur-xl rounded-sm" />
         </div>
       </div>
     </section>

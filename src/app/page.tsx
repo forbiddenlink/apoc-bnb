@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { Search, MapPin, Calendar, ShieldAlert, Users } from "lucide-react";
+import { MapPin, Calendar, ShieldAlert, Users } from "lucide-react";
 
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -15,8 +15,10 @@ import { SystemStatus } from "@/components/ui/SystemStatus";
 import { FloatingStickers } from "@/components/ui/WarningStickers";
 import { SurvivalTip } from "@/components/ui/SurvivalTip";
 import { GuestStories } from "@/components/features/GuestStories";
+import { MissionBriefing } from "@/components/features/MissionBriefing";
 import { AnimatedHeroBackground, ScrollIndicator } from "@/components/ui/AnimatedHeroBackground";
 import { CommandCenterStats } from "@/components/ui/CommandCenterStats";
+import { IncidentCounter } from "@/components/ui/IncidentCounter";
 import { TypewriterText } from "@/components/ui/TypewriterText";
 import { PageTransition, ScrollReveal, StaggerGrid, StaggerItem } from "@/components/ui/PageTransition";
 
@@ -32,7 +34,6 @@ export default function Home() {
         location: "Anywhere (Rad-Free)",
         guests: 2,
     });
-    const [heroTextComplete, setHeroTextComplete] = useState(false);
 
     const handleSearch = () => {
         updateSearchFilters({
@@ -64,15 +65,20 @@ export default function Home() {
                     {/* Animated Background */}
                     <AnimatedHeroBackground />
 
-                    {/* Alert Badge */}
+                    {/* Brand + alert */}
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        className="inline-flex items-center gap-3 border-l-2 border-primary bg-primary/5 pl-4 pr-6 py-2 text-xs font-medium text-primary tracking-[0.2em] uppercase mb-8 sm:mb-12 backdrop-blur-sm"
+                        transition={{ delay: 0.15 }}
+                        className="mb-6 sm:mb-8 flex flex-col items-center gap-4"
                     >
-                        <ShieldAlert className="h-4 w-4 animate-pulse" />
-                        <span>DEFCON 3: Weekends filling up fast</span>
+                        <p className="font-mono text-sm sm:text-base tracking-[0.35em] text-primary uppercase">
+                            APOC-BNB
+                        </p>
+                        <div className="inline-flex items-center gap-3 border-l-2 border-primary bg-primary/5 pl-4 pr-6 py-2 text-xs font-medium text-primary tracking-[0.2em] uppercase backdrop-blur-sm">
+                            <ShieldAlert className="h-4 w-4 animate-pulse" />
+                            <span>DEFCON 3: Weekends filling up fast</span>
+                        </div>
                     </motion.div>
 
                     {/* Hero Headline with Typewriter */}
@@ -87,29 +93,31 @@ export default function Home() {
                             speed={50}
                             delay={500}
                             showCursor={false}
-                            onComplete={() => setTimeout(() => setHeroTextComplete(true), 200)}
                         />
-                        <br className="hidden sm:block" />
-                        <motion.span
-                            initial={{ opacity: 0 }}
-                            animate={heroTextComplete ? { opacity: 1 } : {}}
-                            transition={{ duration: 0.5 }}
-                            className="font-bold text-gold-gradient"
-                        >
-                            {heroTextComplete && "STYLE"}
-                        </motion.span>
+                        <br className="hidden sm:block" />{" "}
+                        <span className="font-bold text-gold-gradient">
+                            <TypewriterText
+                                text="STYLE"
+                                speed={60}
+                                delay={1200}
+                                showCursor={false}
+                            />
+                        </span>
                     </motion.h1>
 
-                    {/* Subheadline */}
+                    {/* Subheadline — what this actually is */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 1.5, duration: 0.6 }}
                     >
-                        <p className="text-body text-muted-foreground max-w-xl mx-auto mb-10 sm:mb-14 font-medium px-4 tracking-widest uppercase opacity-80">
+                        <p className="text-body text-white/90 max-w-2xl mx-auto mb-3 px-4 text-base sm:text-lg leading-relaxed">
+                            The world&apos;s first (and last) rental marketplace for bunkers,
+                            vaults, and fortified hideouts. Airbnb energy. Fallout aesthetic.
+                            Bottle caps accepted.
+                        </p>
+                        <p className="text-sm text-muted-foreground max-w-xl mx-auto mb-10 sm:mb-14 px-4 tracking-[0.15em] uppercase opacity-80">
                             The world ended. Your standards didn&apos;t.
-                            <br className="hidden md:block" />
-                            Book verified fallout-free bunkers & orbital suites.
                         </p>
                     </motion.div>
 
@@ -237,12 +245,12 @@ export default function Home() {
                         </Button>
                     </motion.div>
 
-                    {/* System Status Widget */}
+                    {/* System Status — desktop only; too dense for mobile hero */}
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 2.2 }}
-                        className="mt-12"
+                        className="mt-12 hidden md:block"
                     >
                         <SystemStatus />
                     </motion.div>
@@ -251,13 +259,16 @@ export default function Home() {
                     <ScrollIndicator />
                 </section>
 
+                {/* -- WHAT THIS IS -- */}
+                <MissionBriefing />
+
                 {/* -- FEATURED BUNKERS -- */}
                 <section className="container mx-auto px-4 py-16 md:py-24 relative z-10">
                     <ScrollReveal>
                         <div className="flex items-end justify-between mb-12 pb-4 border-b border-white/10">
                             <div>
                                 <div className="text-label text-secondary mb-2">
-                                    Verified Locations
+                                    Verified Locations · Rad-Checked
                                 </div>
                                 <h2 className="text-h1 text-white">
                                     Trending{" "}
@@ -265,6 +276,10 @@ export default function Home() {
                                         Havens
                                     </span>
                                 </h2>
+                                <p className="mt-2 text-sm text-muted-foreground max-w-md">
+                                    Hand-picked shelters with working blast doors and hosts who
+                                    (usually) respond on the radio.
+                                </p>
                             </div>
 
                             <Button
@@ -312,6 +327,10 @@ export default function Home() {
 
                 {/* -- COMMAND CENTER STATS -- */}
                 <CommandCenterStats />
+
+                <div className="container mx-auto px-4 pb-12 flex justify-center">
+                    <IncidentCounter />
+                </div>
             </main>
 
             <Footer />
