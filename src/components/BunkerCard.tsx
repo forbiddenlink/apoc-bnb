@@ -6,6 +6,7 @@ import { Star, MapPin } from "lucide-react";
 import { Bunker } from "@/types";
 import { FavoriteButton } from "@/components/ui/FavoriteButton";
 import { CompareButton } from "@/components/ui/CompareButton";
+import { TapeBadge } from "@/components/ui/WarningStickers";
 import { cn } from "@/lib/utils";
 
 interface BunkerCardProps {
@@ -83,8 +84,16 @@ export function BunkerCard({
                         )}
                     />
 
+                    {/* Persistent grunge/distress film over the whole card */}
+                    <div className="grunge-overlay" aria-hidden="true" />
+
                     {/* Image Container */}
                     <div className="aspect-video relative overflow-hidden border-b border-white/5">
+                        {/* Distress grain baked onto the photo */}
+                        <div
+                            className="grunge-overlay grunge-overlay-heavy z-20"
+                            aria-hidden="true"
+                        />
                         {/* Green overlay on hover */}
                         <div
                             className={cn(
@@ -170,18 +179,16 @@ export function BunkerCard({
                                         {bunker.title}
                                     </h3>
                                 </div>
-                                {/* Rating - stars fill in sequentially */}
-                                <div
-                                    className={cn(
-                                        "flex items-center gap-1 text-sm font-bold",
-                                        "text-secondary bg-secondary/5 px-1.5 py-0.5 rounded border border-secondary/20",
-                                        "transition-all duration-300 delay-100",
-                                        "group-hover:bg-secondary/10 group-hover:border-secondary/40"
-                                    )}
+                                {/* Rating - gold gaffer-tape badge slapped over the corner */}
+                                <TapeBadge
+                                    variant="gold"
+                                    size="sm"
+                                    seed={index + 3}
+                                    className="shrink-0"
                                 >
-                                    <Star className="h-3.5 w-3.5 fill-secondary transition-transform duration-300 group-hover:scale-110" />
-                                    <span>{bunker.rating.toFixed(1)}</span>
-                                </div>
+                                    <Star className="h-3 w-3 fill-black" />
+                                    {bunker.rating.toFixed(1)}
+                                </TapeBadge>
                             </div>
 
                             {/* Specs Grid */}
@@ -206,13 +213,17 @@ export function BunkerCard({
                                     <span className="text-[10px] text-muted-foreground uppercase tracking-widest">
                                         Rate / Night
                                     </span>
-                                    <div className="flex items-baseline gap-1">
-                                        <span className="font-bold text-lg text-secondary font-mono tabular-nums">
-                                            {bunker.price.caps}
-                                        </span>
-                                        <span className="text-xs font-bold text-secondary/70">
-                                            CAPS
-                                        </span>
+                                    <div className="flex items-baseline gap-1 mt-1">
+                                        <TapeBadge
+                                            variant="gaffer"
+                                            size="md"
+                                            seed={index + 11}
+                                        >
+                                            <span className="font-mono tabular-nums text-sm">
+                                                {bunker.price.caps}
+                                            </span>
+                                            <span className="text-[0.7em] opacity-80">CAPS</span>
+                                        </TapeBadge>
                                     </div>
                                 </div>
 

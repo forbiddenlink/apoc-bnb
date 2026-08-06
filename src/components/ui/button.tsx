@@ -21,6 +21,8 @@ const buttonVariants = cva(
                 // Tactical / HUD variants
                 tactical: "bg-transparent text-primary border border-primary/30 hover:bg-primary/10 hover:border-primary hover:shadow-[0_0_10px_rgba(57,255,20,0.2)] uppercase tracking-[0.15em] font-bold relative group",
                 "tactical-gold": "bg-transparent text-secondary border border-secondary/30 hover:bg-secondary/10 hover:border-secondary hover:shadow-[0_0_10px_rgba(212,175,55,0.2)] uppercase tracking-[0.15em] font-bold",
+                // Duct-taped-to-the-wall CTA: green HUD base + peeling tape corner on hover
+                tape: "tape-peel overflow-visible bg-primary text-black hover:bg-primary/90 border-2 border-black shadow-[3px_3px_0px_0px_rgba(0,0,0,0.9)] uppercase tracking-wider font-black",
             },
             size: {
                 default: "h-10 px-6 py-2",

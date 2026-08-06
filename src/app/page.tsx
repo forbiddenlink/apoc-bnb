@@ -86,7 +86,7 @@ export default function Home() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{ duration: 0.5, delay: 0.3 }}
-                        className="text-display text-white mb-6 sm:mb-8 leading-none"
+                        className="text-display text-stencil text-white mb-6 sm:mb-8 leading-none"
                     >
                         <TypewriterText
                             text="SURVIVE IN"
@@ -259,6 +259,9 @@ export default function Home() {
                     <ScrollIndicator />
                 </section>
 
+                {/* Hazard-tape divider */}
+                <div className="hazard-tape my-4" aria-hidden="true" />
+
                 {/* -- WHAT THIS IS -- */}
                 <MissionBriefing />
 
@@ -270,7 +273,7 @@ export default function Home() {
                                 <div className="text-label text-secondary mb-2">
                                     Verified Locations · Rad-Checked
                                 </div>
-                                <h2 className="text-h1 text-white">
+                                <h2 className="text-h1 text-stencil text-white">
                                     Trending{" "}
                                     <span className="text-muted-foreground font-light">
                                         Havens
@@ -283,7 +286,7 @@ export default function Home() {
                             </div>
 
                             <Button
-                                variant="tactical"
+                                variant="tape"
                                 className="hidden md:flex"
                                 onClick={() => router.push("/search")}
                             >
@@ -321,6 +324,9 @@ export default function Home() {
                         </div>
                     </ScrollReveal>
                 </section>
+
+                {/* Hazard-tape divider */}
+                <div className="hazard-tape my-4" aria-hidden="true" />
 
                 {/* -- GUEST HORROR STORIES -- */}
                 <GuestStories />
