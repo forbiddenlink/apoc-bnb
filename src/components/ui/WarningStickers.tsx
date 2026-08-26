@@ -277,6 +277,67 @@ export function SurvivorApprovedSticker({ className = "", size = "md", seed = 8 
   );
 }
 
+// DUCT / GAFFER TAPE BADGE
+// Strip of tape slapped over a value (price, rating). Extends the
+// seededRotation() primitive with a torn-tape look + framer-motion jitter.
+type TapeVariant = "duct" | "gaffer" | "gold" | "warning";
+
+interface TapeBadgeProps {
+  children: React.ReactNode;
+  className?: string;
+  size?: "sm" | "md" | "lg";
+  seed?: number;
+  variant?: TapeVariant;
+}
+
+const tapeVariantStyles: Record<TapeVariant, string> = {
+  // Silvery duct tape
+  duct: "bg-gradient-to-b from-neutral-300 to-neutral-400 text-black",
+  // Matte black gaffer tape
+  gaffer: "bg-gradient-to-b from-neutral-800 to-black text-primary",
+  // Burnished gold heritage tape
+  gold: "bg-gradient-to-b from-secondary to-[#a8862b] text-black",
+  // Caution yellow
+  warning: "bg-gradient-to-b from-yellow-400 to-yellow-500 text-black",
+};
+
+export function TapeBadge({
+  children,
+  className = "",
+  size = "md",
+  seed = 1,
+  variant = "duct",
+}: Readonly<TapeBadgeProps>) {
+  const rotation = useMemo(() => seededRotation(seed, -6, 6), [seed]);
+
+  const sizeClasses = {
+    sm: "text-[10px] px-2.5 py-1 gap-1",
+    md: "text-xs px-3.5 py-1.5 gap-1.5",
+    lg: "text-sm px-4 py-2 gap-2",
+  };
+
+  return (
+    <motion.span
+      initial={{ opacity: 0, scale: 0.85, rotate: rotation }}
+      animate={{ opacity: 1, scale: 1, rotate: rotation }}
+      whileHover={{ rotate: [rotation, rotation - 2, rotation + 2, rotation], scale: 1.06 }}
+      transition={{ rotate: { duration: 0.3 } }}
+      className={`
+        tape-badge
+        inline-flex items-center justify-center
+        font-black uppercase tracking-wider leading-none
+        shadow-[2px_2px_0px_0px_rgba(0,0,0,0.85)]
+        select-none
+        ${tapeVariantStyles[variant]}
+        ${sizeClasses[size]}
+        ${className}
+      `}
+    >
+      {children}
+    </motion.span>
+  );
+}
+
 // Floating stickers container for page decoration
 interface FloatingStickersProps {
   variant?: "hero" | "scattered" | "corner";
@@ -345,4 +406,5 @@ export const Stickers = {
   LimitedSupply: LimitedSupplySticker,
   LastSpot: LastSpotSticker,
   SurvivorApproved: SurvivorApprovedSticker,
+  Tape: TapeBadge,
 };

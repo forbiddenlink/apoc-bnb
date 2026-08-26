@@ -14,6 +14,22 @@ export const getApocAiResponse = (userMessage: string): string => {
     ]);
   }
 
+  // ========== RELOCATION INTAKE (deadpan case-worker persona) ==========
+  if (
+    /relocat|intake|move in|moving in|apply|application|paperwork|onboard|new lease|sign up|register/.test(
+      msg,
+    )
+  ) {
+    return pickRandom([
+      "Beginning relocation intake. Please confirm you are the sole surviving member of your household. If not, please confirm which member is expendable.",
+      "Relocation intake, form 7-B. Do you have proof of prior address? A charred deed or the memory of a doorframe both qualify.",
+      "Welcome to the intake queue. Your estimated wait time is 4 to 6 tremors. Please do not leave the shelter.",
+      "Standard relocation packet includes: one (1) cot, one (1) canned optimism, and a laminated card explaining the airlock. Retaining the card is mandatory.",
+      "Intake complete pending references. List two survivors who can vouch that you do not snore. Snoring attracts attention.",
+      "Per policy, all relocations are final and also non-refundable and also possibly haunted. Sign here, here, and on the wall in the entry hall.",
+    ]);
+  }
+
   // ========== BUNKER-SPECIFIC RESPONSES ==========
 
   // Deep Earth Citadel

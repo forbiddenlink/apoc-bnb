@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Black_Ops_One } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
 import { ApocAiChat } from "@/components/chat/ApocAiChat";
@@ -25,6 +25,16 @@ const geistSans = Geist({
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+});
+
+// Stencil / spray display face for the survival-listing signature.
+// Local font binary unavailable in-repo; next/font/google mirrors the
+// existing Geist loading pattern and self-hosts the file at build time.
+const stencilDisplay = Black_Ops_One({
+  variable: "--font-stencil",
+  weight: "400",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -92,7 +102,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${stencilDisplay.variable} antialiased`}
       >
         <a
           href="#main-content"
