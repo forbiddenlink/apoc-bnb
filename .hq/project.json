@@ -1,0 +1,39 @@
+{
+  "allowedForCodex": true,
+  "automationLevel": "manual",
+  "confidentialContext": "none",
+  "context": "personal",
+  "hosting": [
+    "vercel"
+  ],
+  "kind": "app",
+  "lastReviewedAt": "2026-08-27",
+  "lifecycle": "prototype",
+  "notes": "Apocalyptic rental marketplace with maps, analytics, Sentry, and performance signals. Strong candidate for product analytics and release-quality comparisons.",
+  "observability": [
+    "posthog",
+    "sentry"
+  ],
+  "ownerContext": "personal",
+  "source": "owned",
+  "surface": "product",
+  "systems": [
+    "solo-control-tower",
+    "marketplace"
+  ],
+  "tags": [
+    "biome",
+    "eslint",
+    "mapbox",
+    "next",
+    "posthog",
+    "react",
+    "sentry",
+    "tailwind",
+    "vercel",
+    "vitest"
+  ],
+  "urls": {
+    "repository": "https://github.com/forbiddenlink/apoc-bnb"
+  }
+}
