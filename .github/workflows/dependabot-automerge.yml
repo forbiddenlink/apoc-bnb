@@ -59,7 +59,9 @@ jobs:
               exit 0
             fi
             echo "CI green -> merging"
-            gh pr merge --squash --delete-branch "$PR_URL"
+            # --match-head-commit: the lockfile-resync bot can push a newer commit while this
+            # job waits on $SHA. Without it, gh merges that unverified head (apoc-bnb#68).
+            gh pr merge --squash --delete-branch --match-head-commit "$SHA" "$PR_URL"
             exit 0
           done
           echo "Timed out waiting for CI (30 min); leaving PR open."
