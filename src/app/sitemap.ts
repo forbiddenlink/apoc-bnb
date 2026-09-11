@@ -1,8 +1,9 @@
 import { MetadataRoute } from 'next'
 import { mockBunkers } from '@/lib/data/bunkers'
+import { getSiteUrl } from '@/lib/site-url'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
+  const baseUrl = getSiteUrl()
 
   // Static pages
   const staticPages: MetadataRoute.Sitemap = [
