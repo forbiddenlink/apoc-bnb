@@ -74,9 +74,10 @@ Validated via `src/env.ts` (`@t3-oss/env-nextjs`): `GROQ_API_KEY` (required),
 bypasses validation.
 
 Read directly via `process.env` but not in the schema: `ARCJET_KEY`, `NEXT_PUBLIC_BASE_URL`
-(defaults to `http://localhost:3000`, used in metadata `metadataBase`),
-`NEXT_PUBLIC_MAPBOX_TOKEN` (map on `/search` falls back to a static UI if missing),
-`VERCEL_PROJECT_PRODUCTION_URL`.
+(used in metadata `metadataBase` via `src/lib/site-url.ts`; falls back to
+`VERCEL_PROJECT_PRODUCTION_URL`, then the literal `https://apoc-bnb.vercel.app` - never
+localhost), `NEXT_PUBLIC_MAPBOX_TOKEN` (map on `/search` falls back to a static UI if
+missing), `VERCEL_PROJECT_PRODUCTION_URL`.
 
 ## Path alias
 
