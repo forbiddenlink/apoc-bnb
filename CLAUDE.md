@@ -60,8 +60,11 @@ Tailwind v4 via `@tailwindcss/postcss`. Dark "survivalist" theme as CSS custom p
 ## Testing
 
 Tests co-located with source (`Component.test.tsx` next to `Component.tsx`). Two Vitest
-configs exist (`vitest.config.ts` and `vitest.config.mts`) pointing at different setup files;
-see Code Issues.
+configs exist (`vitest.config.ts` and `vitest.config.mts`), added in the same commit,
+pointing at different setup files (`vitest-setup.ts` vs `src/test/setup.ts` respectively).
+Which one Vitest picks up depends on its config-resolution order, not an explicit
+`--config` flag anywhere in this repo - this is unreconciled duplication, not two
+intentional configs.
 
 ## Environment variables
 
