@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.0.1](https://github.com/forbiddenlink/apoc-bnb/compare/v1.0.0...v1.0.1) (2026-09-19)
+
+
+### Bug Fixes
+
+* **build:** resync lockfile with the pnpm overrides block ([39a2187](https://github.com/forbiddenlink/apoc-bnb/commit/39a21876814bda721dc172e1837258f8180a46e2))
+* **build:** resync pnpm lockfile with the package.json overrides block ([#60](https://github.com/forbiddenlink/apoc-bnb/issues/60)) ([f52bed8](https://github.com/forbiddenlink/apoc-bnb/commit/f52bed8deda430099636db6377554aae4adfae1c))
+* **ci:** only auto-merge the dependabot commit that CI actually checked ([#72](https://github.com/forbiddenlink/apoc-bnb/issues/72)) ([8227c67](https://github.com/forbiddenlink/apoc-bnb/commit/8227c67a9fe4d0d2e69311b99db03d0f7920f855))
+* **deps:** bump @arcjet/next to 1.12.0 to stop idle GOAWAY crashes ([#75](https://github.com/forbiddenlink/apoc-bnb/issues/75)) ([4dc4fea](https://github.com/forbiddenlink/apoc-bnb/commit/4dc4fea5fbd4d84a1bed7933b8fcdfceb6fac343))
+* **deps:** bump next to 16.3.3 for AVIF image RCE ([#55](https://github.com/forbiddenlink/apoc-bnb/issues/55)) ([964b90c](https://github.com/forbiddenlink/apoc-bnb/commit/964b90c8d1f6c1cb469b88b40584f12c9db51f0b))
+* **deps:** move resolution overrides to package.json and add missing patches ([#56](https://github.com/forbiddenlink/apoc-bnb/issues/56)) ([07c377f](https://github.com/forbiddenlink/apoc-bnb/commit/07c377fb6944f5b8d5af80499d406034a3cfff4c))
+* harden workflow supply chain ([f9efa6c](https://github.com/forbiddenlink/apoc-bnb/commit/f9efa6cb3664d0d34ccad4a246332517f1afd164))
+* restore lint compatibility ([0f8e311](https://github.com/forbiddenlink/apoc-bnb/commit/0f8e3118504cdeff81d28919aaf941b3d48c9850))
+* **sentry:** initialize client-side Sentry via instrumentation-client.ts ([#73](https://github.com/forbiddenlink/apoc-bnb/issues/73)) ([12bdb5b](https://github.com/forbiddenlink/apoc-bnb/commit/12bdb5bda23be2d2204dcb6707efc2df6033a610))
+* **seo:** stop advertising localhost as the canonical URL ([#74](https://github.com/forbiddenlink/apoc-bnb/issues/74)) ([6766806](https://github.com/forbiddenlink/apoc-bnb/commit/6766806798fe37375b6450554c51cc300a0c7da6))
+
 ## 1.0.0 (2026-08-06)
 
 
