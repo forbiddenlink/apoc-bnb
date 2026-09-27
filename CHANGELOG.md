@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/forbiddenlink/apoc-bnb/compare/v1.0.1...v1.0.2) (2026-09-27)
+
+
+### Bug Fixes
+
+* **deps:** move pnpm overrides to pnpm-workspace.yaml, pin packageManager ([#78](https://github.com/forbiddenlink/apoc-bnb/issues/78)) ([5f05eff](https://github.com/forbiddenlink/apoc-bnb/commit/5f05effa55d1d33ea5432b097185629f425b8956))
+
 ## [1.0.1](https://github.com/forbiddenlink/apoc-bnb/compare/v1.0.0...v1.0.1) (2026-09-19)
 
 
