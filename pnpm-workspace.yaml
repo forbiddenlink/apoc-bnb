@@ -1,6 +1,16 @@
+overrides:
+  nanoid@<3.3.18: '>=3.3.18 <4'
+  next: '>=16.2.6'
+  postcss: '>=8.5.23 <9'
+  protobufjs: ^7.6.1
+  sharp: '>=0.35.0 <1'
+  undici: '>=7.28.0 <8'
+  uuid: '>=11.1.1'
+  vite: '>=8.0.5'
+
 allowBuilds:
-  '@sentry/cli': set this to true or false
-  core-js: set this to true or false
-  msw: set this to true or false
-  sharp: set this to true or false
-  unrs-resolver: set this to true or false
+  '@sentry/cli': true
+  core-js: true
+  msw: true
+  sharp: true
+  unrs-resolver: true
