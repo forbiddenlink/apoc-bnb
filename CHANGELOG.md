@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/forbiddenlink/apoc-bnb/compare/v1.0.2...v1.0.3) (2026-10-01)
+
+
+### Bug Fixes
+
+* **deps:** patch Next.js next/og RCE (GHSA-vcvr-r3jv-pc5j) ([#80](https://github.com/forbiddenlink/apoc-bnb/issues/80)) ([0ea7840](https://github.com/forbiddenlink/apoc-bnb/commit/0ea784089e8c974522fecb35969276dd2f1473a3))
+
 ## [1.0.2](https://github.com/forbiddenlink/apoc-bnb/compare/v1.0.1...v1.0.2) (2026-09-27)
 
 
