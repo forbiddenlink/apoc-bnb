@@ -164,13 +164,13 @@ settings:
 
 overrides:
   nanoid@<3.3.18: '>=3.3.18 <4'
-  next: '>=16.3.6'
+  next: '>=16.3.6 <17.0.0'
   postcss: '>=8.5.23 <9'
   protobufjs: ^7.6.1
   sharp: '>=0.35.0 <1'
   undici: '>=7.28.0 <8'
-  uuid: '>=11.1.1'
-  vite: '>=8.0.5'
+  uuid: '>=11.1.1 <12.0.0'
+  vite: '>=8.0.5 <9.0.0'
 
 importers:
 
@@ -231,7 +231,7 @@ importers:
         specifier: ^3.29.0
         version: 3.29.0
       next:
-        specifier: '>=16.3.6'
+        specifier: '>=16.3.6 <17.0.0'
         version: 16.4.2(@babel/core@7.29.7(supports-color@8.1.1))(@opentelemetry/api@1.9.1)(@types/node@26.6.5)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       next-axiom:
         specifier: ^1.5.0
@@ -404,7 +404,7 @@ packages:
     resolution: {integrity: sha512-jWZQnqhyPczlrwyG4szztool2zzaaWbVsxErjxWNVopOxWV3yzFnNAKk5tUJswEBSMz1DZGGSiQe8DXUkuMOww==}
     engines: {node: '>=22.21.0 <23 || >=24.5.0'}
     peerDependencies:
-      next: '>=16.3.6'
+      next: '>=16.3.6 <17.0.0'
 
   '@arcjet/protocol@1.12.0':
     resolution: {integrity: sha512-D0LSb5CHSXFSnyNQJQLt2oNVGldmy+0J8vJQodh+Ln620Nu1wMKtdp2kvETb16rvpBKWYd6uS+ssrM0Q+yrMrg==}
@@ -1519,7 +1519,7 @@ packages:
     resolution: {integrity: sha512-lZFlQkafIHnYKTo0QCY+VqFC7rEt/SRAVrTCKyM+r1yIAw+iIfU1qM2QT7xn71+t0U520I0xBJ2O+YzqLYXJIQ==}
     engines: {node: '>=18'}
     peerDependencies:
-      next: '>=16.3.6'
+      next: '>=16.3.6 <17.0.0'
 
   '@sentry/node-core@10.73.0':
     resolution: {integrity: sha512-GHAGUmZPmm6FKfxfv2maVVJ/A99YAmd7oFOuKMDmITI6O/Msl6JB3vPTEpopVAHLW0LYJQBOjddL9C7o+Jt44g==}
@@ -2491,7 +2491,7 @@ packages:
     peerDependencies:
       '@remix-run/react': ^2
       '@sveltejs/kit': ^1 || ^2
-      next: '>=16.3.6'
+      next: '>=16.3.6 <17.0.0'
       nuxt: '>= 3'
       react: ^18 || ^19 || ^19.0.0-rc
       svelte: '>= 4'
@@ -2532,7 +2532,7 @@ packages:
     resolution: {integrity: sha512-jwkNcrTeafWxjmWq4AHBaptSqZiJkYU5adLC9QBSqeim0GcqDMgN5Ievh8OG1rJ6W3A4l1oiP7qr9CWxGuzu3w==}
     peerDependencies:
       '@sveltejs/kit': ^1 || ^2
-      next: '>=16.3.6'
+      next: '>=16.3.6 <17.0.0'
       nuxt: '>= 3'
       react: ^18 || ^19 || ^19.0.0-rc
       svelte: '>= 4'
@@ -2581,7 +2581,7 @@ packages:
       '@rolldown/plugin-babel': ^0.1.7 || ^0.2.0
       babel-plugin-react-compiler: ^1.0.0
       oxc-transform-react: ^0.152.0
-      vite: '>=8.0.5'
+      vite: '>=8.0.5 <9.0.0'
     peerDependenciesMeta:
       '@rolldown/plugin-babel':
         optional: true
@@ -2597,7 +2597,7 @@ packages:
     resolution: {integrity: sha512-fKShNpKZzupWZuY0z7egydvL0sqW4INEZBEExMBMAa6izlENEVHwoXgdaTCaBZ5fwlr4xf2o1wXC83n9RpO+NA==}
     peerDependencies:
       msw: ^2.4.9
-      vite: '>=8.0.5'
+      vite: '>=8.0.5 <9.0.0'
     peerDependenciesMeta:
       msw:
         optional: true
@@ -4038,14 +4038,14 @@ packages:
     resolution: {integrity: sha512-PpwmfOqoa2xWKcGmYb3d5t3R4+/J8C2D00IhJsI3Qk0xxv9tNvGzS/hKKOPNOuUwqM4b/etqu6iGW7tkKvltgA==}
     engines: {node: '>=18'}
     peerDependencies:
-      next: '>=16.3.6'
+      next: '>=16.3.6 <17.0.0'
       react: '>=18.0.0'
 
   next-safe-action@8.6.1:
     resolution: {integrity: sha512-qFkpXnuZ+xEGsKlQi1079B5hy1aNlvb8kJVcEvzFXP1PMm9z5GI5VhfhZCDVLCXkT1rryaFLeUdJGHm1L7ef0Q==}
     engines: {node: '>=18.17'}
     peerDependencies:
-      next: '>=16.3.6'
+      next: '>=16.3.6 <17.0.0'
       react: '>= 18.2.0'
       react-dom: '>= 18.2.0'
 
@@ -4054,7 +4054,7 @@ packages:
     engines: {node: '>=14.18'}
     hasBin: true
     peerDependencies:
-      next: '>=16.3.6'
+      next: '>=16.3.6 <17.0.0'
 
   next@16.4.2:
     resolution: {integrity: sha512-r+oBJojfefUjOiWkBhXgLS+igxX/7BWyK59uHnyOyplMSLtBZ+QLP3okrdYTbrfrbrmNTVWLBPaHDX9KRaIt3w==}
@@ -4099,7 +4099,7 @@ packages:
     peerDependencies:
       '@remix-run/react': '>=2'
       '@tanstack/react-router': ^1
-      next: '>=16.3.6'
+      next: '>=16.3.6 <17.0.0'
       react: '>=18.2.0 || ^19.0.0-0'
       react-router: ^5 || ^6 || ^7 || ^8
       react-router-dom: ^5 || ^6 || ^7
@@ -4946,7 +4946,7 @@ packages:
       '@vitest/ui': 4.1.12
       happy-dom: '*'
       jsdom: '*'
-      vite: '>=8.0.5'
+      vite: '>=8.0.5 <9.0.0'
     peerDependenciesMeta:
       '@edge-runtime/vm':
         optional: true
