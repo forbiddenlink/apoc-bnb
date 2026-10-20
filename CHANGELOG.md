@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4](https://github.com/forbiddenlink/apoc-bnb/compare/v1.0.3...v1.0.4) (2026-10-20)
+
+
+### Bug Fixes
+
+* **deps:** cap unbounded pnpm overrides at the next major ([#92](https://github.com/forbiddenlink/apoc-bnb/issues/92)) ([f063ae0](https://github.com/forbiddenlink/apoc-bnb/commit/f063ae03f4080b46a2902a992212a739d51773b1))
+
 ## [1.0.3](https://github.com/forbiddenlink/apoc-bnb/compare/v1.0.2...v1.0.3) (2026-10-09)
 
 
