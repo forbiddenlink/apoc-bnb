@@ -22,6 +22,7 @@ import {
     X, Truck, BookOpen, Ban, Thermometer, ArrowUp, Gauge, ChevronLeft, ChevronRight,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { holdVerdict } from "@/lib/hold-verdict";
 import type { Bunker, Review } from "@/types";
 
 interface BunkerDetailsContentProps {
@@ -122,6 +123,31 @@ function SpecCard({ label, value, subValue, icon: Icon, color = "text-primary" }
                 </div>
             </div>
         </motion.div>
+    );
+}
+
+function WillItHold({ bunker }: { bunker: Bunker }) {
+    const v = holdVerdict(bunker.features);
+    const tone = v.level === "holds" ? "text-primary" : v.level === "caveats" ? "text-secondary" : "text-destructive";
+    return (
+        <section aria-labelledby="will-it-hold-heading" className="border border-white/10 bg-black/30">
+            <div className="p-4 border-b border-white/10">
+                <span id="will-it-hold-heading" className="text-label text-muted-foreground">WILL IT HOLD?</span>
+            </div>
+            <div className="p-6">
+                <p className={cn("text-2xl font-bold font-mono", tone)}>{v.headline}</p>
+                <p className="text-sm text-muted-foreground mt-1">{v.note}</p>
+                <ul className="mt-4 space-y-2 text-sm font-mono">
+                    {v.checks.map((c) => (
+                        <li key={c.label} className="flex flex-wrap items-baseline gap-x-3">
+                            <span className={c.pass ? "text-primary" : "text-destructive"}>{c.pass ? "PASS" : "FAIL"}</span>
+                            <span className="text-white">{c.label}: {c.value}</span>
+                            <span className="text-muted-foreground">needs {c.rule}</span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </section>
     );
 }
 
@@ -332,6 +358,11 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                                     <p key={i}>{paragraph.trim()}</p>
                                 )) || <p>{bunker.description}</p>}
                             </div>
+                        </ScrollReveal>
+
+                        {/* Will it hold? verdict, computed from the diagnostics fields below */}
+                        <ScrollReveal>
+                            <WillItHold bunker={bunker} />
                         </ScrollReveal>
 
                         {/* System Diagnostics Panel */}
