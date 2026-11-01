@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/forbiddenlink/apoc-bnb/compare/v1.0.4...v1.1.0) (2026-10-31)
+
+
+### Features
+
+* Will it hold? verdict on the bunker detail page ([#98](https://github.com/forbiddenlink/apoc-bnb/issues/98)) ([e4ddc04](https://github.com/forbiddenlink/apoc-bnb/commit/e4ddc045cc6755ea75a2c326b9fdfa675f869a26))
+
 ## [1.0.4](https://github.com/forbiddenlink/apoc-bnb/compare/v1.0.3...v1.0.4) (2026-10-20)
 
 
