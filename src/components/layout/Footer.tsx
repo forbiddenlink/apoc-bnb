@@ -135,6 +135,11 @@ function FooterLink({
 export function Footer() {
     const [logoClickCount, setLogoClickCount] = useState(0);
     const [showSignalLost, setShowSignalLost] = useState(false);
+    // Computed after mount: Date.now() during render differs between prerender and client (React #418).
+    const [collapseDay, setCollapseDay] = useState<number | null>(null);
+    useEffect(() => {
+        setCollapseDay(Math.floor((Date.now() - new Date("2024-01-01").getTime()) / 86400000));
+    }, []);
 
     // Reset click count after 2 seconds of no clicks
     useEffect(() => {
@@ -354,9 +359,7 @@ export function Footer() {
                                 <span className="text-border hidden sm:inline">|</span>
                                 <span className="hidden sm:inline">
                                     DAY{" "}
-                                    {Math.floor(
-                                        (Date.now() - new Date("2024-01-01").getTime()) / 86400000
-                                    )}{" "}
+                                    <span suppressHydrationWarning>{collapseDay ?? "---"}</span>{" "}
                                     POST-COLLAPSE
                                 </span>
                             </div>

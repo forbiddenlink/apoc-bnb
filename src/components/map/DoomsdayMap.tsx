@@ -18,6 +18,8 @@ import {
 } from '@/lib/geo';
 import type { RadiationZone } from '@/lib/geo';
 import type { BBox } from 'geojson';
+import TacticalMap from './TacticalMap';
+import { getRadColor } from './radColor';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 
@@ -30,13 +32,7 @@ interface DoomsdayMapProps {
 
 // Custom hex marker component for individual bunkers
 function HexMarker({ radLevel, isSelected, isHovered }: { radLevel: number; isSelected: boolean; isHovered: boolean }) {
-    const getColor = () => {
-        if (radLevel <= 2) return { fill: 'var(--primary)', glow: 'rgba(57,255,20,0.5)' };
-        if (radLevel <= 5) return { fill: 'var(--secondary)', glow: 'rgba(212,175,55,0.5)' };
-        return { fill: 'var(--accent)', glow: 'rgba(255,0,60,0.5)' };
-    };
-
-    const { fill, glow } = getColor();
+    const { fill, glow } = getRadColor(radLevel);
     const scale = isSelected || isHovered ? 1.3 : 1;
 
     return (
@@ -315,25 +311,7 @@ export default function DoomsdayMap({
     }, []);
 
     if (!TOKEN) {
-        return (
-            <div className="w-full h-full bg-black flex flex-col items-center justify-center text-primary border border-primary/20 relative overflow-hidden bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-900 via-black to-black">
-                <div className="scanline absolute inset-0 opacity-20 pointer-events-none" />
-                <div className="relative">
-                    <Radiation className="h-20 w-20 animate-pulse text-accent" />
-                    <div className="absolute inset-0 bg-accent/20 rounded-full animate-radar-ping" />
-                </div>
-                <h2 className="text-label text-accent mt-6 mb-2">
-                    SATELLITE UPLINK FAILED
-                </h2>
-                <p className="text-muted-foreground text-mono text-xs text-center max-w-xs">
-                    [ERROR] NEXT_PUBLIC_MAPBOX_TOKEN missing.<br />
-                    Unable to triangulate safe zones.
-                </p>
-                <div className="mt-8 border border-primary/50 p-3 rounded bg-primary/10 font-mono text-xs">
-                    Please add token to .env.local
-                </div>
-            </div>
-        )
+        return <TacticalMap bunkers={markers} selectedBunkerId={selectedBunkerId} />;
     }
 
     return (
