@@ -282,7 +282,7 @@ export default function SearchPage() {
                     </div>
 
                     {/* Doomsday Radar Map Section */}
-                    <div className="flex-1 h-[40vh] lg:h-full relative bg-black search-map order-first lg:order-last">
+                    <div className="flex-none lg:flex-1 h-[40vh] lg:h-[calc(100vh-98px)] relative bg-black search-map order-first lg:order-last">
                         {/* Map tactical frame */}
                         <div className="absolute inset-0 pointer-events-none z-10">
                             <div className="absolute top-2 left-2 w-8 h-8 border-t-2 border-l-2 border-primary/40" />
