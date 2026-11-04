@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/forbiddenlink/apoc-bnb/compare/v1.1.0...v1.1.1) (2026-11-04)
+
+
+### Bug Fixes
+
+* **map:** token-free tactical map fallback; fix footer hydration mismatch ([#102](https://github.com/forbiddenlink/apoc-bnb/issues/102)) ([483e3fc](https://github.com/forbiddenlink/apoc-bnb/commit/483e3fc5eab6cd35abc9c1a3211a1fdf522cc612))
+
 ## [1.1.0](https://github.com/forbiddenlink/apoc-bnb/compare/v1.0.4...v1.1.0) (2026-10-31)
 
 
