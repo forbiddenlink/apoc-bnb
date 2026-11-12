@@ -15,7 +15,7 @@ export function PinnedCta() {
   return (
     <Link
       href="/#reserve"
-      className="fixed bottom-24 right-4 z-30 bg-[var(--soot)] px-5 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-[var(--geiger)] shadow-[3px_3px_0_var(--oxide)] md:bottom-6 md:right-6"
+      className="fixed bottom-[8.25rem] right-4 z-30 inline-flex min-h-11 items-center bg-[var(--soot)] px-5 py-3 font-mono text-xs font-bold uppercase tracking-[0.14em] text-[var(--geiger)] shadow-[3px_3px_0_var(--oxide)] md:bottom-[4.75rem] md:right-6"
     >
       Reserve a bunker
     </Link>

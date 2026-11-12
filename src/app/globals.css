@@ -898,13 +898,16 @@ body {
 /* Home folio concept       */
 /* Scoped to .folio so other routes keep the dark theme. */
 /* ======================== */
-.folio {
+:root {
+  /* Folio palette, global so shared chrome (chat launcher) can use it too. */
   --vellum: #f1eadb;
   --soot: #15130f;
   --bone: #e6dcc6;
   --ash: #5e574a;
   --oxide: #8c3a1c;
   --geiger: #c8f03a;
+}
+.folio {
   background-color: var(--vellum);
   color: var(--soot);
   font-family: var(--font-folio-body), system-ui, sans-serif;
