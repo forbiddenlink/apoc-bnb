@@ -49,8 +49,8 @@ function Dosimeter({ progress }: { progress: number }) {
           return (
             <text
               key={t}
-              x={200 + 108 * Math.sin(a)}
-              y={214 - 108 * Math.cos(a)}
+              x={200 + 188 * Math.sin(a)}
+              y={214 - 188 * Math.cos(a)}
               fontSize="12"
               textAnchor="middle"
               fill="#5e574a"
@@ -139,7 +139,7 @@ export function FolioHero() {
 
   return (
     <section ref={ref} id="reserve" className="relative md:h-[200vh]">
-      <div className="md:sticky md:top-0 md:h-screen flex items-center pt-28 pb-12 md:pt-20 md:pb-0">
+      <div className="md:sticky md:top-0 md:h-screen flex items-center pt-28 pb-12 md:items-start md:pt-28 md:pb-0 lg:pt-32">
         <div className="mx-auto grid w-full max-w-[90rem] items-center gap-10 px-5 md:grid-cols-[1.35fr_1fr] md:gap-8 md:px-10">
           <div>
             <div className="mb-5 flex flex-wrap items-center gap-3 text-[var(--ash)]">
@@ -192,20 +192,23 @@ export function FolioHero() {
                 onChange={(e) => setGuests(Math.min(50, Math.max(1, Number(e.target.value) || 1)))}
                 className={`${field} w-16 text-center`}
               />{' '}
-              survivors, no hotter than RAD{' '}
-              <select
-                aria-label="Maximum RAD level"
-                value={rad}
-                onChange={(e) => setRad(Number(e.target.value))}
-                className={field}
-              >
-                {RAD_OPTIONS.map((r) => (
-                  <option key={r} value={r}>
-                    {r}
-                  </option>
-                ))}
-              </select>
-              .{' '}
+              survivors, no hotter than{' '}
+              <span className="whitespace-nowrap">
+                RAD{' '}
+                <select
+                  aria-label="Maximum RAD level"
+                  value={rad}
+                  onChange={(e) => setRad(Number(e.target.value))}
+                  className={field}
+                >
+                  {RAD_OPTIONS.map((r) => (
+                    <option key={r} value={r}>
+                      {r}
+                    </option>
+                  ))}
+                </select>
+                .
+              </span>{' '}
               <button
                 type="submit"
                 className="ml-1 inline-block bg-[var(--soot)] px-6 py-2 align-middle font-mono text-sm font-bold uppercase tracking-[0.14em] text-[var(--geiger)] transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--soot)]"
@@ -219,7 +222,7 @@ export function FolioHero() {
             <Dosimeter progress={progress} />
             <div
               aria-hidden={!stampVisible(progress)}
-              className="pointer-events-none absolute -right-2 -top-6 md:right-0 md:-top-10"
+              className="pointer-events-none absolute -right-2 -top-6 md:-right-4 md:-top-20"
               style={{
                 opacity: stampVisible(progress) ? 1 : 0,
                 transform: stampVisible(progress)

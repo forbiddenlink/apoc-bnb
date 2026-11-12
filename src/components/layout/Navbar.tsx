@@ -12,20 +12,38 @@ import { ApocMascot } from "@/components/ui/ApocMascot";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
 
-function NavLink({ href, children }: { href: string; children: React.ReactNode }) {
+function NavLink({
+    href,
+    children,
+    folio,
+}: {
+    href: string;
+    children: React.ReactNode;
+    folio?: boolean;
+}) {
     return (
         <Link
             href={href}
-            className="relative hover:text-primary transition-colors duration-200 group py-2"
+            className={cn(
+                "relative transition-colors duration-200 group py-2 whitespace-nowrap",
+                folio ? "hover:text-[#15130f]" : "hover:text-primary"
+            )}
         >
             <span className="relative z-10">{children}</span>
             {/* Animated underline */}
-            <span className="absolute bottom-0 left-0 w-0 h-px bg-primary shadow-[0_0_8px_rgba(57,255,20,0.5)] group-hover:w-full transition-all duration-300 ease-out" />
+            <span
+                className={cn(
+                    "absolute bottom-0 left-0 w-0 h-px group-hover:w-full transition-all duration-300 ease-out",
+                    folio
+                        ? "bg-[#15130f]"
+                        : "bg-primary shadow-[0_0_8px_rgba(57,255,20,0.5)]"
+                )}
+            />
         </Link>
     );
 }
 
-function GlitchLogo({ isScrolled }: { isScrolled: boolean }) {
+function GlitchLogo({ isScrolled, folio }: { isScrolled: boolean; folio?: boolean }) {
     const [isGlitching, setIsGlitching] = useState(false);
 
     const triggerGlitch = useCallback(() => {
@@ -43,14 +61,16 @@ function GlitchLogo({ isScrolled }: { isScrolled: boolean }) {
             <ApocMascot expression="happy" size="sm" animate={false} />
             <span
                 className={cn(
-                    "text-2xl font-black uppercase tracking-[0.3em] text-white transition-all duration-300",
+                    "text-2xl font-black uppercase tracking-[0.3em] text-white transition-all duration-300 whitespace-nowrap",
                     isScrolled && "text-xl tracking-[0.25em]",
+                    folio && "text-[#15130f] text-xl lg:text-2xl tracking-[0.2em] lg:tracking-[0.3em]",
                     isGlitching && "animate-glitch"
                 )}
             >
                 <span
                     className={cn(
-                        "text-glow group-hover:text-glow-intense transition-all inline-block",
+                        "transition-all inline-block",
+                        !folio && "text-glow group-hover:text-glow-intense",
                         isGlitching && "text-primary"
                     )}
                 >
@@ -59,7 +79,7 @@ function GlitchLogo({ isScrolled }: { isScrolled: boolean }) {
                 <span
                     className={cn(
                         "transition-all inline-block",
-                        "group-hover:text-secondary group-hover:text-glow-gold"
+                        !folio && "group-hover:text-secondary group-hover:text-glow-gold"
                     )}
                 >
                     -BNB
@@ -74,12 +94,31 @@ function ScanLineButton({
     variant,
     className,
     onClick,
+    folio,
 }: {
     children: React.ReactNode;
     variant: "tactical" | "tactical-gold";
     className?: string;
     onClick?: () => void;
+    folio?: boolean;
 }) {
+    if (folio) {
+        return (
+            <button
+                type="button"
+                onClick={onClick}
+                className={cn(
+                    "items-center gap-2 px-4 py-2 font-mono text-xs font-bold uppercase tracking-[0.14em] whitespace-nowrap transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#15130f]",
+                    variant === "tactical-gold"
+                        ? "flex bg-[#15130f] text-[#c8f03a]"
+                        : "flex border border-[#15130f] text-[#15130f]",
+                    className
+                )}
+            >
+                {children}
+            </button>
+        );
+    }
     return (
         <Button
             variant={variant}
@@ -111,7 +150,8 @@ function ScanLineButton({
     );
 }
 
-export function Navbar() {
+export function Navbar({ variant = "default" }: { variant?: "default" | "folio" }) {
+    const folio = variant === "folio";
     const { favorites, bookings } = useAppStore();
     const [isScrolled, setIsScrolled] = useState(false);
     const [scrollY, setScrollY] = useState(0);
@@ -137,12 +177,16 @@ export function Navbar() {
             className={cn(
                 "fixed top-0 left-0 right-0 z-50 border-b transition-all duration-300",
                 navHeight,
-                isScrolled
-                    ? "border-primary/20 shadow-[0_1px_20px_rgba(57,255,20,0.1)]"
-                    : "border-border"
+                folio
+                    ? "border-[#15130f]"
+                    : isScrolled
+                      ? "border-primary/20 shadow-[0_1px_20px_rgba(57,255,20,0.1)]"
+                      : "border-border"
             )}
             style={{
-                backgroundColor: `rgba(5, 5, 5, ${bgOpacity})`,
+                backgroundColor: folio
+                    ? `rgba(241, 234, 219, ${Math.max(0.94, bgOpacity)})`
+                    : `rgba(5, 5, 5, ${bgOpacity})`,
                 backdropFilter: `blur(${blurAmount}px)`,
             }}
         >
@@ -151,12 +195,18 @@ export function Navbar() {
                     "container mx-auto flex items-center justify-between px-4 h-full transition-all duration-300"
                 )}
             >
-                <GlitchLogo isScrolled={isScrolled} />
+                <GlitchLogo isScrolled={isScrolled} folio={folio} />
 
-                <div className="hidden md:flex items-center gap-8 font-light text-sm uppercase tracking-widest text-muted-foreground">
-                    <NavLink href="/search">Find a Bunker</NavLink>
-                    <NavLink href="/host">Become a Warlord</NavLink>
-                    <NavLink href="/experiences">Raid Parties</NavLink>
+                <div
+                    className={cn(
+                        "hidden md:flex items-center gap-8 font-light text-sm uppercase tracking-widest text-muted-foreground",
+                        folio &&
+                            "gap-4 lg:gap-8 text-xs lg:text-sm tracking-wider lg:tracking-widest text-[#5e574a]"
+                    )}
+                >
+                    <NavLink href="/search" folio={folio}>Find a Bunker</NavLink>
+                    <NavLink href="/host" folio={folio}>Become a Warlord</NavLink>
+                    <NavLink href="/experiences" folio={folio}>Raid Parties</NavLink>
                     {favorites.length > 0 && (
                         <Link
                             href="/favorites"
@@ -178,10 +228,13 @@ export function Navbar() {
                 </div>
 
                 <div className="hidden md:flex items-center gap-4">
-                    <SystemStatusCompact />
-                    <DefconIndicator />
+                    <div className={cn("items-center gap-4", folio ? "hidden 2xl:flex" : "flex")}>
+                        <SystemStatusCompact />
+                        <DefconIndicator />
+                    </div>
                     <ScanLineButton
                         variant="tactical"
+                        folio={folio}
                         className="hidden lg:flex"
                         onClick={() =>
                             toast.info("Authentication systems offline.", {
@@ -194,7 +247,8 @@ export function Navbar() {
                     </ScanLineButton>
                     <ScanLineButton
                         variant="tactical-gold"
-                        className="shadow-[0_0_15px_rgba(212,175,55,0.15)]"
+                        folio={folio}
+                        className={folio ? undefined : "shadow-[0_0_15px_rgba(212,175,55,0.15)]"}
                         onClick={() =>
                             toast.info("Survivors Only access coming soon.", {
                                 description:
@@ -207,7 +261,7 @@ export function Navbar() {
                     </ScanLineButton>
                 </div>
 
-                <MobileMenu />
+                <MobileMenu buttonClassName={folio ? "text-[#15130f] hover:bg-[#15130f]/10" : undefined} />
             </div>
         </nav>
     );

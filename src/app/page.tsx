@@ -13,7 +13,7 @@ export default function Home() {
   return (
     <>
       <div style={{ fontFamily: 'var(--font-geist-sans), sans-serif' }}>
-        <Navbar />
+        <Navbar variant="folio" />
       </div>
       <div className="folio min-h-screen overflow-x-clip">
         <main id="main-content" className="relative">
