@@ -15,7 +15,7 @@ function Dosimeter({ progress }: { progress: number }) {
   const ticks = Array.from({ length: 17 }, (_, i) => i)
   return (
     <figure
-      className="relative mx-auto w-full max-w-[34rem]"
+      className="relative mx-auto w-full max-w-[34rem] pt-24 min-[1400px]:pt-0"
       aria-label={`Dosimeter reading ${reading.toFixed(1)} millisieverts per hour`}
     >
       <svg viewBox="0 0 400 250" className="w-full" role="img" aria-hidden="true">
@@ -222,7 +222,7 @@ export function FolioHero() {
             <Dosimeter progress={progress} />
             <div
               aria-hidden={!stampVisible(progress)}
-              className="pointer-events-none absolute -right-2 -top-6 md:-right-4 md:-top-20"
+              className="pointer-events-none absolute right-0 top-0 min-[1400px]:-right-4 min-[1400px]:-top-20"
               style={{
                 opacity: stampVisible(progress) ? 1 : 0,
                 transform: stampVisible(progress)
@@ -233,12 +233,18 @@ export function FolioHero() {
             >
               <div className="rounded-full border-[3px] border-[var(--oxide)] p-1.5">
                 <div
-                  className="flex h-28 w-28 flex-col items-center justify-center rounded-full border border-[var(--oxide)] text-center text-[var(--oxide)] md:h-36 md:w-36"
+                  className="flex h-[5.25rem] w-[5.25rem] flex-col items-center justify-center rounded-full border border-[var(--oxide)] text-center text-[var(--oxide)] min-[1400px]:h-36 min-[1400px]:w-36"
                   style={{ fontFamily: 'var(--font-stencil), sans-serif' }}
                 >
-                  <span className="text-[0.6rem] tracking-[0.2em]">VERIFIED</span>
-                  <span className="text-xl leading-none md:text-2xl">RAD-FREE</span>
-                  <span className="text-[0.55rem] tracking-[0.2em]">BY A GUY*</span>
+                  <span className="text-[0.5rem] tracking-[0.2em] min-[1400px]:text-[0.6rem]">
+                    VERIFIED
+                  </span>
+                  <span className="whitespace-nowrap text-[0.8rem] leading-none min-[1400px]:text-2xl">
+                    RAD-FREE
+                  </span>
+                  <span className="text-[0.45rem] tracking-[0.2em] min-[1400px]:text-[0.55rem]">
+                    BY A GUY*
+                  </span>
                 </div>
               </div>
             </div>
