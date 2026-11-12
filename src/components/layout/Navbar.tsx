@@ -153,7 +153,7 @@ export function Navbar() {
             >
                 <GlitchLogo isScrolled={isScrolled} />
 
-                <div className="hidden md:flex items-center gap-8 font-light text-sm uppercase tracking-widest text-muted-foreground/80">
+                <div className="hidden md:flex items-center gap-8 font-light text-sm uppercase tracking-widest text-muted-foreground">
                     <NavLink href="/search">Find a Bunker</NavLink>
                     <NavLink href="/host">Become a Warlord</NavLink>
                     <NavLink href="/experiences">Raid Parties</NavLink>
