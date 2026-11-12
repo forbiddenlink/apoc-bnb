@@ -893,3 +893,68 @@ body {
     transition: none;
   }
 }
+
+/* ======================== */
+/* Home folio concept       */
+/* Scoped to .folio so other routes keep the dark theme. */
+/* ======================== */
+.folio {
+  --vellum: #f1eadb;
+  --soot: #15130f;
+  --bone: #e6dcc6;
+  --ash: #5e574a;
+  --oxide: #8c3a1c;
+  --geiger: #c8f03a;
+  background-color: var(--vellum);
+  color: var(--soot);
+  font-family: var(--font-folio-body), system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  position: relative;
+}
+.folio::before {
+  /* Paper grain, under 6% opacity */
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.folio-display {
+  font-family: var(--font-folio-display), serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.folio-label {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.folio p {
+  text-wrap: pretty;
+}
+.folio h2 {
+  text-wrap: balance;
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .folio-rise {
+      animation: folio-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+    }
+  }
+}
+@keyframes folio-rise {
+  from {
+    transform: translateY(40%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
