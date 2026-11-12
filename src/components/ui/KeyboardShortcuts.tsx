@@ -123,7 +123,7 @@ export function KeyboardShortcuts() {
       {/* Floating help button */}
       <button
         onClick={() => setShowHelp(true)}
-        className="fixed bottom-20 left-4 z-40 p-2 bg-card border border-border rounded-lg hover:border-primary/50 transition-colors group"
+        className="fixed bottom-20 left-4 z-40 p-2 [@media(pointer:coarse)]:hidden bg-card border border-border rounded-lg hover:border-primary/50 transition-colors group"
         title="Keyboard shortcuts (?)"
       >
         <Keyboard className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />

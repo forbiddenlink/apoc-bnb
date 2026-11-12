@@ -57,7 +57,7 @@ export function CookieConsent() {
                 <p className="text-xs uppercase tracking-[0.2em] text-[var(--geiger)] font-bold font-mono">
                   Cookie Rations Notice
                 </p>
-                <p className="text-[0.6875rem] md:text-sm text-[var(--bone)]/85 leading-snug md:leading-relaxed">
+                <p className="text-xs md:text-sm text-[var(--bone)]/85 leading-snug md:leading-relaxed">
                   This facility uses tracking cookies to monitor your survival
                   patterns, optimize bunker recommendations, and definitely not
                   sell your location data to raiders. By continuing, you consent
@@ -74,7 +74,7 @@ export function CookieConsent() {
                   </Button>
                 </div>
 
-                <p className="text-[0.6875rem] md:text-xs text-[var(--bone)]/70">
+                <p className="text-xs text-[var(--bone)]/70">
                   Learn more in our{" "}
                   <Link
                     href="/terms"

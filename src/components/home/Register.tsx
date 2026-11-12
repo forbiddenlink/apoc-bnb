@@ -28,7 +28,7 @@ export function Register() {
   return (
     <section
       aria-labelledby="register-h"
-      className="relative mx-auto max-w-[90rem] px-5 py-24 md:px-10 md:py-32"
+      className="relative mx-auto max-w-[90rem] px-5 pb-24 pt-10 md:px-10 md:py-32"
     >
       <div className="mb-10 flex flex-wrap items-end justify-between gap-6 border-b-2 border-[var(--soot)] pb-4">
         <div>
@@ -37,7 +37,7 @@ export function Register() {
             Today&apos;s vacancies
           </h2>
         </div>
-        <fieldset className="m-0 flex min-w-0 flex-wrap gap-2 border-0 p-0">
+        <fieldset className="m-0 flex min-w-0 max-w-full gap-2 overflow-x-auto border-0 p-0 md:flex-wrap md:overflow-visible">
           <legend className="sr-only">Filter by RAD level</legend>
           {TABS.map((t, i) => (
             <button
@@ -45,7 +45,7 @@ export function Register() {
               type="button"
               aria-pressed={tab === i}
               onClick={() => setTab(i)}
-              className={`folio-label border border-[var(--soot)] px-3 py-2 ${tab === i ? 'bg-[var(--soot)] text-[var(--geiger)]' : 'hover:bg-[var(--bone)]'}`}
+              className={`folio-label shrink-0 whitespace-nowrap border border-[var(--soot)] px-3 py-2 ${tab === i ? 'bg-[var(--soot)] text-[var(--geiger)]' : 'hover:bg-[var(--bone)]'}`}
             >
               {t.label}
             </button>
