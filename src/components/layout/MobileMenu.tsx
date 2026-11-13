@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/lib/store";
 import { ApocMascot } from "@/components/ui/ApocMascot";
+import { cn } from "@/lib/utils";
 
 const menuItemVariants = {
   hidden: { opacity: 0, x: 20 },
@@ -18,7 +19,7 @@ const menuItemVariants = {
   exit: { opacity: 0, x: 20 }
 };
 
-export function MobileMenu() {
+export function MobileMenu({ buttonClassName }: { buttonClassName?: string }) {
   const [isOpen, setIsOpen] = useState(false);
   const { favorites, bookings } = useAppStore();
 
@@ -33,7 +34,10 @@ export function MobileMenu() {
     <div className="md:hidden">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="text-foreground p-2 hover:bg-primary/10 rounded-lg transition-colors"
+        className={cn(
+          "text-foreground p-2 hover:bg-primary/10 rounded-lg transition-colors",
+          buttonClassName
+        )}
         aria-label="Toggle menu"
       >
         {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}

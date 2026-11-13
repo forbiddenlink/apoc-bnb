@@ -57,11 +57,13 @@ export function ApocAiChat() {
                         animate={{ scale: 1 }}
                         exit={{ scale: 0 }}
                         onClick={() => setIsOpen(true)}
-                        className="flex items-center gap-2 bg-primary text-black pl-3 pr-4 py-2.5 shadow-[0_0_15px_rgba(57,255,20,0.35)] hover:scale-[1.03] transition-transform font-bold border border-primary/80"
-                        aria-label="Open APOC-AI chat"
+                        className="flex min-h-11 min-w-11 items-center justify-center gap-2 border border-[var(--bone)] bg-[var(--soot)] text-[var(--geiger)] shadow-[3px_3px_0_var(--oxide)] transition-transform hover:-translate-y-0.5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--geiger)] focus-visible:shadow-[0_0_0_2px_var(--soot)] md:px-4"
+                        aria-label="Ask APOC-AI"
                     >
-                        <Bot className="h-5 w-5" />
-                        <span className="text-xs uppercase tracking-[0.15em]">Ask APOC-AI</span>
+                        <Bot className="h-5 w-5" aria-hidden="true" />
+                        <span className="hidden font-mono text-xs font-bold uppercase tracking-[0.14em] md:inline">
+                            Ask APOC-AI
+                        </span>
                     </motion.button>
                 )}
             </AnimatePresence>

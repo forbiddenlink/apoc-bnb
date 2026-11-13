@@ -65,7 +65,7 @@ export function BunkerSkeleton() {
       </div>
 
       {/* Corner indicator - "SCANNING" text */}
-      <div className="absolute bottom-2 right-2 text-[10px] text-primary/40 font-mono uppercase tracking-widest">
+      <div className="absolute bottom-2 right-2 text-xs text-muted-foreground font-mono uppercase tracking-widest">
         Scanning...
       </div>
     </div>

@@ -60,31 +60,31 @@ export function FilterPanel() {
         <Button
           variant="outline"
           size="sm"
-          className="gap-2 relative group hover:border-primary/50 transition-all"
+          className="min-h-11 gap-2 relative group border-[var(--soot)] hover:bg-[var(--bone)] transition-colors"
           onClick={handleOpen}
         >
           <SlidersHorizontal className="h-3 w-3 group-hover:text-primary transition-colors" />
           <span className="hidden sm:inline">Filters</span>
           {activeFiltersCount > 0 && (
-            <span className="absolute -top-1.5 -right-1.5 bg-primary text-black text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-[0_0_10px_var(--primary)]">
+            <span className="absolute -top-1.5 -right-1.5 bg-primary text-primary-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
               {activeFiltersCount}
             </span>
           )}
         </Button>
 
-        <div className="w-px bg-primary/20 h-6" />
+        <div className="w-px bg-[var(--soot)]/40 h-6" />
 
         <Button
           variant={searchFilters.radFree ? "default" : "ghost"}
           size="sm"
-          className={`group transition-all ${
+          className={`group min-h-11 transition-colors ${
             searchFilters.radFree
-              ? "bg-primary/10 text-primary border border-primary/30 shadow-[0_0_10px_rgba(57,255,20,0.2)]"
-              : "hover:border-primary/30"
+              ? "bg-[var(--soot)] text-[var(--geiger)] border border-[var(--soot)]"
+              : "hover:bg-[var(--bone)]"
           }`}
           onClick={() => updateSearchFilters({ radFree: !searchFilters.radFree })}
         >
-          <ShieldCheck className={`h-3 w-3 mr-1 ${searchFilters.radFree ? 'animate-pulse' : ''}`} />
+          <ShieldCheck className="h-3 w-3 sm:mr-1" />
           <span className="hidden sm:inline">Rad-Free</span>
         </Button>
 
@@ -92,7 +92,7 @@ export function FilterPanel() {
           <Button
             variant="ghost"
             size="sm"
-            className="text-accent hover:text-accent hover:bg-accent/10 transition-all"
+            className="min-h-11 text-accent hover:text-accent hover:bg-[var(--bone)] transition-colors"
             onClick={handleReset}
           >
             <X className="h-3 w-3 sm:mr-1" />
@@ -101,7 +101,7 @@ export function FilterPanel() {
         )}
       </div>
 
-      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Mission Parameters" size="md">
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} title="Mission Parameters" size="md" tone="folio">
         <div className="space-y-6">
           {/* Price Range */}
           <div className="relative">
@@ -117,7 +117,7 @@ export function FilterPanel() {
                   type="number"
                   value={tempFilters.minPrice}
                   onChange={(e) => setTempFilters({ ...tempFilters, minPrice: parseInt(e.target.value) || 0 })}
-                  className="w-full bg-black/50 border border-border rounded p-3 text-sm font-mono focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all"
+                  className="w-full bg-muted border border-border p-3 text-sm font-mono focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all"
                   placeholder="MIN"
                 />
               </div>
@@ -127,7 +127,7 @@ export function FilterPanel() {
                   type="number"
                   value={tempFilters.maxPrice}
                   onChange={(e) => setTempFilters({ ...tempFilters, maxPrice: parseInt(e.target.value) || 2500 })}
-                  className="w-full bg-black/50 border border-border rounded p-3 text-sm font-mono focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all"
+                  className="w-full bg-muted border border-border p-3 text-sm font-mono focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary/50 transition-all"
                   placeholder="MAX"
                 />
               </div>
@@ -147,10 +147,10 @@ export function FilterPanel() {
                 <button
                   key={rating}
                   onClick={() => setTempFilters({ ...tempFilters, minRating: rating })}
-                  className={`p-2 rounded border text-sm font-bold transition-all ${
+                  className={`p-2 border text-sm font-bold transition-all ${
                     tempFilters.minRating === rating
-                      ? "border-primary bg-primary/10 text-primary shadow-[0_0_10px_rgba(57,255,20,0.2)]"
-                      : "border-border hover:border-primary/50 bg-black/30"
+                      ? "border-[var(--soot)] bg-[var(--soot)] text-[var(--geiger)]"
+                      : "border-border hover:border-primary/50 bg-muted"
                   }`}
                 >
                   {rating === 0 ? "ANY" : `${rating}+`}
@@ -174,10 +174,10 @@ export function FilterPanel() {
                 max="10"
                 value={tempFilters.maxRadLevel}
                 onChange={(e) => setTempFilters({ ...tempFilters, maxRadLevel: parseInt(e.target.value) })}
-                className="w-full h-2 bg-muted rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-primary [&::-webkit-slider-thumb]:shadow-[0_0_10px_var(--primary)]"
+                className="w-full h-2 bg-muted appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4  [&::-webkit-slider-thumb]:bg-primary "
               />
               {/* Radiation bar visual */}
-              <div className="absolute top-0 left-0 right-0 h-2 rounded-full overflow-hidden pointer-events-none">
+              <div className="absolute top-0 left-0 right-0 h-2 overflow-hidden pointer-events-none">
                 <div
                   className="h-full transition-all"
                   style={{
@@ -200,7 +200,7 @@ export function FilterPanel() {
           </div>
 
           {/* Rad-Free Toggle */}
-          <div className="flex items-center justify-between p-3 rounded border border-border bg-black/30">
+          <div className="flex items-center justify-between p-3 border border-border bg-muted">
             <div className="flex items-center gap-2">
               <ShieldCheck className={`h-4 w-4 ${tempFilters.radFree ? 'text-primary' : 'text-muted-foreground'}`} />
               <label className="text-sm font-bold text-foreground">
@@ -213,11 +213,11 @@ export function FilterPanel() {
               aria-label="Toggle radiation-free only"
               onClick={() => setTempFilters({ ...tempFilters, radFree: !tempFilters.radFree })}
               className={`relative inline-flex h-6 w-11 items-center rounded-full transition-all ${
-                tempFilters.radFree ? "bg-primary shadow-[0_0_10px_var(--primary)]" : "bg-muted"
+                tempFilters.radFree ? "bg-primary" : "bg-muted"
               }`}
             >
               <span
-                className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                className={`inline-block h-4 w-4 transform rounded-full bg-[var(--vellum)] transition-transform ${
                   tempFilters.radFree ? "translate-x-6" : "translate-x-1"
                 }`}
               />
@@ -232,17 +232,17 @@ export function FilterPanel() {
                 Survivors Count
               </label>
             </div>
-            <div className="flex items-center justify-center gap-6 p-4 rounded border border-border bg-black/30">
+            <div className="flex items-center justify-center gap-6 p-4 border border-border bg-muted">
               <button
                 onClick={() => setTempFilters({ ...tempFilters, guests: Math.max(1, tempFilters.guests - 1) })}
-                className="h-10 w-10 rounded border border-border hover:border-primary hover:bg-primary/10 flex items-center justify-center font-bold text-lg transition-all"
+                className="h-11 w-11 border border-border hover:border-primary hover:bg-primary/10 flex items-center justify-center font-bold text-lg transition-all"
               >
                 −
               </button>
               <span className="text-3xl font-black text-primary w-12 text-center font-mono">{tempFilters.guests}</span>
               <button
                 onClick={() => setTempFilters({ ...tempFilters, guests: Math.min(50, tempFilters.guests + 1) })}
-                className="h-10 w-10 rounded border border-border hover:border-primary hover:bg-primary/10 flex items-center justify-center font-bold text-lg transition-all"
+                className="h-11 w-11 border border-border hover:border-primary hover:bg-primary/10 flex items-center justify-center font-bold text-lg transition-all"
               >
                 +
               </button>
@@ -266,14 +266,14 @@ export function FilterPanel() {
                         : [...tempFilters.amenities, amenity.id];
                       setTempFilters({ ...tempFilters, amenities: newAmenities });
                     }}
-                    className={`p-3 rounded border text-sm font-medium transition-all text-left relative overflow-hidden ${
+                    className={`p-3 border text-sm font-medium transition-all text-left relative overflow-hidden ${
                       isSelected
-                        ? "border-primary bg-primary/10 text-primary"
-                        : "border-border hover:border-primary/50 bg-black/30"
+                        ? "border-[var(--soot)] bg-[var(--soot)] text-[var(--geiger)]"
+                        : "border-border hover:border-primary/50 bg-muted"
                     }`}
                   >
                     {isSelected && (
-                      <div className="absolute top-1 right-1 w-2 h-2 rounded-full bg-primary animate-pulse" />
+                      <div className="absolute top-1 right-1 w-2 h-2 rounded-full bg-[var(--geiger)]" />
                     )}
                     {amenity.name}
                   </button>
@@ -295,11 +295,10 @@ export function FilterPanel() {
             <Button
               variant="default"
               size="lg"
-              className="flex-1 bg-primary hover:bg-primary/90 text-black font-bold relative overflow-hidden group"
+              className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground font-bold relative overflow-hidden group"
               onClick={handleApply}
             >
-              <span className="relative z-10">EXECUTE</span>
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
+              <span>EXECUTE</span>
             </Button>
           </div>
         </div>

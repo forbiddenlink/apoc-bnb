@@ -14,24 +14,24 @@ const severityConfig: Record<VerifiedIncident["severity"], {
   icon?: React.ElementType;
 }> = {
   "Minor Inconvenience": {
-    color: "text-yellow-400",
-    borderColor: "border-yellow-400/60",
-    bgColor: "bg-yellow-400/10",
+    color: "text-muted-foreground",
+    borderColor: "border-l-[var(--ash)]",
+    bgColor: "bg-[var(--vellum)]",
   },
   "Moderate Trauma": {
-    color: "text-orange-400",
-    borderColor: "border-orange-400/60",
-    bgColor: "bg-orange-400/10",
+    color: "text-secondary",
+    borderColor: "border-l-[var(--oxide)]",
+    bgColor: "bg-[var(--vellum)]",
   },
   "Existential Crisis": {
-    color: "text-accent",
-    borderColor: "border-accent/60",
-    bgColor: "bg-accent/10",
+    color: "text-[var(--vellum)]",
+    borderColor: "border-l-[var(--oxide)]",
+    bgColor: "bg-[var(--oxide)]",
   },
   "We Don't Talk About It": {
-    color: "text-purple-400",
-    borderColor: "border-purple-400/60",
-    bgColor: "bg-purple-400/10",
+    color: "text-[var(--geiger)]",
+    borderColor: "border-l-[var(--soot)]",
+    bgColor: "bg-[var(--soot)]",
     icon: Skull,
   },
 };
@@ -46,7 +46,7 @@ function IncidentCard({ incident }: { incident: VerifiedIncident }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       className={cn(
-        "border-l-4 bg-black/40 border border-white/10 p-4 space-y-3",
+        "border-l-4 bg-muted border border-border p-4 space-y-3",
         config.borderColor
       )}
     >
@@ -102,17 +102,11 @@ export function IncidentReport({ bunkerId }: { bunkerId: string }) {
   if (incidents.length === 0) return null;
 
   return (
-    <div className="relative border border-accent/30 bg-black/30">
-      {/* HUD corners */}
-      <div className="absolute top-0 left-0 w-3 h-3 border-l-2 border-t-2 border-accent/50" />
-      <div className="absolute top-0 right-0 w-3 h-3 border-r-2 border-t-2 border-accent/50" />
-      <div className="absolute bottom-0 left-0 w-3 h-3 border-l-2 border-b-2 border-accent/50" />
-      <div className="absolute bottom-0 right-0 w-3 h-3 border-r-2 border-b-2 border-accent/50" />
-
+    <div className="relative border border-[var(--soot)] bg-muted shadow-[3px_3px_0_var(--soot)]">
       {/* Header */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full p-4 flex items-center justify-between gap-3 hover:bg-white/5 transition-colors"
+        className="w-full p-4 flex items-center justify-between gap-3 hover:bg-foreground/5 transition-colors"
       >
         <div className="flex items-center gap-2">
           <AlertTriangle className="h-4 w-4 text-accent" />
@@ -143,7 +137,7 @@ export function IncidentReport({ bunkerId }: { bunkerId: string }) {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="px-4 pb-4 space-y-3 border-t border-accent/20">
+            <div className="px-4 pb-4 space-y-3 border-t border-border">
               <div className="pt-3 space-y-3">
                 {incidents.map((incident) => (
                   <IncidentCard key={incident.id} incident={incident} />
@@ -151,7 +145,7 @@ export function IncidentReport({ bunkerId }: { bunkerId: string }) {
               </div>
 
               {/* Disclaimer */}
-              <p className="text-xs text-muted-foreground/60 italic pt-2 border-t border-white/5">
+              <p className="text-xs text-muted-foreground/60 italic pt-2 border-t border-border">
                 APOC-BNB is legally required to disclose these incidents. We wish we weren&apos;t.
               </p>
             </div>

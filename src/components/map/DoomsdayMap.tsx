@@ -559,19 +559,19 @@ export default function DoomsdayMap({
                     <div className="space-y-1">
                         <div className="flex items-center gap-2">
                             <div className="w-4 h-4 flex items-center justify-center">
-                                <div className="w-2.5 h-3 bg-primary" style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }} />
+                                <div className="w-2.5 h-3" style={{ backgroundColor: getRadColor(0).fill, clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }} />
                             </div>
                             <span className="text-muted-foreground">SAFE (0-2)</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <div className="w-4 h-4 flex items-center justify-center">
-                                <div className="w-2.5 h-3 bg-secondary" style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }} />
+                                <div className="w-2.5 h-3" style={{ backgroundColor: getRadColor(3).fill, clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }} />
                             </div>
                             <span className="text-muted-foreground">CAUTION (3-5)</span>
                         </div>
                         <div className="flex items-center gap-2">
                             <div className="w-4 h-4 flex items-center justify-center">
-                                <div className="w-2.5 h-3 bg-accent" style={{ clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }} />
+                                <div className="w-2.5 h-3" style={{ backgroundColor: getRadColor(6).fill, clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)' }} />
                             </div>
                             <span className="text-muted-foreground">DANGER (6+)</span>
                         </div>

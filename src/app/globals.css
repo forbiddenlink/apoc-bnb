@@ -812,11 +812,6 @@ body {
   font-family: var(--font-stencil), var(--font-sans);
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  /* Ragged spray edge via turbulent mask */
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 120'%3E%3Cfilter id='spray'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.016' numOctaves='2' seed='7'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%23fff' filter='url(%23spray)'/%3E%3C/svg%3E");
-  -webkit-mask-size: 100% 100%;
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 120'%3E%3Cfilter id='spray'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.012 0.016' numOctaves='2' seed='7'/%3E%3CfeDisplacementMap in='SourceGraphic' scale='6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' fill='%23fff' filter='url(%23spray)'/%3E%3C/svg%3E");
-  mask-size: 100% 100%;
 }
 
 /* Spray overspray glow, subtle — keeps tactical green identity */
@@ -898,3 +893,140 @@ body {
     transition: none;
   }
 }
+
+/* ======================== */
+/* Home folio concept       */
+/* Scoped to .folio so other routes keep the dark theme. */
+/* ======================== */
+:root {
+  /* Folio palette, global so shared chrome (chat launcher) can use it too. */
+  --vellum: #f1eadb;
+  --soot: #15130f;
+  --bone: #e6dcc6;
+  --ash: #5e574a;
+  --oxide: #8c3a1c;
+  --geiger: #c8f03a;
+}
+.folio {
+  background-color: var(--vellum);
+  color: var(--soot);
+  font-family: var(--font-folio-body), system-ui, sans-serif;
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  position: relative;
+}
+.folio::before {
+  /* Paper grain, under 6% opacity */
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.folio-display {
+  font-family: var(--font-folio-display), serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+.folio-label {
+  font-family: var(--font-geist-mono), monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.folio p {
+  text-wrap: pretty;
+}
+.folio h2 {
+  text-wrap: balance;
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .folio-rise {
+      animation: folio-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 40%;
+    }
+  }
+}
+@keyframes folio-rise {
+  from {
+    transform: translateY(40%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* ======================== */
+/* Folio inner pages        */
+/* Remaps the shadcn tokens so utilities written for the dark theme     */
+/* (text-primary, bg-muted, border-border) render as ink on paper.      */
+/* Use with .folio on the page body; keep Navbar outside this scope.    */
+/* ======================== */
+.folio-inner {
+  --background: var(--vellum);
+  --foreground: var(--soot);
+  --primary: var(--soot);
+  --primary-foreground: var(--geiger);
+  --secondary: var(--oxide);
+  --secondary-foreground: var(--vellum);
+  --accent: var(--oxide);
+  --accent-foreground: var(--vellum);
+  --destructive: var(--oxide);
+  --destructive-foreground: var(--vellum);
+  --muted: var(--bone);
+  --muted-foreground: var(--ash);
+  --card: var(--bone);
+  --card-foreground: var(--soot);
+  --border: rgba(21, 19, 15, 0.4);
+  --input: rgba(21, 19, 15, 0.4);
+  --ring: var(--soot);
+  --radius: 0;
+}
+/* Inverted scope for chrome that should sit on Soot (footer). */
+.folio-soot {
+  --background: var(--soot);
+  --foreground: var(--vellum);
+  --primary: var(--geiger);
+  --primary-foreground: var(--soot);
+  --secondary: var(--vellum);
+  --secondary-foreground: var(--soot);
+  --accent: var(--geiger);
+  --accent-foreground: var(--soot);
+  --muted: #26231d;
+  --muted-foreground: #c9c0ac;
+  --card: #1d1b16;
+  --card-foreground: var(--vellum);
+  --border: rgba(241, 234, 219, 0.28);
+  --input: rgba(241, 234, 219, 0.28);
+  --ring: var(--geiger);
+  background-color: var(--soot);
+  color: var(--vellum);
+}
+.folio-inner .text-glow,
+.folio-inner .text-glow-gold,
+.folio-inner .text-glow-intense,
+.folio-inner .text-glow-accent {
+  text-shadow: none;
+}
+.folio-inner ::selection {
+  background: var(--geiger);
+  color: var(--soot);
+}
+/* Ruled register row used by listings on inner pages. */
+.folio-row {
+  border-top: 1px solid var(--soot);
+}
+.folio-card {
+  background: var(--bone);
+  border: 1px solid var(--soot);
+  box-shadow: 3px 3px 0 var(--soot);
+}
+
+/* folio pages: neon glow shadows from shared buttons do not belong on paper */
+.folio-inner [class*="shadow-[0_0_"] { box-shadow: none; }

@@ -58,21 +58,21 @@ function OperationsHeader({ bunkerCount, total }: { bunkerCount: number; total: 
     }, []);
 
     return (
-        <div className="hidden lg:flex items-center justify-between px-4 py-2 bg-black/60 border-b border-primary/20 backdrop-blur-sm">
+        <div className="hidden lg:flex items-center justify-between px-4 py-2 bg-[var(--bone)] border-b border-[var(--soot)]">
             <div className="flex items-center gap-3">
                 <div className="flex items-center gap-2">
-                    <div className={`w-2 h-2 rounded-full bg-primary transition-opacity ${statusBlink ? 'opacity-100' : 'opacity-40'}`} />
-                    <span className="text-label text-primary">OPERATIONS CENTER ONLINE</span>
+                    <div className={`w-2 h-2 rounded-full bg-[var(--oxide)] transition-opacity ${statusBlink ? 'opacity-100' : 'opacity-40'}`} />
+                    <span className="folio-label font-bold">OPERATIONS CENTER ONLINE</span>
                 </div>
-                <div className="w-px h-4 bg-border" />
-                <span className="text-mono text-muted-foreground">
-                    TARGETS: <span className="text-primary">{bunkerCount}</span>/<span className="text-secondary">{total}</span>
+                <div className="w-px h-4 bg-[var(--soot)]/50" />
+                <span className="folio-label text-muted-foreground">
+                    TARGETS: <span className="font-bold text-foreground">{bunkerCount}</span>/<span className="font-bold text-foreground">{total}</span>
                 </span>
             </div>
-            <div className="flex items-center gap-4 text-mono text-xs text-muted-foreground">
+            <div className="folio-label flex items-center gap-4 text-muted-foreground">
                 <span>LAT: 40.7128°N</span>
                 <span>LON: 74.0060°W</span>
-                <span className="text-primary">GRID: ACTIVE</span>
+                <span className="font-bold text-foreground">GRID: ACTIVE</span>
             </div>
         </div>
     );
@@ -104,19 +104,9 @@ function BunkerListItem({
                 }}
                 onMouseLeave={() => onHover(null)}
             >
-                <div className={`flex gap-3 md:gap-4 p-2.5 md:p-3 rounded-lg cursor-pointer group transition-all relative overflow-hidden
-                    ${bunker.features.radLevel > 3
-                        ? 'containment-card-critical'
-                        : 'containment-card'
-                    }`}
-                >
-                    {/* Scan line on hover */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity">
-                        <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent animate-scanline" />
-                    </div>
-
+                <div className="folio-row group relative flex cursor-pointer gap-3 overflow-hidden border-t border-[var(--soot)] py-3 pr-12 transition-colors hover:bg-[var(--bone)] md:gap-4 md:p-3 md:pr-3">
                     {/* Image */}
-                    <div className="w-28 sm:w-32 h-20 sm:h-24 bg-muted rounded-md relative overflow-hidden flex-shrink-0">
+                    <div className="relative h-24 w-28 flex-shrink-0 overflow-hidden border border-[var(--soot)] bg-muted sm:w-32">
                         <Image
                             src={bunker.images[0]}
                             alt={bunker.title}
@@ -124,54 +114,38 @@ function BunkerListItem({
                             sizes="128px"
                             className="object-cover transition-transform duration-300 group-hover:scale-105"
                         />
-                        {/* Rad indicator with pulse */}
-                        <div className={`absolute top-2 left-2 flex items-center justify-center ${
-                            bunker.features.radLevel > 4 ? 'animate-pulse' : ''
-                        }`}>
-                            <div className={`w-2 h-2 rounded-full ${
-                                bunker.features.radLevel <= 2 ? "bg-primary shadow-[0_0_8px_var(--primary)]" :
-                                bunker.features.radLevel <= 4 ? "bg-secondary shadow-[0_0_8px_var(--secondary)]" :
-                                "bg-accent shadow-[0_0_8px_var(--accent)]"
-                            }`} />
-                        </div>
-                        {/* HUD corner on hover */}
-                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity">
-                            <div className="absolute top-1 left-1 w-3 h-3 border-t border-l border-primary/60" />
-                            <div className="absolute bottom-1 right-1 w-3 h-3 border-b border-r border-primary/60" />
-                        </div>
                     </div>
 
                     {/* Content */}
-                    <div className="flex-1 flex flex-col justify-between min-w-0">
+                    <div className="flex min-w-0 flex-1 flex-col justify-between">
                         <div>
-                            <div className="flex justify-between items-start gap-2">
-                                <h3 className="font-bold text-sm md:text-base text-foreground group-hover:text-primary transition-colors line-clamp-1">
+                            <div className="flex items-start justify-between gap-2">
+                                <h3 className="line-clamp-2 font-[family-name:var(--font-folio-display)] text-lg font-bold leading-tight md:text-xl">
                                     {bunker.title}
                                 </h3>
-                                <span className="flex items-center gap-1 flex-shrink-0">
-                                    <Star className="h-3 w-3 text-secondary fill-secondary" />
-                                    <span className="text-sm font-bold">{bunker.rating.toFixed(1)}</span>
+                                <span className="flex flex-shrink-0 items-center gap-1">
+                                    <Star className="h-3.5 w-3.5 fill-current" />
+                                    <span className="font-mono text-sm font-bold">{bunker.rating.toFixed(1)}</span>
                                 </span>
                             </div>
-                            <div className="flex items-center gap-1 text-xs text-muted-foreground mt-1">
-                                <MapPin className="h-3 w-3" />
+                            <div className="mt-1 flex items-center gap-1 text-sm text-muted-foreground">
+                                <MapPin className="h-3 w-3 flex-shrink-0" />
                                 <span className="line-clamp-1">{bunker.location.name}</span>
+                                <span className="folio-label ml-1 flex-shrink-0">RAD {bunker.features.radLevel}</span>
                             </div>
                         </div>
 
-                        <div className="flex justify-between items-end mt-2 gap-2">
-                            <span className={`text-[10px] md:text-xs font-bold px-2 py-0.5 rounded uppercase ${
+                        <div className="mt-2 flex items-end justify-between gap-2">
+                            <span className={`folio-label whitespace-nowrap border px-2 py-0.5 font-bold ${
                                 bunker.features.radLevel <= 2
-                                    ? "text-primary bg-primary/10 border border-primary/20"
-                                    : bunker.features.radLevel <= 4
-                                        ? "text-secondary bg-secondary/10 border border-secondary/20"
-                                        : "text-accent bg-accent/10 border border-accent/20"
+                                    ? "border-[var(--soot)] bg-[var(--soot)] text-[var(--geiger)]"
+                                    : "border-[var(--oxide)] text-[var(--oxide)]"
                             }`}>
                                 {bunker.tags[0] || 'Available'}
                             </span>
                             <div className="text-right">
-                                <span className="font-black text-base md:text-lg group-hover:text-glow transition-all">{bunker.price.caps}</span>
-                                <span className="text-[10px] md:text-xs text-muted-foreground ml-1">CAPS/night</span>
+                                <span className="font-mono text-lg font-bold tabular-nums">{bunker.price.caps}</span>
+                                <span className="ml-1 text-xs text-muted-foreground">CAPS/night</span>
                             </div>
                         </div>
                     </div>
@@ -189,25 +163,25 @@ export default function SearchPage() {
     const [hoveredBunkerId, setHoveredBunkerId] = useState<string | null>(null);
 
     return (
-        <div id="main-content" className="min-h-screen bg-background flex flex-col font-sans noise-overlay">
-            <Navbar />
+        <>
+            <div style={{ fontFamily: 'var(--font-geist-sans), sans-serif' }}>
+                <Navbar variant="folio" />
+            </div>
+            <div id="main-content" className="folio folio-inner flex min-h-screen flex-col overflow-x-clip">
 
-            <div className="flex-1 flex flex-col pt-[60px] h-[calc(100vh-60px)]">
+            <div className="flex-1 flex flex-col pt-20 lg:h-[100vh]">
                 {/* Operations Center Header */}
                 <OperationsHeader bunkerCount={bunkers.length} total={total} />
 
                 <div className="flex-1 flex flex-col lg:flex-row overflow-hidden">
                     {/* Mission Parameters Sidebar */}
-                    <div className="w-full lg:w-[500px] xl:w-[600px] flex flex-col border-r border-primary/10 bg-card/30 backdrop-blur-sm overflow-hidden lg:h-full search-sidebar relative">
-                        {/* Tactical frame corners */}
-                        <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-primary/30 pointer-events-none z-20" />
-                        <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-primary/30 pointer-events-none z-20 lg:hidden" />
+                    <div className="w-full lg:w-[500px] xl:w-[600px] flex flex-col border-r border-[var(--soot)] bg-[var(--vellum)] overflow-hidden lg:h-full search-sidebar relative">
 
                         {/* Filters Header - Mission Parameters */}
-                        <div className="p-3 md:p-4 border-b border-border bg-background/80 backdrop-blur-sm sticky top-0 z-10">
+                        <div className="p-3 md:p-4 border-b-2 border-[var(--soot)] bg-[var(--vellum)] sticky top-0 z-10">
                             <div className="flex items-center gap-2 mb-3">
-                                <Shield className="h-4 w-4 text-primary" />
-                                <span className="text-label text-primary">MISSION PARAMETERS</span>
+                                <Shield className="h-4 w-4" />
+                                <span className="folio-label font-bold">MISSION PARAMETERS</span>
                             </div>
                             <div className="flex gap-2 overflow-x-auto no-scrollbar">
                                 <FilterPanel />
@@ -215,7 +189,7 @@ export default function SearchPage() {
                         </div>
 
                         {/* Scrollable Listings */}
-                        <div className="flex-1 overflow-y-auto p-3 md:p-4 space-y-3 pb-24 md:pb-4">
+                        <div className="flex-1 overflow-y-auto p-3 md:p-4 pb-44 md:pb-4">
                             {isLoading && <BunkerListSkeleton />}
 
                             {isError && (
@@ -225,12 +199,11 @@ export default function SearchPage() {
                                     className="text-center py-12 px-4"
                                 >
                                     <div className="relative w-20 h-20 mx-auto mb-4">
-                                        <Radiation className="h-20 w-20 text-accent animate-pulse" />
-                                        <div className="absolute inset-0 bg-accent/20 rounded-full animate-radar-ping" />
+                                        <Radiation className="h-20 w-20 text-accent" />
                                     </div>
-                                    <p className="text-label text-accent mb-2">SIGNAL LOST</p>
+                                    <p className="folio-label font-bold text-accent mb-2">SIGNAL LOST</p>
                                     <p className="text-body-sm text-muted-foreground">Failed to load bunkers. Check your connection.</p>
-                                    <div className="mt-4 text-mono text-xs text-muted-foreground">
+                                    <div className="mt-4 folio-label text-muted-foreground">
                                         ERROR CODE: RAD_INTERFERENCE_01
                                     </div>
                                 </motion.div>
@@ -254,9 +227,9 @@ export default function SearchPage() {
                                     className="text-center py-16 px-4"
                                 >
                                     <RadarSweep />
-                                    <p className="text-label text-muted-foreground mb-2">SECTOR EMPTY</p>
+                                    <p className="folio-label font-bold mb-2">SECTOR EMPTY</p>
                                     <p className="text-body-sm text-muted-foreground">No bunkers match current parameters.</p>
-                                    <p className="text-mono text-xs text-muted-foreground mt-4">
+                                    <p className="folio-label text-muted-foreground mt-4">
                                         Adjust filters to expand search radius.
                                     </p>
                                 </motion.div>
@@ -264,10 +237,10 @@ export default function SearchPage() {
                         </div>
 
                         {/* Tactical Footer */}
-                        <div className="p-3 md:p-4 border-t border-primary/20 bg-black/60 backdrop-blur-sm hidden md:flex items-center justify-between">
+                        <div className="p-3 md:p-4 border-t border-primary/20 bg-muted backdrop-blur-sm hidden md:flex items-center justify-between">
                             <div className="flex items-center gap-2">
                                 <Radio className="h-3 w-3 text-primary animate-pulse" />
-                                <span className="text-mono text-xs text-muted-foreground">SCANNING...</span>
+                                <span className="folio-label text-muted-foreground">SCANNING...</span>
                             </div>
                             <div className="text-mono text-xs">
                                 <span className="text-primary">{bunkers.length}</span>
@@ -282,30 +255,25 @@ export default function SearchPage() {
                     </div>
 
                     {/* Doomsday Radar Map Section */}
-                    <div className="flex-none lg:flex-1 h-[40vh] lg:h-[calc(100vh-98px)] relative bg-black search-map order-first lg:order-last">
-                        {/* Map tactical frame */}
-                        <div className="absolute inset-0 pointer-events-none z-10">
-                            <div className="absolute top-2 left-2 w-8 h-8 border-t-2 border-l-2 border-primary/40" />
-                            <div className="absolute top-2 right-2 w-8 h-8 border-t-2 border-r-2 border-primary/40" />
-                            <div className="absolute bottom-2 left-2 w-8 h-8 border-b-2 border-l-2 border-primary/40" />
-                            <div className="absolute bottom-2 right-2 w-8 h-8 border-b-2 border-r-2 border-primary/40" />
-                        </div>
-
+                    <div className="flex-none lg:flex-1 h-[40vh] lg:h-[calc(100vh-98px)] relative folio-soot bg-[var(--soot)] border-b border-[var(--soot)] lg:border-b-0 search-map order-first lg:order-last">
                         <DoomsdayMap bunkers={bunkers} selectedBunkerId={hoveredBunkerId || undefined} />
 
                         {/* Mobile results count overlay */}
                         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 lg:hidden z-20">
-                            <div className="bg-black/90 backdrop-blur border border-primary/30 rounded-full px-4 py-2 text-xs font-mono flex items-center gap-2">
-                                <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                                <span className="text-primary">{bunkers.length}</span>
-                                <span className="text-muted-foreground">targets found</span>
+                            <div className="bg-[var(--vellum)] border border-[var(--soot)] shadow-[3px_3px_0_var(--soot)] px-4 py-2 text-xs font-mono flex items-center gap-2">
+                                <div className="w-1.5 h-1.5 rounded-full bg-[var(--oxide)]" />
+                                <span className="font-bold text-[var(--soot)]">{bunkers.length}</span>
+                                <span className="text-[var(--ash)]">targets found</span>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            </div>
 
-            <MobileBottomNav />
+            <div style={{ fontFamily: 'var(--font-geist-sans), sans-serif' }}>
+                <MobileBottomNav />
+            </div>
 
             {/* CSS for radar sweep animation */}
             <style jsx>{`
@@ -314,6 +282,6 @@ export default function SearchPage() {
                     to { transform: rotate(360deg); }
                 }
             `}</style>
-        </div>
+        </>
     );
 }

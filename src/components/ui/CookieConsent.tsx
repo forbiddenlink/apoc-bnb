@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Radiation } from "lucide-react";
 import { toast } from "sonner";
@@ -11,6 +11,28 @@ const STORAGE_KEY = "apoc-bnb-cookie-consent";
 
 export function CookieConsent() {
   const [visible, setVisible] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  // On phones the banner floats above the bottom nav; pad the page by its height
+  // so the last rows and the booking button can always scroll clear of it.
+  useEffect(() => {
+    if (!visible) return;
+    const el = panelRef.current;
+    if (!el) return;
+    const mq = window.matchMedia("(max-width: 767px)");
+    const apply = () => {
+      document.body.style.paddingBottom = mq.matches ? `${el.offsetHeight + 16}px` : "";
+    };
+    apply();
+    const ro = new ResizeObserver(apply);
+    ro.observe(el);
+    mq.addEventListener("change", apply);
+    return () => {
+      ro.disconnect();
+      mq.removeEventListener("change", apply);
+      document.body.style.paddingBottom = "";
+    };
+  }, [visible]);
 
   useEffect(() => {
     const dismissed = localStorage.getItem(STORAGE_KEY);
@@ -39,25 +61,19 @@ export function CookieConsent() {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 100, opacity: 0 }}
           transition={{ type: "spring", damping: 25, stiffness: 200 }}
-          className="fixed bottom-20 left-4 right-4 md:left-auto md:right-6 md:bottom-6 md:max-w-lg z-[60]"
+          className="fixed bottom-[4.5rem] left-4 right-4 md:left-auto md:right-6 md:bottom-6 md:max-w-lg z-[60]"
         >
-          <div className="relative bg-card/95 backdrop-blur-md border border-border rounded-sm p-5 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
-            {/* HUD corners */}
-            <div className="absolute top-0 left-0 w-4 h-4 border-l-2 border-t-2 border-primary/50 -translate-x-0.5 -translate-y-0.5" />
-            <div className="absolute top-0 right-0 w-4 h-4 border-r-2 border-t-2 border-primary/50 translate-x-0.5 -translate-y-0.5" />
-            <div className="absolute bottom-0 left-0 w-4 h-4 border-l-2 border-b-2 border-primary/50 -translate-x-0.5 translate-y-0.5" />
-            <div className="absolute bottom-0 right-0 w-4 h-4 border-r-2 border-b-2 border-primary/50 translate-x-0.5 translate-y-0.5" />
-
-            {/* Scanline top border */}
-            <div className="absolute top-0 left-4 right-4 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-
+          <div
+            ref={panelRef}
+            className="relative bg-[var(--vellum)] text-[var(--soot)] border border-[var(--soot)] p-3 md:p-5 shadow-[3px_3px_0_var(--soot)]"
+          >
             <div className="flex items-start gap-3">
-              <Radiation className="h-5 w-5 text-primary shrink-0 mt-0.5 animate-pulse" />
-              <div className="space-y-3">
-                <p className="text-xs uppercase tracking-[0.2em] text-primary font-bold font-mono">
+              <Radiation className="h-5 w-5 text-[var(--oxide)] shrink-0 mt-0.5" />
+              <div className="space-y-2 md:space-y-3">
+                <p className="text-xs uppercase tracking-[0.2em] text-[var(--oxide)] font-bold font-mono">
                   Cookie Rations Notice
                 </p>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+                <p className="text-xs md:text-sm text-[var(--soot)] leading-snug md:leading-relaxed">
                   This facility uses tracking cookies to monitor your survival
                   patterns, optimize bunker recommendations, and definitely not
                   sell your location data to raiders. By continuing, you consent
@@ -66,19 +82,19 @@ export function CookieConsent() {
                 </p>
 
                 <div className="flex items-center gap-3">
-                  <Button size="sm" onClick={dismiss}>
+                  <Button size="sm" onClick={dismiss} className="rounded-none bg-[var(--soot)] text-[var(--vellum)] hover:bg-[var(--oxide)] hover:text-[var(--vellum)] shadow-none">
                     Accept Rations
                   </Button>
-                  <Button variant="ghost" size="sm" onClick={reject}>
+                  <Button variant="ghost" size="sm" onClick={reject} className="rounded-none text-[var(--soot)] border border-[var(--soot)]/40 hover:bg-[var(--bone)] hover:text-[var(--soot)]">
                     Reject &amp; Starve
                   </Button>
                 </div>
 
-                <p className="text-xs text-muted-foreground/50">
+                <p className="text-xs text-[var(--ash)]">
                   Learn more in our{" "}
                   <Link
                     href="/terms"
-                    className="underline underline-offset-2 hover:text-primary transition-colors"
+                    className="text-[var(--soot)] underline underline-offset-2 hover:text-[var(--oxide)] transition-colors"
                   >
                     Terms of Survival
                   </Link>

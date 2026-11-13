@@ -37,9 +37,9 @@ function RatingBreakdown({ reviews }: { reviews: Review[] }) {
           <div key={rating} className="flex items-center gap-2 text-sm">
             <span className="w-3 text-muted-foreground">{rating}</span>
             <Star className="h-3 w-3 text-secondary fill-secondary" />
-            <div className="flex-1 h-2 bg-muted rounded-full overflow-hidden">
+            <div className="flex-1 h-2 bg-muted border border-[var(--soot)]/40 overflow-hidden">
               <div
-                className="h-full bg-secondary rounded-full transition-all duration-300"
+                className="h-full bg-secondary transition-all duration-300"
                 style={{ width: `${percentage}%` }}
               />
             </div>
@@ -83,7 +83,7 @@ export function ReviewsList({ reviews, averageRating, totalReviews }: ReviewsLis
   if (reviews.length === 0) {
     return (
       <div className="text-center py-16">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-muted mb-4">
+        <div className="inline-flex items-center justify-center w-16 h-16 border border-[var(--soot)] bg-muted mb-4">
           <Skull className="h-8 w-8 text-muted-foreground" />
         </div>
         <h3 className="text-lg font-bold text-foreground mb-2">
@@ -109,7 +109,7 @@ export function ReviewsList({ reviews, averageRating, totalReviews }: ReviewsLis
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
             <Star className="h-6 w-6 text-secondary fill-secondary" />
-            <span className="text-3xl font-black">{averageRating.toFixed(2)}</span>
+            <span className="folio-display text-4xl">{averageRating.toFixed(2)}</span>
           </div>
           <div className="text-muted-foreground">
             <div className="font-bold text-foreground">{reviews.length} Reviews</div>
@@ -147,7 +147,7 @@ export function ReviewsList({ reviews, averageRating, totalReviews }: ReviewsLis
                 className="fixed inset-0 z-10"
                 onClick={() => setSortDropdownOpen(false)}
               />
-              <div className="absolute right-0 mt-1 w-40 bg-card border border-border rounded-md shadow-lg z-20">
+              <div className="absolute right-0 mt-1 w-40 bg-[var(--vellum)] border border-[var(--soot)] shadow-[3px_3px_0_var(--soot)] z-20">
                 {sortOptions.map((option) => (
                   <button
                     key={option.value}
@@ -155,7 +155,7 @@ export function ReviewsList({ reviews, averageRating, totalReviews }: ReviewsLis
                       setSortBy(option.value);
                       setSortDropdownOpen(false);
                     }}
-                    className={`w-full text-left px-3 py-2 text-sm hover:bg-muted transition-colors first:rounded-t-md last:rounded-b-md ${
+                    className={`w-full text-left px-3 py-2 text-sm hover:bg-muted transition-colors ${
                       sortBy === option.value ? 'text-primary font-medium' : 'text-foreground'
                     }`}
                   >

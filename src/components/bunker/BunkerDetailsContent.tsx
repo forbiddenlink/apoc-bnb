@@ -3,9 +3,7 @@
 import Image from "next/image";
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
+import { FolioShell } from "@/components/layout/FolioShell";
 import { BookingWidget } from "@/components/booking/BookingWidget";
 import { ReviewsList } from "@/components/reviews/ReviewsList";
 import { HostAvatar } from "@/components/ui/HostAvatar";
@@ -32,10 +30,8 @@ interface BunkerDetailsContentProps {
 
 function RadiationGauge({ level }: { level: number }) {
     const percentage = (level / 10) * 100;
-    const color = level <= 2 ? "text-primary" : level <= 4 ? "text-secondary" : "text-accent";
-    const bgColor = level <= 2 ? "bg-primary" : level <= 4 ? "bg-secondary" : "bg-accent";
-    const glowColor = level <= 2 ? "shadow-[0_0_20px_rgba(57,255,20,0.5)]" : level <= 4 ? "shadow-[0_0_20px_rgba(212,175,55,0.5)]" : "shadow-[0_0_20px_rgba(255,0,60,0.5)]";
-    const label = level <= 2 ? "MINIMAL" : level <= 4 ? "ELEVATED" : "CRITICAL";
+    const color = level <= 2 ? "text-foreground" : "text-[var(--oxide)]";
+        const label = level <= 2 ? "MINIMAL" : level <= 4 ? "ELEVATED" : "CRITICAL";
 
     return (
         <div className="relative">
@@ -45,7 +41,7 @@ function RadiationGauge({ level }: { level: number }) {
                 <path
                     d="M 10 55 A 40 40 0 0 1 90 55"
                     fill="none"
-                    stroke="rgba(255,255,255,0.1)"
+                    stroke="rgba(21,19,15,0.15)"
                     strokeWidth="8"
                     strokeLinecap="round"
                 />
@@ -68,7 +64,7 @@ function RadiationGauge({ level }: { level: number }) {
                     y1="55"
                     x2="50"
                     y2="20"
-                    stroke="white"
+                    stroke="var(--soot)"
                     strokeWidth="2"
                     strokeLinecap="round"
                     initial={{ rotate: -90 }}
@@ -92,7 +88,7 @@ function RadiationGauge({ level }: { level: number }) {
     );
 }
 
-function SpecCard({ label, value, subValue, icon: Icon, color = "text-primary" }: {
+function SpecCard({ label, value, subValue, icon: Icon, color: _color = "text-primary" }: {
     label: string;
     value: string | number;
     subValue?: string;
@@ -104,21 +100,16 @@ function SpecCard({ label, value, subValue, icon: Icon, color = "text-primary" }
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="relative bg-black/40 border border-white/10 p-4 hover:border-primary/30 transition-colors group"
+            className="folio-card relative p-4"
         >
-            {/* Corner accents */}
-            <div className="absolute top-0 left-0 w-2 h-2 border-l border-t border-primary/30 group-hover:border-primary/60 transition-colors" />
-            <div className="absolute top-0 right-0 w-2 h-2 border-r border-t border-primary/30 group-hover:border-primary/60 transition-colors" />
-            <div className="absolute bottom-0 left-0 w-2 h-2 border-l border-b border-primary/30 group-hover:border-primary/60 transition-colors" />
-            <div className="absolute bottom-0 right-0 w-2 h-2 border-r border-b border-primary/30 group-hover:border-primary/60 transition-colors" />
 
             <div className="flex items-start gap-3">
-                <div className={cn("p-2 bg-white/5 border border-white/10", color)}>
+                <div className={cn("p-2 bg-[var(--vellum)] border border-[var(--soot)]")}>
                     <Icon className="h-4 w-4" />
                 </div>
                 <div>
-                    <div className="text-label text-muted-foreground mb-1">{label}</div>
-                    <div className={cn("text-xl font-bold font-mono", color)}>{value}</div>
+                    <div className="folio-label text-muted-foreground mb-1">{label}</div>
+                    <div className={"text-xl font-bold font-mono"}>{value}</div>
                     {subValue && <div className="text-xs text-muted-foreground">{subValue}</div>}
                 </div>
             </div>
@@ -128,20 +119,20 @@ function SpecCard({ label, value, subValue, icon: Icon, color = "text-primary" }
 
 function WillItHold({ bunker }: { bunker: Bunker }) {
     const v = holdVerdict(bunker.features);
-    const tone = v.level === "holds" ? "text-primary" : v.level === "caveats" ? "text-secondary" : "text-destructive";
+    const tone = v.level === "holds" ? "text-foreground" : "text-[var(--oxide)]";
     return (
-        <section aria-labelledby="will-it-hold-heading" className="border border-white/10 bg-black/30">
-            <div className="p-4 border-b border-white/10">
-                <span id="will-it-hold-heading" className="text-label text-muted-foreground">WILL IT HOLD?</span>
+        <section aria-labelledby="will-it-hold-heading" className="folio-card">
+            <div className="p-4 border-b border-[var(--soot)]">
+                <span id="will-it-hold-heading" className="folio-label text-muted-foreground">WILL IT HOLD?</span>
             </div>
             <div className="p-6">
-                <p className={cn("text-2xl font-bold font-mono", tone)}>{v.headline}</p>
+                <p className={cn("folio-display text-3xl", tone)}>{v.headline}</p>
                 <p className="text-sm text-muted-foreground mt-1">{v.note}</p>
                 <ul className="mt-4 space-y-2 text-sm font-mono">
                     {v.checks.map((c) => (
                         <li key={c.label} className="flex flex-wrap items-baseline gap-x-3">
-                            <span className={c.pass ? "text-primary" : "text-destructive"}>{c.pass ? "PASS" : "FAIL"}</span>
-                            <span className="text-white">{c.label}: {c.value}</span>
+                            <span className={c.pass ? "font-bold text-foreground" : "font-bold text-[var(--oxide)]"}>{c.pass ? "PASS" : "FAIL"}</span>
+                            <span className="text-foreground">{c.label}: {c.value}</span>
                             <span className="text-muted-foreground">needs {c.rule}</span>
                         </li>
                     ))}
@@ -169,16 +160,14 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
     };
 
     return (
-        <PageTransition className="min-h-screen bg-background font-sans">
-            <Navbar />
-
-            <main className="pt-24 pb-20 md:pb-20 pb-mobile-nav container mx-auto px-4 max-w-7xl">
+        <FolioShell mainClassName="max-w-7xl">
+            <PageTransition>
                 {/* Warning Banners */}
                 {!bunker.availability && (
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="mb-6 p-4 bg-muted/50 border border-border flex items-center gap-3"
+                        className="mb-6 p-4 bg-[var(--bone)] border border-dashed border-[var(--soot)] flex items-center gap-3"
                     >
                         <AlertTriangle className="h-5 w-5 text-muted-foreground flex-shrink-0" />
                         <div className="text-sm">
@@ -192,9 +181,9 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                     <motion.div
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="mb-6 p-4 bg-accent/10 border border-accent/30 flex items-center gap-3"
+                        className="mb-6 p-4 bg-[var(--bone)] border border-[var(--oxide)] flex items-center gap-3"
                     >
-                        <AlertTriangle className="h-5 w-5 text-accent animate-pulse flex-shrink-0" />
+                        <AlertTriangle className="h-5 w-5 text-accent flex-shrink-0" />
                         <div className="text-sm">
                             <span className="font-bold text-accent">HIGH RADIATION ZONE</span>
                             <span className="text-muted-foreground ml-2">Protective gear recommended.</span>
@@ -204,17 +193,17 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
 
                 {/* Header */}
                 <ScrollReveal>
-                    <div className="mb-8">
-                        <div className="flex justify-between items-start mb-3">
-                            <h1 className="text-h1 uppercase tracking-tight">{bunker.title}</h1>
+                    <div className="mb-8 border-b-2 border-[var(--soot)] pb-6">
+                        <div className="flex justify-between items-start gap-3 mb-3">
+                            <h1 className="folio-display text-[clamp(2.25rem,6vw,4rem)]">{bunker.title}</h1>
                             <div className="flex gap-2">
                                 <CompareButton bunkerId={bunker.id} />
                                 <FavoriteButton bunkerId={bunker.id} size="lg" />
                             </div>
                         </div>
                         <div className="flex flex-wrap items-center gap-4 text-sm">
-                            <span className="flex items-center gap-1 font-bold text-secondary">
-                                <Star className="h-4 w-4 fill-secondary" /> {bunker.rating.toFixed(2)}
+                            <span className="flex items-center gap-1 font-bold">
+                                <Star className="h-4 w-4 fill-current" /> {bunker.rating.toFixed(2)}
                             </span>
                             <span className="text-muted-foreground hover:text-foreground cursor-pointer transition-colors">
                                 {reviews.length} {reviews.length === 1 ? 'Review' : 'Reviews'}
@@ -222,14 +211,14 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                             {bunker.host.isSuperhost && (
                                 <>
                                     <span className="text-muted-foreground">•</span>
-                                    <span className="flex items-center gap-1 text-primary font-bold">
+                                    <span className="flex items-center gap-1 font-bold">
                                         <ShieldCheck className="h-4 w-4" /> Superhost
                                     </span>
                                 </>
                             )}
                             <span className="text-muted-foreground">•</span>
                             <span className="flex items-center gap-1">
-                                <MapPin className="h-4 w-4 text-primary/70" />
+                                <MapPin className="h-4 w-4" />
                                 {bunker.location.name}, {bunker.location.region}
                             </span>
                         </div>
@@ -239,7 +228,7 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                 {/* Gallery */}
                 <ScrollReveal delay={0.1}>
                     <div className="mb-12">
-                        <div className="relative h-[50vh] md:h-[60vh] overflow-hidden border border-white/10 mb-2 group/gallery">
+                        <div className="relative h-[50vh] md:h-[60vh] overflow-hidden border border-[var(--soot)] mb-2 group/gallery">
                             <motion.div
                                 key={activeImage}
                                 initial={{ opacity: 0, scale: 1.05 }}
@@ -255,7 +244,7 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                                     priority
                                 />
                             </motion.div>
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
 
                             {bunker.images.length > 1 && (
                                 <>
@@ -266,7 +255,7 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                                                 (activeImage - 1 + bunker.images.length) % bunker.images.length
                                             )
                                         }
-                                        className="absolute left-3 top-1/2 -translate-y-1/2 z-20 h-10 w-10 flex items-center justify-center border border-white/20 bg-black/75 text-white hover:border-primary hover:text-primary transition-colors"
+                                        className="absolute left-3 top-1/2 -translate-y-1/2 z-20 h-11 w-11 flex items-center justify-center border border-[var(--soot)] bg-[var(--vellum)] text-[var(--soot)] hover:bg-[var(--geiger)] transition-colors"
                                         aria-label="Previous photo"
                                     >
                                         <ChevronLeft className="h-5 w-5" />
@@ -276,7 +265,7 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                                         onClick={() =>
                                             setActiveImage((activeImage + 1) % bunker.images.length)
                                         }
-                                        className="absolute right-3 top-1/2 -translate-y-1/2 z-20 h-10 w-10 flex items-center justify-center border border-white/20 bg-black/75 text-white hover:border-primary hover:text-primary transition-colors"
+                                        className="absolute right-3 top-1/2 -translate-y-1/2 z-20 h-11 w-11 flex items-center justify-center border border-[var(--soot)] bg-[var(--vellum)] text-[var(--soot)] hover:bg-[var(--geiger)] transition-colors"
                                         aria-label="Next photo"
                                     >
                                         <ChevronRight className="h-5 w-5" />
@@ -285,10 +274,10 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                             )}
 
                             <div className="absolute bottom-4 left-4 right-4 z-20 flex items-end justify-between gap-3 pointer-events-none">
-                                <span className="text-[10px] uppercase tracking-[0.2em] text-white/70 font-mono bg-black/50 px-2 py-1 border border-white/10">
+                                <span className="text-xs uppercase tracking-[0.2em] text-[var(--soot)] font-mono bg-[var(--vellum)] px-2 py-1 border border-[var(--soot)]">
                                     Facility recon
                                 </span>
-                                <div className="px-3 py-1 bg-black/70 backdrop-blur-sm border border-white/10 text-sm font-mono tabular-nums">
+                                <div className="px-3 py-1 bg-[var(--vellum)] text-[var(--soot)] border border-[var(--soot)] text-sm font-mono tabular-nums">
                                     {activeImage + 1} / {bunker.images.length}
                                 </div>
                             </div>
@@ -302,8 +291,8 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                                     className={cn(
                                         "relative flex-shrink-0 w-20 h-14 overflow-hidden border-2 transition-all",
                                         activeImage === index
-                                            ? "border-primary shadow-[0_0_10px_rgba(57,255,20,0.3)]"
-                                            : "border-white/10 hover:border-white/30"
+                                            ? "border-[var(--soot)] shadow-[3px_3px_0_var(--soot)]"
+                                            : "border-transparent opacity-70 hover:opacity-100"
                                     )}
                                     aria-label={`View photo ${index + 1}`}
                                     aria-current={activeImage === index ? "true" : undefined}
@@ -320,8 +309,8 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                     <div className="lg:col-span-2 space-y-10">
                         {/* Host Dossier */}
                         <ScrollReveal>
-                            <div className="relative p-6 bg-black/30 border border-white/10">
-                                <div className="absolute top-2 right-2 text-label text-muted-foreground/50 rotate-3">
+                            <div className="relative p-6 bg-muted border border-border">
+                                <div className="absolute top-2 right-2 folio-label text-muted-foreground/50 rotate-3">
                                     CLASSIFIED
                                 </div>
                                 <div className="flex items-start gap-4">
@@ -332,10 +321,10 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                                         size="lg"
                                     />
                                     <div className="flex-1">
-                                        <div className="text-label text-muted-foreground mb-1">WARLORD DOSSIER</div>
+                                        <div className="folio-label text-muted-foreground mb-1">WARLORD DOSSIER</div>
                                         <h3 className="text-xl font-bold mb-1">{bunker.host.name}</h3>
                                         <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground mb-3">
-                                            {bunker.host.isSuperhost && <span className="text-primary">★ Superhost</span>}
+                                            {bunker.host.isSuperhost && <span className="font-bold text-foreground">★ Superhost</span>}
                                             <span>{bunker.host.yearsHosting} Years Hosting</span>
                                         </div>
                                         {bunker.host.quirk && bunker.host.quirkLabel && (
@@ -344,7 +333,7 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                                     </div>
                                 </div>
                                 {bunker.host.bio && (
-                                    <p className="mt-4 text-sm text-muted-foreground leading-relaxed border-t border-white/5 pt-4">
+                                    <p className="mt-4 text-sm text-muted-foreground leading-relaxed border-t border-border pt-4">
                                         {bunker.host.bio}
                                     </p>
                                 )}
@@ -367,11 +356,11 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
 
                         {/* System Diagnostics Panel */}
                         <ScrollReveal>
-                            <div className="border border-white/10 bg-black/30">
-                                <div className="p-4 border-b border-white/10 flex items-center gap-2">
-                                    <Gauge className="h-4 w-4 text-primary" />
-                                    <span className="text-label text-muted-foreground">SYSTEM DIAGNOSTICS</span>
-                                    <span className="ml-auto text-xs font-mono text-primary animate-pulse">● LIVE</span>
+                            <div className="folio-card">
+                                <div className="p-4 border-b border-[var(--soot)] flex items-center gap-2">
+                                    <Gauge className="h-4 w-4" />
+                                    <span className="folio-label text-muted-foreground">SYSTEM DIAGNOSTICS</span>
+                                    <span className="ml-auto text-xs font-mono font-bold">● LIVE</span>
                                 </div>
                                 <div className="p-6">
                                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -382,19 +371,19 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                                         {/* Other specs */}
                                         <div className="md:col-span-2 grid grid-cols-2 gap-3">
                                             <SpecCard label="CAPACITY" value={`${bunker.features.capacity}`} subValue="survivors" icon={Users} />
-                                            <SpecCard label="SECURITY" value={`Level ${bunker.features.securityLevel}`} icon={ShieldCheck} color="text-secondary" />
+                                            <SpecCard label="SECURITY" value={`Level ${bunker.features.securityLevel}`} icon={ShieldCheck} />
                                             <SpecCard label="DEPTH" value={`${Math.abs(bunker.features.depth)}ft`} subValue={bunker.features.depth > 0 ? "underground" : "elevation"} icon={ArrowUp} />
                                             <SpecCard label="OXYGEN" value={`${bunker.features.oxygenPurity}%`} subValue="purity" icon={Wind} />
                                         </div>
                                     </div>
-                                    <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-white/5">
+                                    <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-border">
                                         <div className="text-sm">
                                             <span className="text-muted-foreground">Power: </span>
-                                            <span className="text-white font-mono">{bunker.features.powerSource}</span>
+                                            <span className="text-foreground font-mono">{bunker.features.powerSource}</span>
                                         </div>
                                         <div className="text-sm">
                                             <span className="text-muted-foreground">Water: </span>
-                                            <span className="text-white font-mono">{bunker.features.waterSource}</span>
+                                            <span className="text-foreground font-mono">{bunker.features.waterSource}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -403,18 +392,18 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
 
                         {/* Amenities */}
                         <ScrollReveal>
-                            <div className="border border-white/10 bg-black/30">
-                                <div className="p-4 border-b border-white/10">
-                                    <span className="text-label text-muted-foreground">SURVIVAL FEATURES</span>
+                            <div className="folio-card">
+                                <div className="p-4 border-b border-[var(--soot)]">
+                                    <span className="folio-label text-muted-foreground">SURVIVAL FEATURES</span>
                                 </div>
                                 <div className="p-6">
                                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                                         {bunker.amenities.filter(a => a.available).slice(0, 9).map((amenity) => {
                                             const IconComponent = iconMap[amenity.icon] || ShieldCheck;
                                             return (
-                                                <div key={amenity.id} className="flex items-center gap-3 p-2 hover:bg-white/5 transition-colors">
-                                                    <div className="p-2 bg-primary/10 border border-primary/20">
-                                                        <IconComponent className="h-4 w-4 text-primary" />
+                                                <div key={amenity.id} className="flex items-center gap-3 p-2 hover:bg-foreground/5 transition-colors">
+                                                    <div className="p-2 bg-[var(--vellum)] border border-[var(--soot)]">
+                                                        <IconComponent className="h-4 w-4" />
                                                     </div>
                                                     <span className="text-sm">{amenity.name}</span>
                                                 </div>
@@ -428,10 +417,10 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                         {/* Banned Items */}
                         {bunker.bannedItems && bunker.bannedItems.length > 0 && (
                             <ScrollReveal>
-                                <div className="border border-accent/30 bg-accent/5">
-                                    <div className="p-4 border-b border-accent/20 flex items-center gap-2">
+                                <div className="folio-card border-[var(--oxide)]">
+                                    <div className="p-4 border-b border-[var(--oxide)] flex items-center gap-2">
                                         <Ban className="h-4 w-4 text-accent" />
-                                        <span className="text-label text-accent">CONTRABAND // DO NOT BRING</span>
+                                        <span className="folio-label font-bold text-accent">CONTRABAND // DO NOT BRING</span>
                                     </div>
                                     <div className="p-6">
                                         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
@@ -470,10 +459,7 @@ export function BunkerDetailsContent({ bunker, reviews }: BunkerDetailsContentPr
                         />
                     </div>
                 </div>
-            </main>
-
-            <Footer />
-            <MobileBottomNav />
-        </PageTransition>
+            </PageTransition>
+        </FolioShell>
     );
 }

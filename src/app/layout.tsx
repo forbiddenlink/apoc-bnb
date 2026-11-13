@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import { Geist, Geist_Mono, Black_Ops_One } from "next/font/google";
+import { Geist, Geist_Mono, Black_Ops_One, Bodoni_Moda, Hanken_Grotesk } from "next/font/google";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
 import { ApocAiChat } from "@/components/chat/ApocAiChat";
@@ -34,6 +34,20 @@ const geistMono = Geist_Mono({
 const stencilDisplay = Black_Ops_One({
   variable: "--font-stencil",
   weight: "400",
+  subsets: ["latin"],
+  display: "swap",
+});
+
+// Home "folio" concept: Bodoni Moda for the grand-hotel header, Hanken Grotesk for body.
+const folioDisplay = Bodoni_Moda({
+  variable: "--font-folio-display",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
+const folioBody = Hanken_Grotesk({
+  variable: "--font-folio-body",
   subsets: ["latin"],
   display: "swap",
 });
@@ -101,7 +115,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${stencilDisplay.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${stencilDisplay.variable} ${folioDisplay.variable} ${folioBody.variable} antialiased`}
       >
         <a
           href="#main-content"

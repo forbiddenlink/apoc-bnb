@@ -213,7 +213,7 @@ export function Footer() {
 
             <footer className="footer-terminal relative z-10">
                 {/* Warning Banner with Animated Hazard Stripes */}
-                <div className="relative bg-secondary/10 border-b border-secondary/30 py-3 overflow-hidden">
+                <div className="relative bg-[var(--oxide)] border-b border-[var(--vellum)]/30 py-3 overflow-hidden">
                     {/* Animated hazard stripes background */}
                     <div
                         className="absolute inset-0 opacity-20 animate-hazard-scroll"
@@ -222,8 +222,8 @@ export function Footer() {
                 -45deg,
                 transparent,
                 transparent 10px,
-                rgba(212, 175, 55, 0.3) 10px,
-                rgba(212, 175, 55, 0.3) 20px
+                rgba(241, 234, 219, 0.3) 10px,
+                rgba(241, 234, 219, 0.3) 20px
               )`,
                             backgroundSize: "40px 40px",
                         }}
@@ -248,7 +248,7 @@ export function Footer() {
                             >
                                 <ApocMascot expression="happy" size="md" animate={false} />
                                 <div>
-                                    <span className="text-2xl font-black uppercase tracking-tighter text-primary group-hover:text-glow-intense transition-all block">
+                                    <span className="text-2xl font-black uppercase tracking-tighter folio-display text-primary transition-colors block">
                                         APOC-BNB
                                     </span>
                                     <p className="text-xs text-muted-foreground uppercase tracking-widest">
@@ -264,11 +264,11 @@ export function Footer() {
 
                             {/* Status Indicators */}
                             <div className="flex flex-wrap gap-3 mb-6">
-                                <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 border border-primary/30 rounded-full text-xs font-mono">
+                                <div className="flex items-center gap-2 px-3 py-1.5 bg-primary/10 border border-primary/30 rounded-none text-xs font-mono">
                                     <Radio className="h-3 w-3 text-primary animate-pulse" />
                                     <span className="text-primary">BROADCASTING</span>
                                 </div>
-                                <div className="flex items-center gap-2 px-3 py-1.5 bg-card border border-border rounded-full text-xs font-mono">
+                                <div className="flex items-center gap-2 px-3 py-1.5 bg-card border border-border rounded-none text-xs font-mono">
                                     <Shield className="h-3 w-3 text-muted-foreground" />
                                     <span className="text-muted-foreground">ENCRYPTED</span>
                                 </div>
@@ -289,7 +289,7 @@ export function Footer() {
 
                         {/* Links Columns */}
                         <div>
-                            <h3 className="text-sm font-bold uppercase tracking-wider text-foreground mb-4 flex items-center gap-2">
+                            <h3 className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-foreground mb-4 flex items-center gap-2">
                                 <Radiation className="h-4 w-4 text-primary" />
                                 Discover
                             </h3>
@@ -303,7 +303,7 @@ export function Footer() {
                         </div>
 
                         <div>
-                            <h3 className="text-sm font-bold uppercase tracking-wider text-foreground mb-4 flex items-center gap-2">
+                            <h3 className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-foreground mb-4 flex items-center gap-2">
                                 <Skull className="h-4 w-4 text-secondary" />
                                 Hosting
                             </h3>
@@ -317,7 +317,7 @@ export function Footer() {
                         </div>
 
                         <div>
-                            <h3 className="text-sm font-bold uppercase tracking-wider text-foreground mb-4">
+                            <h3 className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-foreground mb-4">
                                 Support
                             </h3>
                             <ul className="space-y-3">
@@ -330,7 +330,7 @@ export function Footer() {
                         </div>
 
                         <div>
-                            <h3 className="text-sm font-bold uppercase tracking-wider text-foreground mb-4">
+                            <h3 className="font-mono text-xs font-bold uppercase tracking-[0.16em] text-foreground mb-4">
                                 Legal
                             </h3>
                             <ul className="space-y-3">
@@ -377,8 +377,6 @@ export function Footer() {
                 </div>
 
                 {/* Decorative Elements */}
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary/5 blur-3xl pointer-events-none" />
-                <div className="absolute bottom-0 right-0 w-32 h-32 bg-secondary/5 blur-3xl pointer-events-none" />
             </footer>
         </>
     );

@@ -60,14 +60,14 @@ export function FavoriteButton({ bunkerId, size = "md", showCount = false }: Fav
       onClick={handleToggle}
       className={`${sizeClasses[size]} rounded-full flex items-center justify-center transition-all ${
         favorite
-          ? "bg-accent text-white shadow-[0_0_15px_rgba(255,0,60,0.5)]"
-          : "bg-background/80 backdrop-blur text-muted-foreground hover:text-accent hover:bg-background border border-border"
+          ? "bg-accent text-accent-foreground border border-accent"
+          : "bg-background text-foreground hover:text-accent border border-border"
       }`}
       aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
     >
       <Heart className={`${iconSizes[size]} ${favorite ? "fill-current" : ""}`} />
       {showCount && favorites.length > 0 && (
-        <span className="absolute -top-1 -right-1 bg-primary text-black text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+        <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
           {favorites.length}
         </span>
       )}
