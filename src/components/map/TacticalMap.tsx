@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
 import { MapPin, Radiation, X } from 'lucide-react';
 import type { Bunker } from '@/types';
-import { getRadColor } from './radColor';
+import { getRadColor, RAD_COLORS } from './radColor';
 import { fitProjection, formatCoord, niceStep } from './projection';
 
 interface TacticalMapProps {
@@ -247,12 +247,12 @@ export default function TacticalMap({ bunkers, selectedBunkerId }: TacticalMapPr
                 <div className="text-primary">{list.length} TARGETS LOCKED</div>
                 <ul className="space-y-1 pt-1 border-t border-primary/20">
                     {([
-                        ['LOW', 'bg-primary'],
-                        ['MODERATE', 'bg-secondary'],
-                        ['SEVERE', 'bg-accent'],
-                    ] as const).map(([name, cls]) => (
+                        ['LOW', RAD_COLORS.low.fill],
+                        ['MODERATE', RAD_COLORS.moderate.fill],
+                        ['SEVERE', RAD_COLORS.severe.fill],
+                    ] as const).map(([name, color]) => (
                         <li key={name} className="flex items-center gap-2 text-muted-foreground">
-                            <span className={`w-2.5 h-2.5 rounded-sm ${cls}`} />
+                            <span className="w-2.5 h-2.5 rounded-sm" style={{ backgroundColor: color }} />
                             {name}
                         </li>
                     ))}
@@ -277,13 +277,11 @@ export default function TacticalMap({ bunkers, selectedBunkerId }: TacticalMapPr
                         <div className="flex items-start justify-between gap-2 mb-2">
                             <h3 className="font-bold text-sm text-foreground">{selected.title}</h3>
                             <span
-                                className={`text-[10px] font-bold px-1.5 py-0.5 rounded shrink-0 ${
-                                    selected.features.radLevel <= 2
-                                        ? 'bg-primary/20 text-primary'
-                                        : selected.features.radLevel <= 5
-                                          ? 'bg-secondary/20 text-secondary'
-                                          : 'bg-accent/20 text-accent'
-                                }`}
+                                className="text-[10px] font-bold px-1.5 py-0.5 rounded shrink-0"
+                                style={{
+                                    color: getRadColor(selected.features.radLevel).fill,
+                                    backgroundColor: 'rgba(241,234,219,0.12)',
+                                }}
                             >
                                 RAD {selected.features.radLevel} {radLabel(selected.features.radLevel)}
                             </span>

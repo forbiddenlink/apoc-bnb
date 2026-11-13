@@ -123,10 +123,10 @@ export function KeyboardShortcuts() {
       {/* Floating help button */}
       <button
         onClick={() => setShowHelp(true)}
-        className="fixed bottom-20 left-4 z-40 p-2 [@media(pointer:coarse)]:hidden bg-card border border-border rounded-lg hover:border-primary/50 transition-colors group"
+        className="fixed bottom-6 right-[15rem] z-40 p-2 [@media(pointer:coarse)]:hidden hidden md:block bg-[var(--vellum)] border border-[var(--soot)] hover:border-[var(--oxide)] transition-colors group"
         title="Keyboard shortcuts (?)"
       >
-        <Keyboard className="h-4 w-4 text-muted-foreground group-hover:text-primary transition-colors" />
+        <Keyboard className="h-4 w-4 text-[var(--ash)] group-hover:text-[var(--oxide)] transition-colors" />
       </button>
 
       <Modal isOpen={showHelp} onClose={() => setShowHelp(false)} title="Keyboard Shortcuts" size="sm">

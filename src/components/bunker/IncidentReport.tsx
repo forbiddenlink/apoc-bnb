@@ -14,24 +14,24 @@ const severityConfig: Record<VerifiedIncident["severity"], {
   icon?: React.ElementType;
 }> = {
   "Minor Inconvenience": {
-    color: "text-yellow-400",
-    borderColor: "border-yellow-400/60",
-    bgColor: "bg-yellow-400/10",
+    color: "text-muted-foreground",
+    borderColor: "border-l-[var(--ash)]",
+    bgColor: "bg-[var(--vellum)]",
   },
   "Moderate Trauma": {
-    color: "text-orange-400",
-    borderColor: "border-orange-400/60",
-    bgColor: "bg-orange-400/10",
+    color: "text-secondary",
+    borderColor: "border-l-[var(--oxide)]",
+    bgColor: "bg-[var(--vellum)]",
   },
   "Existential Crisis": {
-    color: "text-accent",
-    borderColor: "border-accent/60",
-    bgColor: "bg-accent/10",
+    color: "text-[var(--vellum)]",
+    borderColor: "border-l-[var(--oxide)]",
+    bgColor: "bg-[var(--oxide)]",
   },
   "We Don't Talk About It": {
-    color: "text-purple-400",
-    borderColor: "border-purple-400/60",
-    bgColor: "bg-purple-400/10",
+    color: "text-[var(--geiger)]",
+    borderColor: "border-l-[var(--soot)]",
+    bgColor: "bg-[var(--soot)]",
     icon: Skull,
   },
 };
@@ -102,13 +102,7 @@ export function IncidentReport({ bunkerId }: { bunkerId: string }) {
   if (incidents.length === 0) return null;
 
   return (
-    <div className="relative border border-accent/30 bg-muted">
-      {/* HUD corners */}
-      <div className="absolute top-0 left-0 w-3 h-3 border-l-2 border-t-2 border-accent/50" />
-      <div className="absolute top-0 right-0 w-3 h-3 border-r-2 border-t-2 border-accent/50" />
-      <div className="absolute bottom-0 left-0 w-3 h-3 border-l-2 border-b-2 border-accent/50" />
-      <div className="absolute bottom-0 right-0 w-3 h-3 border-r-2 border-b-2 border-accent/50" />
-
+    <div className="relative border border-[var(--soot)] bg-muted shadow-[3px_3px_0_var(--soot)]">
       {/* Header */}
       <button
         onClick={() => setIsOpen(!isOpen)}
@@ -143,7 +137,7 @@ export function IncidentReport({ bunkerId }: { bunkerId: string }) {
             transition={{ duration: 0.3, ease: "easeInOut" }}
             className="overflow-hidden"
           >
-            <div className="px-4 pb-4 space-y-3 border-t border-accent/20">
+            <div className="px-4 pb-4 space-y-3 border-t border-border">
               <div className="pt-3 space-y-3">
                 {incidents.map((incident) => (
                   <IncidentCard key={incident.id} incident={incident} />
