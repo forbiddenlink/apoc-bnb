@@ -137,7 +137,7 @@ export default function TacticalMap({ bunkers, selectedBunkerId }: TacticalMapPr
                     return (
                         <g key={`m${lng}`} aria-hidden="true">
                             <line x1={x} x2={x} y1={tl.y} y2={br.y} stroke="var(--primary)" strokeOpacity={0.12} />
-                            <text x={x} y={br.y + 16} textAnchor="middle" fontSize="10" fontFamily="var(--font-mono, monospace)" fill="var(--muted-foreground)">
+                            <text x={x} y={br.y + 16} textAnchor="middle" fontSize="12" fontFamily="var(--font-mono, monospace)" fill="var(--muted-foreground)">
                                 {formatCoord(lng, 'E', 'W')}
                             </text>
                         </g>
@@ -148,7 +148,7 @@ export default function TacticalMap({ bunkers, selectedBunkerId }: TacticalMapPr
                     return (
                         <g key={`p${lat}`} aria-hidden="true">
                             <line x1={tl.x} x2={br.x} y1={y} y2={y} stroke="var(--primary)" strokeOpacity={0.12} />
-                            <text x={tl.x - 6} y={y + 3} textAnchor="end" fontSize="10" fontFamily="var(--font-mono, monospace)" fill="var(--muted-foreground)">
+                            <text x={tl.x - 6} y={y + 3} textAnchor="end" fontSize="12" fontFamily="var(--font-mono, monospace)" fill="var(--muted-foreground)">
                                 {formatCoord(lat, 'N', 'S')}
                             </text>
                         </g>
@@ -221,7 +221,7 @@ export default function TacticalMap({ bunkers, selectedBunkerId }: TacticalMapPr
                                 <text
                                     y={-22}
                                     textAnchor="middle"
-                                    fontSize="10"
+                                    fontSize="12"
                                     fontFamily="var(--font-mono, monospace)"
                                     fill="#fff"
                                     stroke="#000"

@@ -13,7 +13,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
   });
 
   return (
-    <div className="p-4 bg-card rounded-lg border border-border hover:border-primary/20 transition-colors">
+    <div className="p-4 bg-card border border-[var(--soot)]">
       <div className="flex items-start gap-3 mb-3">
         {review.userAvatar ? (
           <div className="relative h-10 w-10 rounded-full overflow-hidden bg-muted">

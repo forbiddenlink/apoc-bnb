@@ -6,7 +6,6 @@ import { Star, MapPin } from "lucide-react";
 import { Bunker } from "@/types";
 import { FavoriteButton } from "@/components/ui/FavoriteButton";
 import { CompareButton } from "@/components/ui/CompareButton";
-import { TapeBadge } from "@/components/ui/WarningStickers";
 import { cn } from "@/lib/utils";
 
 interface BunkerCardProps {
@@ -23,14 +22,10 @@ export function BunkerCard({
     size,
 }: Readonly<BunkerCardProps>) {
     const variantClasses = {
-        default:
-            "bg-black/40 border border-white/5 hover:border-primary/50 hover:shadow-[0_0_30px_rgba(57,255,20,0.1)]",
-        dotted:
-            "bg-black/40 border border-dashed border-white/10 hover:border-primary/50 hover:shadow-[0_0_30px_rgba(57,255,20,0.1)]",
-        hazard:
-            "bg-black/40 border border-accent/30 hover:border-accent hover:shadow-[0_0_30px_rgba(255,0,60,0.2)]",
-        featured:
-            "bg-gradient-to-br from-black/60 to-primary/5 border border-primary/30 hover:border-primary/60 hover:shadow-[0_0_40px_rgba(57,255,20,0.15)]",
+        default: "bg-[var(--bone)] border border-[var(--soot)] shadow-[3px_3px_0_var(--soot)] hover:shadow-[5px_5px_0_var(--soot)]",
+        dotted: "bg-[var(--bone)] border border-dashed border-[var(--soot)] hover:shadow-[3px_3px_0_var(--soot)]",
+        hazard: "bg-[var(--bone)] border border-[var(--oxide)] shadow-[3px_3px_0_var(--oxide)] hover:shadow-[5px_5px_0_var(--oxide)]",
+        featured: "bg-[var(--bone)] border-2 border-[var(--soot)] shadow-[4px_4px_0_var(--soot)] hover:shadow-[6px_6px_0_var(--soot)]",
     };
 
     const sizeClasses = {
@@ -45,96 +40,29 @@ export function BunkerCard({
             <Link href={`/bunkers/${bunker.id}`}>
                 <div
                     className={cn(
-                        "group relative h-full flex flex-col backdrop-blur-sm overflow-hidden rounded-sm",
-                        "transition-all duration-500",
+                        "group relative h-full flex flex-col overflow-hidden",
+                        "transition-shadow duration-200",
                         variantClasses[variant]
                     )}
                 >
-                    {/* HUD Corner Accents - Animate inward on hover */}
-                    <div
-                        className={cn(
-                            "absolute top-0 left-0 w-2 h-2 border-l border-t z-30",
-                            "transition-all duration-300 ease-out",
-                            "border-white/20 group-hover:border-primary",
-                            "group-hover:w-4 group-hover:h-4"
-                        )}
-                    />
-                    <div
-                        className={cn(
-                            "absolute top-0 right-0 w-2 h-2 border-r border-t z-30",
-                            "transition-all duration-300 ease-out delay-[50ms]",
-                            "border-white/20 group-hover:border-primary",
-                            "group-hover:w-4 group-hover:h-4"
-                        )}
-                    />
-                    <div
-                        className={cn(
-                            "absolute bottom-0 left-0 w-2 h-2 border-l border-b z-30",
-                            "transition-all duration-300 ease-out delay-[100ms]",
-                            "border-white/20 group-hover:border-primary",
-                            "group-hover:w-4 group-hover:h-4"
-                        )}
-                    />
-                    <div
-                        className={cn(
-                            "absolute bottom-0 right-0 w-2 h-2 border-r border-b z-30",
-                            "transition-all duration-300 ease-out delay-[150ms]",
-                            "border-white/20 group-hover:border-primary",
-                            "group-hover:w-4 group-hover:h-4"
-                        )}
-                    />
-
-                    {/* Persistent grunge/distress film over the whole card */}
-                    <div className="grunge-overlay" aria-hidden="true" />
-
                     {/* Image Container */}
-                    <div className="aspect-video relative overflow-hidden border-b border-white/5">
-                        {/* Distress grain baked onto the photo */}
-                        <div
-                            className="grunge-overlay grunge-overlay-heavy z-20"
-                            aria-hidden="true"
-                        />
-                        {/* Green overlay on hover */}
-                        <div
-                            className={cn(
-                                "absolute inset-0 z-10 mix-blend-overlay",
-                                "bg-primary/10 opacity-0 group-hover:opacity-100",
-                                "transition-opacity duration-300"
-                            )}
-                        />
-
-                        {/* Scanline Effect on Hover */}
-                        <div
-                            className={cn(
-                                "absolute inset-0 z-20 pointer-events-none",
-                                "opacity-0 group-hover:opacity-100 transition-opacity duration-500",
-                                "bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))]",
-                                "bg-size-[100%_4px,3px_100%]"
-                            )}
-                        />
-
+                    <div className="aspect-video relative overflow-hidden border-b border-[var(--soot)]">
                         <Image
                             src={bunker.images[0]}
                             alt={bunker.title}
                             fill
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                            className={cn(
-                                "object-cover",
-                                "transition-transform duration-700 ease-out",
-                                "group-hover:scale-105",
-                                "filter group-hover:contrast-110"
-                            )}
+                            className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80 z-10" />
 
                         {/* Status Badge */}
                         <div className="absolute top-3 left-3 z-30 flex items-center gap-2">
                             <div
                                 className={cn(
-                                    "text-[10px] font-bold px-2 py-0.5 uppercase tracking-widest backdrop-blur-md border",
+                                    "folio-label px-2 py-1 font-bold border",
                                     bunker.features.radLevel <= 2
-                                        ? "bg-primary/10 text-primary border-primary/30"
-                                        : "bg-accent/10 text-accent border-accent/30 animate-pulse"
+                                        ? "bg-[var(--soot)] text-[var(--geiger)] border-[var(--soot)]"
+                                        : "bg-[var(--vellum)] text-[var(--oxide)] border-[var(--oxide)]"
                                 )}
                             >
                                 {bunker.features.radLevel <= 2 ? "RAD-SAFE" : "HAZARD"}
@@ -149,111 +77,58 @@ export function BunkerCard({
                     </div>
 
                     {/* Content */}
-                    <div className="p-4 flex-1 flex flex-col relative">
-                        {/* Grid Background Effect - scrolls on hover */}
-                        <div
-                            className={cn(
-                                "absolute inset-0 pointer-events-none opacity-20",
-                                "bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)]",
-                                "bg-size-[20px_20px]",
-                                "transition-all duration-700",
-                                "group-hover:bg-position-[10px_10px]"
-                            )}
-                        />
-
-                        <div className="relative z-10">
-                            {/* Header */}
-                            <div className="flex justify-between items-start mb-2 gap-2">
-                                <div>
-                                    <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground uppercase tracking-wider mb-1">
-                                        <MapPin className="h-3 w-3 text-primary/70" />
-                                        <span>{bunker.location.region}</span>
-                                    </div>
-                                    <h3
-                                        className={cn(
-                                            "font-bold text-lg leading-tight text-white font-sans tracking-wide line-clamp-1",
-                                            "transition-all duration-300",
-                                            "group-hover:text-primary group-hover:text-glow"
-                                        )}
-                                    >
-                                        {bunker.title}
-                                    </h3>
+                    <div className="p-4 flex-1 flex flex-col">
+                        <div className="flex justify-between items-start mb-2 gap-2">
+                            <div className="min-w-0">
+                                <div className="folio-label flex items-center gap-1.5 text-muted-foreground mb-1">
+                                    <MapPin className="h-3 w-3" />
+                                    <span>{bunker.location.region}</span>
                                 </div>
-                                {/* Rating - gold gaffer-tape badge slapped over the corner */}
-                                <TapeBadge
-                                    variant="gold"
-                                    size="sm"
-                                    seed={index + 3}
-                                    className="shrink-0"
-                                >
-                                    <Star className="h-3 w-3 fill-black" />
-                                    {bunker.rating.toFixed(1)}
-                                </TapeBadge>
+                                <h3 className="font-[family-name:var(--font-folio-display)] text-xl font-bold leading-tight line-clamp-1">
+                                    {bunker.title}
+                                </h3>
                             </div>
+                            <span className="folio-label shrink-0 inline-flex items-center gap-1 border border-[var(--soot)] bg-[var(--vellum)] px-2 py-1 font-bold">
+                                <Star className="h-3 w-3 fill-current" />
+                                {bunker.rating.toFixed(1)}
+                            </span>
+                        </div>
 
-                            {/* Specs Grid */}
-                            <div className="grid grid-cols-2 gap-2 my-3 text-xs text-muted-foreground">
-                                <div className="flex items-center gap-1.5 border-l border-white/10 pl-2 group-hover:border-primary/30 transition-colors duration-300">
-                                    <span className="text-white/40">CAP:</span>
-                                    <span className="text-white/80">
-                                        {bunker.features.capacity} Units
+                        {/* Specs */}
+                        <div className="grid grid-cols-2 gap-2 my-3 text-sm text-muted-foreground">
+                            <div className="flex items-center gap-1.5 border-l border-[var(--soot)] pl-2">
+                                <span>CAP:</span>
+                                <span>{bunker.features.capacity} Units</span>
+                            </div>
+                            <div className="flex items-center gap-1.5 border-l border-[var(--soot)] pl-2">
+                                <span>SEC:</span>
+                                <span>Lvl {bunker.features.securityLevel}</span>
+                            </div>
+                        </div>
+
+                        {/* Price Footer */}
+                        <div className="mt-auto pt-3 border-t border-[var(--soot)] flex justify-between items-end">
+                            <div className="flex flex-col">
+                                <span className="folio-label text-muted-foreground">Rate / Night</span>
+                                <div className="flex items-baseline gap-1.5 mt-1">
+                                    <span className="font-mono text-xl font-bold tabular-nums">
+                                        {bunker.price.caps}
                                     </span>
-                                </div>
-                                <div className="flex items-center gap-1.5 border-l border-white/10 pl-2 group-hover:border-primary/30 transition-colors duration-300 delay-75">
-                                    <span className="text-white/40">SEC:</span>
-                                    <span className="text-white/80">
-                                        Lvl {bunker.features.securityLevel}
-                                    </span>
+                                    <span className="folio-label">CAPS</span>
                                 </div>
                             </div>
 
-                            {/* Price Footer */}
-                            <div className="mt-auto pt-3 border-t border-white/5 group-hover:border-white/10 transition-colors flex justify-between items-end">
-                                <div className="flex flex-col">
-                                    <span className="text-[10px] text-muted-foreground uppercase tracking-widest">
-                                        Rate / Night
-                                    </span>
-                                    <div className="flex items-baseline gap-1 mt-1">
-                                        <TapeBadge
-                                            variant="gaffer"
-                                            size="md"
-                                            seed={index + 11}
-                                        >
-                                            <span className="font-mono tabular-nums text-sm">
-                                                {bunker.price.caps}
-                                            </span>
-                                            <span className="text-[0.7em] opacity-80">CAPS</span>
-                                        </TapeBadge>
-                                    </div>
-                                </div>
-
-                                {/* Arrow button */}
-                                <div
-                                    className={cn(
-                                        "h-8 w-8 flex items-center justify-center rounded-sm",
-                                        "border border-white/10",
-                                        "transition-all duration-300",
-                                        "group-hover:bg-primary group-hover:text-black group-hover:border-primary",
-                                        "group-hover:shadow-[0_0_15px_rgba(57,255,20,0.3)]"
-                                    )}
-                                >
-                                    <span className="sr-only">View</span>
-                                    <svg
-                                        width="12"
-                                        height="12"
-                                        viewBox="0 0 12 12"
-                                        fill="none"
-                                        className="transform group-hover:rotate-45 transition-transform duration-300"
-                                    >
-                                        <path
-                                            d="M1 11L11 1M11 1H1M11 1V11"
-                                            stroke="currentColor"
-                                            strokeWidth="1.5"
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                        />
-                                    </svg>
-                                </div>
+                            <div
+                                className={cn(
+                                    "h-9 w-9 flex items-center justify-center border border-[var(--soot)]",
+                                    "transition-colors duration-200",
+                                    "group-hover:bg-[var(--soot)] group-hover:text-[var(--geiger)]"
+                                )}
+                            >
+                                <span className="sr-only">View</span>
+                                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="transition-transform duration-200 group-hover:rotate-45">
+                                    <path d="M1 11L11 1M11 1H1M11 1V11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
                             </div>
                         </div>
                     </div>

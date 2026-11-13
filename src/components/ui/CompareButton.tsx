@@ -33,7 +33,7 @@ export function CompareButton({ bunkerId }: CompareButtonProps) {
         className={`px-4 py-2 rounded-md border transition-colors ${
           isAdded
             ? "bg-secondary text-secondary-foreground border-secondary"
-            : "border-border hover:bg-accent"
+            : "border-border hover:bg-muted"
         }`}
       >
         <Scale className="h-4 w-4 inline mr-2" />

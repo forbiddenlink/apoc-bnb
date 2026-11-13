@@ -46,7 +46,7 @@ function IncidentCard({ incident }: { incident: VerifiedIncident }) {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -10 }}
       className={cn(
-        "border-l-4 bg-black/40 border border-white/10 p-4 space-y-3",
+        "border-l-4 bg-muted border border-border p-4 space-y-3",
         config.borderColor
       )}
     >
@@ -102,7 +102,7 @@ export function IncidentReport({ bunkerId }: { bunkerId: string }) {
   if (incidents.length === 0) return null;
 
   return (
-    <div className="relative border border-accent/30 bg-black/30">
+    <div className="relative border border-accent/30 bg-muted">
       {/* HUD corners */}
       <div className="absolute top-0 left-0 w-3 h-3 border-l-2 border-t-2 border-accent/50" />
       <div className="absolute top-0 right-0 w-3 h-3 border-r-2 border-t-2 border-accent/50" />
@@ -112,7 +112,7 @@ export function IncidentReport({ bunkerId }: { bunkerId: string }) {
       {/* Header */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full p-4 flex items-center justify-between gap-3 hover:bg-white/5 transition-colors"
+        className="w-full p-4 flex items-center justify-between gap-3 hover:bg-foreground/5 transition-colors"
       >
         <div className="flex items-center gap-2">
           <AlertTriangle className="h-4 w-4 text-accent" />
@@ -151,7 +151,7 @@ export function IncidentReport({ bunkerId }: { bunkerId: string }) {
               </div>
 
               {/* Disclaimer */}
-              <p className="text-xs text-muted-foreground/60 italic pt-2 border-t border-white/5">
+              <p className="text-xs text-muted-foreground/60 italic pt-2 border-t border-border">
                 APOC-BNB is legally required to disclose these incidents. We wish we weren&apos;t.
               </p>
             </div>

@@ -961,3 +961,72 @@ body {
     transform: translateY(0);
   }
 }
+
+/* ======================== */
+/* Folio inner pages        */
+/* Remaps the shadcn tokens so utilities written for the dark theme     */
+/* (text-primary, bg-muted, border-border) render as ink on paper.      */
+/* Use with .folio on the page body; keep Navbar outside this scope.    */
+/* ======================== */
+.folio-inner {
+  --background: var(--vellum);
+  --foreground: var(--soot);
+  --primary: var(--soot);
+  --primary-foreground: var(--geiger);
+  --secondary: var(--oxide);
+  --secondary-foreground: var(--vellum);
+  --accent: var(--oxide);
+  --accent-foreground: var(--vellum);
+  --destructive: var(--oxide);
+  --destructive-foreground: var(--vellum);
+  --muted: var(--bone);
+  --muted-foreground: var(--ash);
+  --card: var(--bone);
+  --card-foreground: var(--soot);
+  --border: rgba(21, 19, 15, 0.4);
+  --input: rgba(21, 19, 15, 0.4);
+  --ring: var(--soot);
+  --radius: 0;
+}
+/* Inverted scope for chrome that should sit on Soot (footer). */
+.folio-soot {
+  --background: var(--soot);
+  --foreground: var(--vellum);
+  --primary: var(--geiger);
+  --primary-foreground: var(--soot);
+  --secondary: var(--vellum);
+  --secondary-foreground: var(--soot);
+  --accent: var(--geiger);
+  --accent-foreground: var(--soot);
+  --muted: #26231d;
+  --muted-foreground: #c9c0ac;
+  --card: #1d1b16;
+  --card-foreground: var(--vellum);
+  --border: rgba(241, 234, 219, 0.28);
+  --input: rgba(241, 234, 219, 0.28);
+  --ring: var(--geiger);
+  background-color: var(--soot);
+  color: var(--vellum);
+}
+.folio-inner .text-glow,
+.folio-inner .text-glow-gold,
+.folio-inner .text-glow-intense,
+.folio-inner .text-glow-accent {
+  text-shadow: none;
+}
+.folio-inner ::selection {
+  background: var(--geiger);
+  color: var(--soot);
+}
+/* Ruled register row used by listings on inner pages. */
+.folio-row {
+  border-top: 1px solid var(--soot);
+}
+.folio-card {
+  background: var(--bone);
+  border: 1px solid var(--soot);
+  box-shadow: 3px 3px 0 var(--soot);
+}
+
+/* folio pages: neon glow shadows from shared buttons do not belong on paper */
+.folio-inner [class*="shadow-[0_0_"] { box-shadow: none; }

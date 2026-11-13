@@ -99,7 +99,7 @@ export function BookingConfirmation({
             speech="YOU'RE NOT DEAD YET!"
           />
         </div>
-        <h2 className="text-2xl font-black text-primary uppercase tracking-tight">
+        <h2 className="folio-display text-3xl">
           MISSION BRIEFING: SHELTER SECURED
         </h2>
         <p className="text-muted-foreground mt-1 font-mono text-sm">
@@ -108,12 +108,8 @@ export function BookingConfirmation({
       </div>
 
       {/* Confirmation Number - Military Format */}
-      <div className="relative bg-background border border-primary/30 rounded-lg p-4">
+      <div className="relative bg-[var(--vellum)] border border-[var(--soot)]  p-4">
         {/* HUD Corner Accents */}
-        <div className="absolute top-0 left-0 w-4 h-4 border-l-2 border-t-2 border-primary/50 -translate-x-0.5 -translate-y-0.5" />
-        <div className="absolute top-0 right-0 w-4 h-4 border-r-2 border-t-2 border-primary/50 translate-x-0.5 -translate-y-0.5" />
-        <div className="absolute bottom-0 left-0 w-4 h-4 border-l-2 border-b-2 border-primary/50 -translate-x-0.5 translate-y-0.5" />
-        <div className="absolute bottom-0 right-0 w-4 h-4 border-r-2 border-b-2 border-primary/50 translate-x-0.5 translate-y-0.5" />
 
         <div className="flex justify-between items-center">
           <div>
@@ -126,7 +122,7 @@ export function BookingConfirmation({
           </div>
           <button
             onClick={copyConfirmation}
-            className="p-2 rounded-lg bg-muted hover:bg-primary hover:text-black transition-colors"
+            className="p-2  bg-muted hover:bg-primary hover:text-primary-foreground transition-colors"
             aria-label="Copy confirmation number"
           >
             <Clipboard className="h-5 w-5" />
@@ -138,7 +134,7 @@ export function BookingConfirmation({
       </div>
 
       {/* MISSION STATUS Timeline */}
-      <div className="bg-background border border-border rounded-lg p-4">
+      <div className="bg-background border border-border  p-4">
         <h3 className="font-bold text-sm uppercase text-muted-foreground flex items-center gap-2 mb-4 tracking-widest">
           <Radio className="h-4 w-4 text-primary" />
           MISSION STATUS
@@ -189,7 +185,7 @@ export function BookingConfirmation({
       </div>
 
       {/* Booking Summary */}
-      <div className="bg-background border border-border rounded-lg p-4 space-y-3">
+      <div className="bg-background border border-border  p-4 space-y-3">
         <h3 className="font-bold text-sm uppercase text-muted-foreground tracking-widest">
           INTEL SUMMARY
         </h3>
@@ -226,12 +222,8 @@ export function BookingConfirmation({
       </div>
 
       {/* SURVIVAL BRIEFING - Random Tips */}
-      <div className="relative bg-background border border-secondary/30 rounded-lg p-4">
+      <div className="relative bg-[var(--bone)] border border-[var(--oxide)]  p-4">
         {/* HUD Corner Accents */}
-        <div className="absolute top-0 left-0 w-4 h-4 border-l-2 border-t-2 border-secondary/50 -translate-x-0.5 -translate-y-0.5" />
-        <div className="absolute top-0 right-0 w-4 h-4 border-r-2 border-t-2 border-secondary/50 translate-x-0.5 -translate-y-0.5" />
-        <div className="absolute bottom-0 left-0 w-4 h-4 border-l-2 border-b-2 border-secondary/50 -translate-x-0.5 translate-y-0.5" />
-        <div className="absolute bottom-0 right-0 w-4 h-4 border-r-2 border-b-2 border-secondary/50 translate-x-0.5 translate-y-0.5" />
 
         <h3 className="font-bold text-sm uppercase text-secondary flex items-center gap-2 mb-3 tracking-widest">
           <AlertTriangle className="h-4 w-4" />
@@ -250,7 +242,7 @@ export function BookingConfirmation({
       </div>
 
       {/* Pre-Apocalypse Checklist */}
-      <div className="bg-background border border-border rounded-lg p-4">
+      <div className="bg-background border border-border  p-4">
         <h3 className="font-bold text-sm uppercase text-primary flex items-center gap-2 mb-3 tracking-widest">
           <ShieldCheck className="h-4 w-4" />
           PRE-DEPLOYMENT CHECKLIST
@@ -287,14 +279,14 @@ export function BookingConfirmation({
           <Calendar className="h-4 w-4 mr-2" />
           Add to Calendar
         </Button>
-        <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-card border border-border px-3 py-2 rounded-lg text-xs text-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10">
+        <div className="absolute -top-12 left-1/2 -translate-x-1/2 bg-card border border-border px-3 py-2  text-xs text-center opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-10">
           <AlertTriangle className="h-3 w-3 inline mr-1 text-secondary" />
           Calendar apps don&apos;t survive EMPs
         </div>
       </div>
 
       {/* Cancellation Policy */}
-      <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-3 text-center">
+      <div className="bg-destructive/10 border border-destructive/30  p-3 text-center">
         <p className="text-xs text-destructive font-medium">
           Cancellation Policy: Full refund up until nuclear event. No refunds after detonation.
           <br />

@@ -16,16 +16,19 @@ function NavLink({
     href,
     children,
     folio,
+    className,
 }: {
     href: string;
     children: React.ReactNode;
     folio?: boolean;
+    className?: string;
 }) {
     return (
         <Link
             href={href}
             className={cn(
                 "relative transition-colors duration-200 group py-2 whitespace-nowrap",
+                className,
                 folio ? "hover:text-[#15130f]" : "hover:text-primary"
             )}
         >
@@ -206,7 +209,7 @@ export function Navbar({ variant = "default" }: { variant?: "default" | "folio" 
                 >
                     <NavLink href="/search" folio={folio}>Find a Bunker</NavLink>
                     <NavLink href="/host" folio={folio}>Become a Warlord</NavLink>
-                    <NavLink href="/experiences" folio={folio}>Raid Parties</NavLink>
+                    <NavLink href="/experiences" folio={folio} className={folio && (bookings.length > 0 || favorites.length > 0) ? "hidden lg:block" : undefined}>Raid Parties</NavLink>
                     {favorites.length > 0 && (
                         <Link
                             href="/favorites"

@@ -1,8 +1,6 @@
 "use client";
 
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { MobileBottomNav } from "@/components/layout/MobileBottomNav";
+import { FolioShell } from "@/components/layout/FolioShell";
 import { Button } from "@/components/ui/button";
 import { ApocMascot } from "@/components/ui/ApocMascot";
 import { useAppStore } from "@/lib/store";
@@ -51,31 +49,20 @@ export default function ProfilePage() {
     ];
 
     return (
-        <div className="min-h-screen bg-background font-sans noise-overlay">
-            <Navbar />
-
-            <main className="pt-24 pb-20 md:pb-20 pb-mobile-nav container mx-auto px-4 max-w-2xl">
+        <FolioShell mainClassName="max-w-2xl">
+            <div>
                 {/* Survivor ID Card */}
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="mb-8 relative"
                 >
-                    <div className="bg-card border border-primary/30 rounded-xl p-6 relative overflow-hidden">
-                        {/* Holographic shimmer effect */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent animate-shimmer pointer-events-none" />
-
-                        {/* HUD corners */}
-                        <div className="absolute top-0 left-0 w-6 h-6 border-t-2 border-l-2 border-primary/50" />
-                        <div className="absolute top-0 right-0 w-6 h-6 border-t-2 border-r-2 border-primary/50" />
-                        <div className="absolute bottom-0 left-0 w-6 h-6 border-b-2 border-l-2 border-primary/50" />
-                        <div className="absolute bottom-0 right-0 w-6 h-6 border-b-2 border-r-2 border-primary/50" />
-
+                    <div className="folio-card relative overflow-hidden p-5 md:p-6">
                         {/* Card header */}
                         <div className="flex items-center justify-between mb-6">
                             <div className="flex items-center gap-2">
                                 <Fingerprint className="h-5 w-5 text-primary" />
-                                <span className="text-label text-primary">SURVIVOR ID CARD</span>
+                                <span className="folio-label font-bold">SURVIVOR ID CARD</span>
                             </div>
                             <div className="text-mono text-xs text-muted-foreground">
                                 {survivorId}
@@ -83,17 +70,17 @@ export default function ProfilePage() {
                         </div>
 
                         {/* Profile info */}
-                        <div className="flex items-center gap-6">
+                        <div className="flex items-center gap-4 sm:gap-6">
                             <div className="relative">
-                                <div className="h-20 w-20 rounded-lg bg-black border-2 border-primary/30 flex items-center justify-center overflow-hidden">
+                                <div className="h-20 w-20 bg-[var(--soot)] border-2 border-[var(--soot)] flex items-center justify-center overflow-hidden">
                                     <ApocMascot expression="happy" size="lg" animate={false} />
                                 </div>
-                                <div className="absolute -bottom-1 -right-1 h-6 w-6 rounded-full bg-primary flex items-center justify-center shadow-[0_0_10px_var(--primary)]">
-                                    <Radiation className="h-3 w-3 text-black" />
+                                <div className="absolute -bottom-1 -right-1 h-6 w-6 rounded-full bg-primary flex items-center justify-center">
+                                    <Radiation className="h-3 w-3 text-primary-foreground" />
                                 </div>
                             </div>
                             <div className="flex-1">
-                                <h1 className="text-h3 font-black uppercase tracking-tight mb-1">
+                                <h1 className="folio-display text-3xl mb-1">
                                     Anonymous Survivor
                                 </h1>
                                 <div className="flex items-center gap-2 text-mono text-xs text-muted-foreground mb-2">
@@ -102,16 +89,12 @@ export default function ProfilePage() {
                                     <span>CLEARANCE: STANDARD</span>
                                 </div>
                                 <div className="flex items-center gap-1">
-                                    <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-                                    <span className="text-xs text-primary">VERIFIED SURVIVOR</span>
+                                    <div className="w-2 h-2 rounded-full bg-[var(--oxide)]" />
+                                    <span className="folio-label font-bold">VERIFIED SURVIVOR</span>
                                 </div>
                             </div>
                         </div>
 
-                        {/* Scan line */}
-                        <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.03]">
-                            <div className="absolute inset-0 bg-gradient-to-b from-primary/20 to-transparent animate-scanline" />
-                        </div>
                     </div>
                 </motion.div>
 
@@ -122,24 +105,21 @@ export default function ProfilePage() {
                     transition={{ delay: 0.1 }}
                     className="grid grid-cols-3 gap-4 mb-8"
                 >
-                    <div className="bg-card border border-border rounded-lg p-4 text-center relative overflow-hidden group hover:border-primary/30 transition-colors">
-                        <div className="text-2xl font-black text-primary font-mono">
+                    <div className="folio-card p-4 text-center relative overflow-hidden">
+                        <div className="text-3xl font-bold font-mono tabular-nums">
                             <AnimatedCounter value={bookings.length} />
                         </div>
-                        <div className="text-label text-muted-foreground">Missions</div>
-                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary/20 group-hover:bg-primary/50 transition-colors" />
+                        <div className="folio-label text-muted-foreground">Missions</div>
                     </div>
-                    <div className="bg-card border border-border rounded-lg p-4 text-center relative overflow-hidden group hover:border-accent/30 transition-colors">
-                        <div className="text-2xl font-black text-accent font-mono">
+                    <div className="folio-card p-4 text-center relative overflow-hidden">
+                        <div className="text-3xl font-bold font-mono tabular-nums">
                             <AnimatedCounter value={favorites.length} />
                         </div>
-                        <div className="text-label text-muted-foreground">Targets</div>
-                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-accent/20 group-hover:bg-accent/50 transition-colors" />
+                        <div className="folio-label text-muted-foreground">Targets</div>
                     </div>
-                    <div className="bg-card border border-border rounded-lg p-4 text-center relative overflow-hidden group hover:border-secondary/30 transition-colors">
-                        <div className="text-2xl font-black text-secondary font-mono">100%</div>
-                        <div className="text-label text-muted-foreground">Survival</div>
-                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-secondary/20 group-hover:bg-secondary/50 transition-colors" />
+                    <div className="folio-card p-4 text-center relative overflow-hidden">
+                        <div className="text-3xl font-bold font-mono tabular-nums">100%</div>
+                        <div className="folio-label text-muted-foreground">Survival</div>
                     </div>
                 </motion.div>
 
@@ -150,29 +130,24 @@ export default function ProfilePage() {
                     transition={{ delay: 0.2 }}
                     className="space-y-2 mb-8"
                 >
-                    <div className="text-label text-muted-foreground mb-3 px-1">QUICK ACCESS</div>
+                    <div className="folio-label text-muted-foreground mb-3 px-1 border-b border-[var(--soot)] pb-2">QUICK ACCESS</div>
                     {menuItems.map((item, index) => (
                         <Link key={item.label} href={item.href}>
                             <motion.div
                                 initial={{ opacity: 0, x: -10 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 transition={{ delay: 0.2 + index * 0.05 }}
-                                className="flex items-center justify-between p-4 bg-card border border-border rounded-lg hover:border-primary/50 transition-all group relative overflow-hidden"
+                                className="folio-row flex min-h-14 items-center justify-between border-t border-[var(--soot)] p-4 transition-colors hover:bg-[var(--bone)] group relative overflow-hidden"
                             >
-                                {/* Scan line on hover */}
-                                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity">
-                                    <div className="absolute inset-0 bg-gradient-to-r from-primary/5 to-transparent" />
-                                </div>
-
                                 <div className="flex items-center gap-4 relative z-10">
-                                    <div className={`p-2 rounded border ${item.color.replace('text-', 'border-')}/20 ${item.color.replace('text-', 'bg-')}/10`}>
-                                        <item.icon className={`h-4 w-4 ${item.color}`} />
+                                    <div className="border border-[var(--soot)] bg-[var(--vellum)] p-2">
+                                        <item.icon className="h-4 w-4" />
                                     </div>
-                                    <span className="font-bold">{item.label}</span>
+                                    <span className="font-[family-name:var(--font-folio-display)] text-xl font-semibold">{item.label}</span>
                                 </div>
                                 <div className="flex items-center gap-3 relative z-10">
                                     {item.count !== undefined && item.count > 0 && (
-                                        <span className="text-mono text-xs bg-primary/10 text-primary px-2 py-0.5 rounded border border-primary/20">
+                                        <span className="folio-label bg-[var(--soot)] text-[var(--geiger)] px-2 py-0.5">
                                             {item.count}
                                         </span>
                                     )}
@@ -190,7 +165,7 @@ export default function ProfilePage() {
                     transition={{ delay: 0.25 }}
                     className="mb-8"
                 >
-                    <div className="text-label text-muted-foreground mb-3 px-1">ACHIEVEMENTS</div>
+                    <div className="folio-label text-muted-foreground mb-3 px-1 border-b border-[var(--soot)] pb-2">ACHIEVEMENTS</div>
 
                     {/* Survival Rank Progress Bar */}
                     {(() => {
@@ -211,34 +186,33 @@ export default function ProfilePage() {
                         return (
                             <>
                                 {/* Progress bar */}
-                                <div className="bg-card border border-border rounded-lg p-4 mb-4">
+                                <div className="folio-card p-4 mb-4">
                                     <div className="flex items-center justify-between mb-2">
-                                        <span className="text-label text-primary">SURVIVAL RANK: {rank}</span>
+                                        <span className="folio-label font-bold">SURVIVAL RANK: {rank}</span>
                                         <span className="text-mono text-xs text-muted-foreground">{unlockedCount}/{achievements.length} achievements unlocked</span>
                                     </div>
-                                    <div className="w-full h-2 bg-muted/30 rounded-full overflow-hidden border border-border">
+                                    <div className="w-full h-3 bg-[var(--vellum)] overflow-hidden border border-[var(--soot)]">
                                         <div
-                                            className="h-full bg-primary rounded-full transition-all duration-1000 shadow-[0_0_8px_var(--primary)]"
+                                            className="h-full bg-[var(--soot)] transition-all duration-1000"
                                             style={{ width: `${percentage}%` }}
                                         />
                                     </div>
-                                    <div className="text-mono text-[10px] text-muted-foreground mt-1 text-right">{percentage}%</div>
+                                    <div className="text-mono text-xs text-muted-foreground mt-1 text-right">{percentage}%</div>
                                 </div>
 
                                 {/* Achievement grid */}
                                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                                     {achievements.map((badge, index) => {
                                         const IconComponent = badge.icon;
-                                        const colorVar = badge.color === "primary" ? "var(--primary)" : badge.color === "secondary" ? "var(--secondary)" : "var(--accent)";
-                                        return (
+                                                                                return (
                                             <div
                                                 key={index}
-                                                className={`relative p-3 rounded-lg border text-center transition-all ${
+                                                className={`relative p-3 border text-center transition-all ${
                                                     badge.unlocked
-                                                        ? `bg-${badge.color}/10 border-${badge.color}/30`
-                                                        : 'bg-muted/20 border-border opacity-40'
+                                                        ? 'bg-[var(--bone)] border-[var(--soot)] shadow-[3px_3px_0_var(--soot)]'
+                                                        : 'bg-[var(--vellum)] border-dashed border-[var(--ash)]'
                                                 }`}
-                                                style={badge.unlocked ? { boxShadow: `0 0 12px color-mix(in srgb, ${colorVar} 25%, transparent)` } : undefined}
+                                               
                                             >
                                                 {!badge.unlocked && (
                                                     <div className="absolute top-1.5 right-1.5">
@@ -246,10 +220,10 @@ export default function ProfilePage() {
                                                     </div>
                                                 )}
                                                 <div className="mb-1 flex justify-center">
-                                                    <IconComponent className={`h-6 w-6 ${badge.unlocked ? `text-${badge.color}` : 'text-muted-foreground'}`} />
+                                                    <IconComponent className={`h-6 w-6 ${badge.unlocked ? 'text-foreground' : 'text-muted-foreground'}`} />
                                                 </div>
-                                                <div className={`text-[11px] font-bold uppercase ${badge.unlocked ? `text-${badge.color}` : 'text-muted-foreground'}`}>{badge.label}</div>
-                                                <div className="text-[9px] text-muted-foreground mt-0.5 leading-tight">{badge.description}</div>
+                                                <div className={`text-xs font-bold uppercase ${badge.unlocked ? 'text-foreground' : 'text-muted-foreground'}`}>{badge.label}</div>
+                                                <div className="text-xs text-muted-foreground mt-0.5 leading-tight">{badge.description}</div>
                                             </div>
                                         );
                                     })}
@@ -264,35 +238,25 @@ export default function ProfilePage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
-                    className="containment-active p-6 text-center relative overflow-hidden"
+                    className="folio-card relative overflow-hidden p-6 text-center"
                 >
-                    {/* HUD corners */}
-                    <div className="absolute top-0 left-0 w-4 h-4 border-t border-l border-primary/50" />
-                    <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-primary/50" />
-                    <div className="absolute bottom-0 left-0 w-4 h-4 border-b border-l border-primary/50" />
-                    <div className="absolute bottom-0 right-0 w-4 h-4 border-b border-r border-primary/50" />
-
-                    <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center">
-                        <Fingerprint className="h-8 w-8 text-primary opacity-60" />
+                    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-dashed border-[var(--soot)]">
+                        <Fingerprint className="h-8 w-8" aria-hidden="true" />
                     </div>
-                    <h3 className="text-h3 mb-2">Sign in for full access</h3>
+                    <h3 className="folio-display mb-2 text-3xl">Sign in for full access</h3>
                     <p className="text-body-sm text-muted-foreground mb-6">
                         Sync your favorites and bookings across devices. Unlock all achievements.
                     </p>
                     <Button
                         variant="default"
-                        className="w-full sm:w-auto relative overflow-hidden group"
+                        className="min-h-11 w-full sm:w-auto"
                         onClick={() => toast.info("Authentication systems offline.", { description: "Survivor ID verification requires a working satellite uplink." })}
                     >
-                        <span className="relative z-10">Authenticate</span>
-                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-500" />
+                        <span>Authenticate</span>
                     </Button>
                 </motion.div>
 
-            </main>
-
-            <Footer />
-            <MobileBottomNav />
-        </div>
+            </div>
+        </FolioShell>
     );
 }

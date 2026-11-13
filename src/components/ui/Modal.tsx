@@ -10,9 +10,12 @@ interface ModalProps {
   children: React.ReactNode;
   title?: string;
   size?: "sm" | "md" | "lg" | "xl";
+  /** "folio" renders the panel on the paper/ink tokens (portal content sits outside page scopes). */
+  tone?: "default" | "folio";
 }
 
-export function Modal({ isOpen, onClose, children, title, size = "md" }: ModalProps) {
+export function Modal({ isOpen, onClose, children, title, size = "md", tone = "default" }: ModalProps) {
+  const folio = tone === "folio";
   useEffect(() => {
     // Only set up listeners when modal is open
     if (!isOpen) return;
@@ -51,22 +54,22 @@ export function Modal({ isOpen, onClose, children, title, size = "md" }: ModalPr
           />
 
           {/* Modal */}
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className={`fixed inset-0 z-50 flex items-center justify-center p-4 ${folio ? "folio-inner" : ""}`}>
             <motion.div
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className={`bg-card border border-primary/30 rounded-xl shadow-2xl w-full ${sizeClasses[size]} max-h-[90vh] overflow-y-auto relative`}
+              className={`bg-card w-full ${sizeClasses[size]} max-h-[90vh] overflow-y-auto relative ${folio ? "border border-[var(--soot)] shadow-[6px_6px_0_var(--soot)]" : "border border-primary/30 rounded-xl shadow-2xl"}`}
             >
               {/* Header */}
               {title && (
                 <div className="sticky top-0 bg-card/95 backdrop-blur border-b border-border p-4 flex justify-between items-center z-10">
-                  <h2 className="text-xl font-bold text-primary uppercase tracking-tight">
+                  <h2 className={folio ? "folio-display text-2xl" : "text-xl font-bold text-primary uppercase tracking-tight"}>
                     {title}
                   </h2>
                   <button
                     onClick={onClose}
-                    className="text-muted-foreground hover:text-white transition-colors"
+                    className={`text-muted-foreground transition-colors ${folio ? "hover:text-foreground flex min-h-11 min-w-11 items-center justify-center" : "hover:text-white"}`}
                     aria-label="Close modal"
                   >
                     <X className="h-6 w-6" />
