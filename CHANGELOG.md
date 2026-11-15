@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.1.2](https://github.com/forbiddenlink/apoc-bnb/compare/v1.1.1...v1.1.2) (2026-11-14)
+
+
+### Bug Fixes
+
+* **deps:** bump next to 16.4.5 for Nov 2026 security advisories ([#106](https://github.com/forbiddenlink/apoc-bnb/issues/106)) ([9856e8c](https://github.com/forbiddenlink/apoc-bnb/commit/9856e8c24d616015153fdf4eb7b78d781334fb7f))
+* **deps:** lift glob/minimatch to patched majors ([#108](https://github.com/forbiddenlink/apoc-bnb/issues/108)) ([ed89a5f](https://github.com/forbiddenlink/apoc-bnb/commit/ed89a5f08f6d68b2f08695240968c21c737507c1))
+
 ## [1.1.1](https://github.com/forbiddenlink/apoc-bnb/compare/v1.1.0...v1.1.1) (2026-11-04)
 
 
