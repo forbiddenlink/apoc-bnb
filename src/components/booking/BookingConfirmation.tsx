@@ -107,6 +107,10 @@ export function BookingConfirmation({
         </p>
       </div>
 
+      <p className="text-sm text-muted-foreground" role="note">
+        Demo booking complete. This is a fictional confirmation, not a real reservation. No payment was collected.
+      </p>
+
       {/* Confirmation Number - Military Format */}
       <div className="relative bg-[var(--vellum)] border border-[var(--soot)]  p-4">
         {/* HUD Corner Accents */}

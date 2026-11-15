@@ -189,10 +189,11 @@ export function BookingWidget({
                         <div className="border border-[var(--soot)] bg-[var(--vellum)] p-3">
                             <div className="folio-label text-muted-foreground mb-1">EXTRACTION</div>
                             <div className="flex items-center justify-between">
-                                <span className="text-sm font-bold text-foreground font-mono">{nights} nights</span>
+                                <span className="text-sm font-bold text-foreground font-mono">{nights} {nights === 1 ? "night" : "nights"}</span>
                                 <div className="flex gap-1">
                                     <button
                                         type="button"
+                                        aria-label="Decrease nights"
                                         onClick={() => setNights(Math.max(1, nights - 1))}
                                         className="h-9 w-9 border border-[var(--soot)] hover:bg-[var(--soot)] hover:text-[var(--geiger)] flex items-center justify-center transition-all active:scale-95"
                                     >
@@ -200,6 +201,7 @@ export function BookingWidget({
                                     </button>
                                     <button
                                         type="button"
+                                        aria-label="Increase nights"
                                         onClick={() => setNights(Math.min(MAX_NIGHTS, nights + 1))}
                                         className="h-9 w-9 border border-[var(--soot)] hover:bg-[var(--soot)] hover:text-[var(--geiger)] flex items-center justify-center transition-all active:scale-95"
                                     >
@@ -220,6 +222,7 @@ export function BookingWidget({
                             <div className="flex gap-1">
                                 <button
                                     type="button"
+                                    aria-label="Decrease guests"
                                     onClick={() => setGuests(Math.max(1, guests - 1))}
                                     className="h-9 w-9 border border-[var(--soot)] hover:bg-[var(--soot)] hover:text-[var(--geiger)] flex items-center justify-center transition-all active:scale-95"
                                 >
@@ -227,6 +230,7 @@ export function BookingWidget({
                                 </button>
                                 <button
                                     type="button"
+                                    aria-label="Increase guests"
                                     onClick={() => setGuests(Math.min(maxCapacity, guests + 1))}
                                     className={cn(
                                         "h-9 w-9 border border-[var(--soot)] flex items-center justify-center transition-all active:scale-95",
@@ -270,7 +274,7 @@ export function BookingWidget({
                         >
                             <div className="space-y-2 py-3 border-y border-border text-sm">
                                 <div className="flex justify-between">
-                                    <span className="text-muted-foreground">Bunker × {nights} nights</span>
+                                    <span className="text-muted-foreground">Bunker × {nights} {nights === 1 ? "night" : "nights"}</span>
                                     <span className="font-mono"><AnimatedPrice value={total} currency={currency} /> {currency}</span>
                                 </div>
                                 <div className="flex justify-between text-[var(--oxide)]">
@@ -294,6 +298,10 @@ export function BookingWidget({
                     </span>
                 </div>
 
+                <p className="text-sm text-muted-foreground mb-3" role="note">
+                    Demo simulation only. No payment is collected and no real shelter is reserved.
+                </p>
+
                 {/* CTA Button */}
                 <Button
                     size="xl"
@@ -306,7 +314,7 @@ export function BookingWidget({
                     disabled={bookBunker.isPending || !available}
                 >
                     <span>
-                        {!available ? "UNAVAILABLE" : bookBunker.isPending ? "PROCESSING..." : "INITIATE BOOKING"}
+                        {!available ? "UNAVAILABLE" : bookBunker.isPending ? "PROCESSING..." : "SIMULATE BOOKING"}
                     </span>
                 </Button>
 
@@ -314,7 +322,7 @@ export function BookingWidget({
                 <p className="text-xs text-center text-muted-foreground mt-4 font-mono">
                     {!available
                         ? "This shelter is currently occupied or off-market."
-                        : "Charges applied upon nuclear event confirmation."}
+                        : "Fictional prices and confirmation codes. No charges apply."}
                 </p>
 
             </motion.div>
