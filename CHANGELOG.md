@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/forbiddenlink/apoc-bnb/compare/v1.1.2...v1.1.3) (2026-11-15)
+
+
+### Bug Fixes
+
+* **booking:** label the booking flow as a demo and fix control names and plurals ([#109](https://github.com/forbiddenlink/apoc-bnb/issues/109)) ([57e8489](https://github.com/forbiddenlink/apoc-bnb/commit/57e848923c2e38a294c85acd9775cabeb8ea856b))
+
 ## [1.1.2](https://github.com/forbiddenlink/apoc-bnb/compare/v1.1.1...v1.1.2) (2026-11-14)
 
 
