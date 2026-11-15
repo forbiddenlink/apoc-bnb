@@ -35,14 +35,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         openGraph: {
             title: `${bunker.title} - ${bunker.price.caps} CAPS/night`,
             description: bunker.description,
-            images: bunker.images[0] ? [bunker.images[0]] : [],
+            // The share image comes from opengraph-image.tsx (the hold verdict card).
             type: "website",
         },
         twitter: {
             card: "summary_large_image",
             title: `${bunker.title} | APOC-BNB`,
             description: bunker.description,
-            images: bunker.images[0] ? [bunker.images[0]] : [],
         },
     };
 }
