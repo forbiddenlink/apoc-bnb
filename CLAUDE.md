@@ -45,8 +45,8 @@ including a 10% random failure rate on booking creation.
 ## Other notable modules
 
 - `src/lib/safe-action.ts` - `next-safe-action` client setup
-- `src/lib/apocAiResponses.ts` - AI chat responses (uses `GROQ_API_KEY`); backs
-  `src/components/chat/`
+- `src/lib/apocAiResponses.ts` - scripted chat replies (no model call; `GROQ_API_KEY` is
+  required by the env schema but not read here); backs `src/components/chat/`
 - `src/lib/apoc-weather.ts`, `src/lib/pricing.ts` (dinero.js), `src/lib/posthog.ts`,
   `src/lib/site-url.ts`
 
