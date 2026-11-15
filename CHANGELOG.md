@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/forbiddenlink/apoc-bnb/compare/v1.1.4...v1.2.0) (2026-11-15)
+
+
+### Features
+
+* **share:** render each bunker's hold verdict as its OG card ([#114](https://github.com/forbiddenlink/apoc-bnb/issues/114)) ([2f8ebbd](https://github.com/forbiddenlink/apoc-bnb/commit/2f8ebbd2ac0185727c4eb2232668660aa82277eb))
+
 ## [1.1.4](https://github.com/forbiddenlink/apoc-bnb/compare/v1.1.3...v1.1.4) (2026-11-15)
 
 
