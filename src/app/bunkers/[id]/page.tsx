@@ -13,14 +13,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     const bunker = getBunkerById(id);
 
     if (!bunker) {
-        return {
-            title: "Bunker Not Found | APOC-BNB",
-            description: "This shelter has been destroyed or never existed.",
-        };
+        // Throwing here (not only in the page) makes the response status 404
+        // even when loading.tsx has already started streaming a 200.
+        notFound();
     }
 
     return {
-        title: `${bunker.title} | APOC-BNB`,
+        title: bunker.title,
         description: bunker.description,
         openGraph: {
             title: `${bunker.title} - ${bunker.price.caps} CAPS/night`,
@@ -30,7 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
         },
         twitter: {
             card: "summary_large_image",
-            title: `${bunker.title} | APOC-BNB`,
+            title: bunker.title,
             description: bunker.description,
             images: bunker.images[0] ? [bunker.images[0]] : [],
         },
