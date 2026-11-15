@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.4](https://github.com/forbiddenlink/apoc-bnb/compare/v1.1.3...v1.1.4) (2026-11-15)
+
+
+### Bug Fixes
+
+* **seo:** single brand in bunker titles and real 404 for unknown bunkers ([#112](https://github.com/forbiddenlink/apoc-bnb/issues/112)) ([2485e8d](https://github.com/forbiddenlink/apoc-bnb/commit/2485e8d38ece9d3efcc787f00053b13dd7825e9d))
+
 ## [1.1.3](https://github.com/forbiddenlink/apoc-bnb/compare/v1.1.2...v1.1.3) (2026-11-15)
 
 
