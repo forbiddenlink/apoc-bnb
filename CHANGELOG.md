@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/forbiddenlink/apoc-bnb/compare/v1.2.0...v1.2.1) (2026-11-17)
+
+
+### Bug Fixes
+
+* **deps:** raise the next override floor to the patched 16.4.5 ([#117](https://github.com/forbiddenlink/apoc-bnb/issues/117)) ([a3ba81d](https://github.com/forbiddenlink/apoc-bnb/commit/a3ba81d30d3a168c68d5db70c98c9e2937c88e19))
+
 ## [1.2.0](https://github.com/forbiddenlink/apoc-bnb/compare/v1.1.4...v1.2.0) (2026-11-15)
 
 
