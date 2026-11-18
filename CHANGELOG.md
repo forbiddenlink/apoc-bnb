@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.2](https://github.com/forbiddenlink/apoc-bnb/compare/v1.2.1...v1.2.2) (2026-11-18)
+
+
+### Bug Fixes
+
+* TS 7 lint crash and Tailwind v4 border-opacity ([#120](https://github.com/forbiddenlink/apoc-bnb/issues/120)) ([932116e](https://github.com/forbiddenlink/apoc-bnb/commit/932116e2e2e36fed959257c7710738df10180b49))
+
 ## [1.2.1](https://github.com/forbiddenlink/apoc-bnb/compare/v1.2.0...v1.2.1) (2026-11-17)
 
 
