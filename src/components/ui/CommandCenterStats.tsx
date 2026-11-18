@@ -72,6 +72,7 @@ const stats = [
         color: "text-primary",
         bgColor: "bg-primary/10",
         borderColor: "border-primary/30",
+        hoverBorderColor: "hover:border-primary/60",
     },
     {
         value: 99.9,
@@ -82,6 +83,7 @@ const stats = [
         color: "text-secondary",
         bgColor: "bg-secondary/10",
         borderColor: "border-secondary/30",
+        hoverBorderColor: "hover:border-secondary/60",
     },
     {
         value: 12500,
@@ -90,6 +92,7 @@ const stats = [
         color: "text-white",
         bgColor: "bg-white/5",
         borderColor: "border-white/10",
+        hoverBorderColor: "hover:border-white/60",
     },
     {
         value: 0,
@@ -98,6 +101,7 @@ const stats = [
         color: "text-accent",
         bgColor: "bg-accent/10",
         borderColor: "border-accent/30",
+        hoverBorderColor: "hover:border-accent/60",
     },
 ];
 
@@ -174,7 +178,8 @@ export function CommandCenterStats() {
                                 "relative p-6 md:p-8 border rounded-sm",
                                 "bg-black/40 backdrop-blur-sm",
                                 stat.borderColor,
-                                "group hover:border-opacity-60 transition-all duration-300"
+                                stat.hoverBorderColor,
+                                "group transition-all duration-300"
                             )}
                         >
                             {/* Corner accents */}
