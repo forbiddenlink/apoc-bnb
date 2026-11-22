@@ -1,3 +1,7 @@
+# Wait one week (in minutes) before resolving newly published packages, so a
+# compromised release (e.g. the Shai-Hulud npm worm) is pulled before it reaches
+# installs in CI or Vercel.
+minimumReleaseAge: 10080
 overrides:
   nanoid@<3.3.18: '>=3.3.18 <4'
   next: '>=16.4.5 <17.0.0'
