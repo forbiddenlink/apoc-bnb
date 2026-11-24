@@ -9,7 +9,7 @@ Creative/humorous frontend project, no real database. Live: https://apoc-bnb.ver
 - TanStack React Query for data fetching/caching, Zustand for client state
 - Mapbox GL (`react-map-gl` + `supercluster`) for the interactive map on `/search`
 - Framer Motion for animations, `dinero.js` for price formatting
-- Arcjet (`@arcjet/next`) for bot/rate-limit protection, `next-safe-action` for server actions
+- `next-safe-action` for server actions
 - Sentry, Axiom (`next-axiom`), PostHog for observability/analytics
 - Vitest + React Testing Library (jsdom) for tests, MSW for API mocking
 - Biome and ESLint (`eslint-config-next`) both configured
@@ -73,7 +73,7 @@ Validated via `src/env.ts` (`@t3-oss/env-nextjs`): `GROQ_API_KEY` (required),
 `NEXT_PUBLIC_POSTHOG_HOST`, `NEXT_PUBLIC_SENTRY_DSN` (all optional). `SKIP_ENV_VALIDATION`
 bypasses validation.
 
-Read directly via `process.env` but not in the schema: `ARCJET_KEY`, `NEXT_PUBLIC_BASE_URL`
+Read directly via `process.env` but not in the schema: `NEXT_PUBLIC_BASE_URL`
 (used in metadata `metadataBase` via `src/lib/site-url.ts`; falls back to
 `VERCEL_PROJECT_PRODUCTION_URL`, then the literal `https://apoc-bnb.vercel.app` - never
 localhost), `NEXT_PUBLIC_MAPBOX_TOKEN` (map on `/search` falls back to a static UI if
