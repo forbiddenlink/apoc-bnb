@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.3](https://github.com/forbiddenlink/apoc-bnb/compare/v1.2.2...v1.2.3) (2026-11-24)
+
+
+### Bug Fixes
+
+* report root error boundary errors to Sentry ([#124](https://github.com/forbiddenlink/apoc-bnb/issues/124)) ([a3c1396](https://github.com/forbiddenlink/apoc-bnb/commit/a3c13961a68d9e7941e0e1db3599e05dbeb5a850))
+
 ## [1.2.2](https://github.com/forbiddenlink/apoc-bnb/compare/v1.2.1...v1.2.2) (2026-11-18)
 
 
