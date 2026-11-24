@@ -33,7 +33,7 @@ without it.
 - Mapbox GL for the interactive map
 - Framer Motion for animations
 - Vitest and Testing Library for tests, Biome and ESLint for linting
-- Optional Sentry, PostHog, Axiom and Arcjet
+- Optional Sentry, PostHog and Axiom
 - Deployed on Vercel
 
 ## Scripts
